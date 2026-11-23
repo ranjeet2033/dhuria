@@ -43,8 +43,8 @@
 <div class="dhuria-social-bar">
     <div class="dhuria-social-inner">
         <div class="dhuria-social-left">
-            <a href="https://facebook.com" target="_blank" class="dhuria-s-icon" title="Facebook"><i class="bi bi-facebook"></i></a>
-            <a href="https://instagram.com" target="_blank" class="dhuria-s-icon" title="Instagram"><i class="bi bi-instagram"></i></a>
+            <a href="{{ \App\Models\Setting::get('social_facebook', 'https://www.facebook.com/profile.php?id=61594745097448') }}" target="_blank" class="dhuria-s-icon" title="Facebook"><i class="bi bi-facebook"></i></a>
+            <a href="{{ \App\Models\Setting::get('social_instagram', 'https://www.instagram.com/ayurvedadhuria/') }}" target="_blank" class="dhuria-s-icon" title="Instagram"><i class="bi bi-instagram"></i></a>
         </div>
         <div class="dhuria-social-right">
             Follow-us on social media!
@@ -65,10 +65,10 @@
                     Premium Ayurvedic wellness inspired by the five natural elements. Formulated with authentic botanical extracts for balanced health and vitality.
                 </p>
                 <div class="dhuria-brand-socials">
-                    <a href="https://instagram.com" target="_blank" class="dhuria-bs-icon"><i class="bi bi-instagram"></i></a>
-                    <a href="https://facebook.com" target="_blank" class="dhuria-bs-icon"><i class="bi bi-facebook"></i></a>
-                    <a href="https://wa.me/919220251059" target="_blank" class="dhuria-bs-icon"><i class="bi bi-whatsapp"></i></a>
-                    <a href="mailto:floramade517@gmail.com" class="dhuria-bs-icon"><i class="bi bi-envelope"></i></a>
+                    <a href="{{ \App\Models\Setting::get('social_instagram', 'https://www.instagram.com/ayurvedadhuria/') }}" target="_blank" class="dhuria-bs-icon" title="Instagram"><i class="bi bi-instagram"></i></a>
+                    <a href="{{ \App\Models\Setting::get('social_facebook', 'https://www.facebook.com/profile.php?id=61594745097448') }}" target="_blank" class="dhuria-bs-icon" title="Facebook"><i class="bi bi-facebook"></i></a>
+                    <a href="https://wa.me/919220251059" target="_blank" class="dhuria-bs-icon" title="WhatsApp"><i class="bi bi-whatsapp"></i></a>
+                    <a href="mailto:floramade517@gmail.com" class="dhuria-bs-icon" title="Email"><i class="bi bi-envelope"></i></a>
                 </div>
             </div>
 

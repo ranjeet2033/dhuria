@@ -1095,6 +1095,51 @@
     box-shadow: 0 6px 15px rgba(8, 26, 48, 0.15);
 }
 
+/* Section 6: Doctor Endorsement Banner (Large & Fully Responsive) */
+.dh-doctor-endorsement-section {
+    max-width: 1200px;
+    margin: 55px auto 45px;
+    padding: 0 20px;
+    width: 100%;
+}
+.dh-doctor-banner-wrap {
+    width: 100%;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 12px 35px rgba(8, 26, 48, 0.12);
+    border: 1px solid rgba(8, 26, 48, 0.08);
+    background: #ffffff;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.dh-doctor-banner-wrap:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 18px 45px rgba(8, 26, 48, 0.16);
+}
+.dh-doctor-banner-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+    border-radius: 24px;
+}
+
+@media (max-width: 768px) {
+    .dh-doctor-endorsement-section {
+        margin: 35px auto 25px;
+        padding: 0 14px;
+    }
+    .dh-doctor-banner-wrap {
+        border-radius: 16px;
+        box-shadow: 0 6px 20px rgba(8, 26, 48, 0.1);
+    }
+    .dh-doctor-banner-img {
+        border-radius: 16px;
+    }
+}
+
 /* Section 7: Benefits 4-Card Grid */
 .dh-benefits-grid {
     display: grid;
@@ -1523,29 +1568,12 @@
 <!-- ========================================================
      6. DOCTOR / HEALTHCARE EXPERT ENDORSEMENT
      ======================================================== -->
-<section style="max-width: 950px; margin: 40px auto; padding: 0 20px;">
-    <div style="background: linear-gradient(135deg, #081a30 0%, #0d2544 100%); border-radius: 20px; padding: 24px 32px; display: flex; align-items: center; gap: 28px; box-shadow: 0 10px 30px rgba(8, 26, 48, 0.18); border: 1px solid rgba(212, 175, 55, 0.25); flex-wrap: wrap;">
-        <!-- Left: Doctor circle photo -->
-        <div style="width: 110px; height: 110px; min-width: 110px; border-radius: 50%; background: #ffffff; padding: 4px; box-shadow: 0 6px 18px rgba(0,0,0,0.25); overflow: hidden; display: flex; align-items: center; justify-content: center; margin: 0 auto;">
-            <img src="{{ asset('images/doctor_portrait.jpg') }}" alt="Vaidya Health Professional" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
-        </div>
-
-        <!-- Right: Text & Badges -->
-        <div style="flex: 1; min-width: 260px; text-align: left;">
-            <span style="display: inline-block; background: rgba(255, 255, 255, 0.12); border: 1px solid rgba(255, 255, 255, 0.2); color: #93c5fd; font-size: 10px; font-weight: 800; padding: 3px 12px; border-radius: 14px; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px;">
-                SAFE AND TESTED
-            </span>
-            <h3 style="font-size: 22px; font-weight: 800; color: #ffffff; margin: 0 0 6px 0; letter-spacing: -0.01em; line-height: 1.25;">
-                RECOMMENDED BY HEALTH PROFESSIONALS
-            </h3>
-            <div style="font-size: 14px; color: #d4af37; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
-                <span>WE ARE AN HONEST AYURVEDA BRAND</span>
-                <i class="bi bi-patch-check-fill" style="color: #10b981;"></i>
-            </div>
-            <p style="color: #cbd5e1; font-size: 13px; line-height: 1.55; margin: 0;">
-                Every batch is evaluated by senior Ayurvedic practitioners for heavy-metal safety, botanical authenticity, and high bioavailability.
-            </p>
-        </div>
+<section class="dh-doctor-endorsement-section">
+    <div class="dh-doctor-banner-wrap">
+        <img src="{{ asset('images/doctor_endorsement_banner_hd.png') }}" 
+             alt="Recommended By Health Professionals - We Are An Honest Ayurveda Brand" 
+             class="dh-doctor-banner-img"
+             loading="lazy">
     </div>
 </section>
 

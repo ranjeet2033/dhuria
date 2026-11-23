@@ -940,8 +940,8 @@
   <!-- 1. Top Utility Notification Bar -->
   <div class="flora-top-bar">
     <div class="flora-top-left">
-      <a href="https://facebook.com" target="_blank" class="flora-social-link" title="Facebook"><i class="bi bi-facebook"></i></a>
-      <a href="https://instagram.com" target="_blank" class="flora-social-link" title="Instagram"><i class="bi bi-instagram"></i></a>
+      <a href="{{ \App\Models\Setting::get('social_facebook', 'https://www.facebook.com/profile.php?id=61594745097448') }}" target="_blank" class="flora-social-link" title="Facebook"><i class="bi bi-facebook"></i></a>
+      <a href="{{ \App\Models\Setting::get('social_instagram', 'https://www.instagram.com/ayurvedadhuria/') }}" target="_blank" class="flora-social-link" title="Instagram"><i class="bi bi-instagram"></i></a>
       <span class="flora-top-left-text">Follow us!</span>
     </div>
 
