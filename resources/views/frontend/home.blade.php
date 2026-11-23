@@ -1064,34 +1064,166 @@
     line-height: 1.35;
 }
 
+/* Section 3: Dual Mobile Grid & Desktop Carousel */
+.dh-daily-mobile-view {
+    display: none;
+}
+.dh-daily-desktop-view {
+    display: block;
+}
+.dh-btn-view-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    border: 2px solid var(--dh-navy);
+    color: var(--dh-navy);
+    padding: 10px 26px;
+    border-radius: 30px;
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    text-decoration: none !important;
+    transition: all 0.25s ease;
+    box-shadow: 0 2px 8px rgba(8, 26, 48, 0.06);
+}
+.dh-btn-view-all:hover {
+    background: var(--dh-navy);
+    color: #ffffff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(8, 26, 48, 0.15);
+}
+
+/* Section 7: Benefits 4-Card Grid */
+.dh-benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+.dh-benefit-card {
+    background: #f0f7ff;
+    border: 1px solid #dbeafe;
+    border-radius: 16px;
+    padding: 24px 18px;
+    text-align: center;
+    transition: all 0.25s ease;
+}
+.dh-benefit-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(2, 132, 199, 0.08);
+}
+.dh-benefit-icon {
+    width: 50px;
+    height: 50px;
+    background: #ffffff;
+    border-radius: 50%;
+    margin: 0 auto 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    color: #0284c7;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+}
+
 @media (max-width: 992px) {
     .dh-slide-liver, .dh-slide-pilecurex, .dh-slide-diabetes {
         grid-template-columns: 1fr;
-        padding: 40px 25px;
+        padding: 0 !important;
         text-align: center;
     }
-    .dh-pilecurex-left { min-height: 320px; }
+    .dh-pilecurex-left {
+        width: 100%;
+        min-height: 280px;
+        aspect-ratio: 4/3;
+        background-position: center;
+        background-size: cover;
+    }
+    .dh-pilecurex-right {
+        padding: 30px 20px 38px;
+        text-align: center;
+        align-items: center;
+    }
+    .dh-slide-liver-img-wrap, .dh-slide-diabetes .dh-slide-liver-img-wrap {
+        order: 1;
+        padding: 24px 20px 0;
+        min-height: 250px;
+    }
+    .dh-slide-liver-content, .dh-slide-diabetes .dh-slide-liver-content {
+        order: 2;
+        padding: 20px 20px 35px;
+        text-align: center;
+    }
     .dh-slide-actions { justify-content: center; }
     .dh-slide-trust-row { justify-content: center; }
     .dh-doctor-card { grid-template-columns: 1fr; text-align: center; }
     .dh-doctor-avatar-wrap { margin: 0 auto; }
+    .dh-benefits-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+    }
     .dh-why-grid { grid-template-columns: repeat(2, 1fr); }
     .dh-spotlight-box { grid-template-columns: 1fr; }
 }
+
 @media (max-width: 768px) {
+    /* Section 3: Switch to 2-Column Mobile Grid */
+    .dh-daily-mobile-view {
+        display: block;
+    }
+    .dh-daily-desktop-view {
+        display: none;
+    }
+    .dh-daily-grid-2col {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    /* Benefits: 2x2 Grid on Mobile */
+    .dh-benefits-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+    .dh-benefit-card {
+        padding: 16px 10px;
+        border-radius: 14px;
+    }
+    .dh-benefit-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.15rem;
+        margin-bottom: 8px;
+    }
+    .dh-benefit-card h4 {
+        font-size: 0.85rem !important;
+        margin-bottom: 4px !important;
+    }
+    .dh-benefit-card p {
+        font-size: 0.72rem !important;
+        line-height: 1.35 !important;
+    }
+
     .dh-spotlight-section {
-        margin: 35px auto;
-        padding: 0 15px;
+        margin: 30px auto;
+        padding: 0 14px;
     }
     .dh-spotlight-layout {
         grid-template-columns: 1fr;
-        gap: 25px;
+        gap: 22px;
+    }
+    .dh-spotlight-main-card {
+        max-width: 360px;
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 20px;
     }
     .dh-sp-title {
-        font-size: 1.55rem;
+        font-size: 1.5rem;
     }
     .dh-sp-price-current {
-        font-size: 1.85rem;
+        font-size: 1.8rem;
     }
     .dh-sp-actions-row {
         gap: 10px;
@@ -1099,7 +1231,7 @@
     .dh-sp-meta-row {
         flex-direction: column;
         align-items: flex-start;
-        gap: 12px;
+        gap: 10px;
     }
     .dh-sp-pincode {
         width: 100%;
@@ -1114,13 +1246,17 @@
         margin-right: -5px !important;
     }
 }
+
 @media (max-width: 600px) {
-    .dh-slide-liver-title, .dh-pilecurex-title { font-size: 2rem; }
-    .dh-why-grid { grid-template-columns: 1fr; }
+    .dh-slide-liver-title, .dh-pilecurex-title { font-size: 1.95rem; }
+    .dh-why-grid { grid-template-columns: 1fr; gap: 14px; }
+    .dh-why-card { min-height: 145px !important; padding: 18px 20px !important; }
     .dh-btn-order-now { width: 100%; justify-content: center; }
     .dh-marquee-set { gap: 25px; }
     .dh-marquee-item { font-size: 0.76rem; }
     .dh-sp-thumb { width: 52px; height: 52px; }
+    .dh-nature-banner { padding: 45px 15px; }
+    .dh-nature-script { font-size: 1.8rem; }
 }
 </style>
 
@@ -1248,53 +1384,108 @@
 <!-- ========================================================
      3. FEATURED DAILY PRODUCTS (EXACT MATCH TO HEADING)
      ======================================================== -->
-<section style="padding: 10px 20px 50px; max-width: 1300px; margin: 0 auto;">
+<section style="padding: 10px 16px 50px; max-width: 1300px; margin: 0 auto;">
     <div class="dh-section-header">
-        <div class="dh-section-kicker">FEATURED DAILY PRODUCTS</div>
+        <div class="dh-section-kicker">FEATURED BEST PRODUCTS</div>
         <h2 class="dh-section-title">Daily Ayurvedic Essentials</h2>
         <p class="dh-section-subtitle">Browse complete range of 100% organic &amp; approved products.</p>
     </div>
 
-    <div class="owl-carousel dh-daily-carousel owl-theme">
-        @foreach($bestSellers as $index => $product)
-            @php
-                $inWishlist = in_array($product->id, session()->get('wishlist', []));
-            @endphp
-            <div class="dh-product-card" onclick="if (!event.target.closest('.dh-card-wishlist, .dh-btn-card-add')) window.location.href='{{ route('product.show', $product->slug) }}';">
-                @if(str_contains(strtolower($product->name), 'kit'))
-                    <span class="dh-card-badge">Kit</span>
-                @endif
+    <!-- Desktop View: Carousel -->
+    <div class="dh-daily-desktop-view">
+        <div class="owl-carousel dh-daily-carousel owl-theme">
+            @foreach($bestSellers as $index => $product)
+                @php
+                    $inWishlist = in_array($product->id, session()->get('wishlist', []));
+                @endphp
+                <div class="dh-product-card" onclick="if (!event.target.closest('.dh-card-wishlist, .dh-btn-card-add')) window.location.href='{{ route('product.show', $product->slug) }}';">
+                    @if(str_contains(strtolower($product->name), 'kit'))
+                        <span class="dh-card-badge">Kit</span>
+                    @endif
 
-                <button type="button" class="dh-card-wishlist" onclick="Ebigcart.toggleWishlist('{{ $product->id }}', this, event)" style="{{ $inWishlist ? 'color:#ef4444;' : '' }}" title="Wishlist">
-                    <i class="bi {{ $inWishlist ? 'bi-heart-fill' : 'bi-heart' }}"></i>
-                </button>
-
-                <div class="dh-card-img-box">
-                    <img src="{{ $product->primary_image_url }}" alt="{{ $product->name }}" loading="lazy">
-                </div>
-
-                <div class="dh-card-body">
-                    <a href="{{ route('product.show', $product->slug) }}" class="dh-card-title">{{ $product->name }}</a>
-                    
-                    <div class="dh-card-rating">
-                        <span>★★★★★</span>
-                        <span class="dh-rating-num">{{ $product->id == 17 ? '4.5' : '5.0' }}</span>
-                        <span class="dh-reviews-cnt">({{ $product->id == 17 ? '7' : ($product->id == 21 ? '12' : '1') }})</span>
-                    </div>
-
-                    <div class="dh-card-price-row">
-                        <span class="dh-card-price-current">₹{{ number_format($product->sale_price ?? $product->price, 0) }}</span>
-                        @if($product->sale_price)
-                            <span class="dh-card-price-old">₹{{ number_format($product->price, 0) }}</span>
-                        @endif
-                    </div>
-
-                    <button type="button" class="dh-btn-card-add" onclick="Ebigcart.addToCart('{{ $product->id }}', 1, event)">
-                        <i class="bi bi-bag"></i> ADD TO BAG
+                    <button type="button" class="dh-card-wishlist" onclick="Ebigcart.toggleWishlist('{{ $product->id }}', this, event)" style="{{ $inWishlist ? 'color:#ef4444;' : '' }}" title="Wishlist">
+                        <i class="bi {{ $inWishlist ? 'bi-heart-fill' : 'bi-heart' }}"></i>
                     </button>
+
+                    <div class="dh-card-img-box">
+                        <img src="{{ $product->primary_image_url }}" alt="{{ $product->name }}" loading="lazy">
+                    </div>
+
+                    <div class="dh-card-body">
+                        <a href="{{ route('product.show', $product->slug) }}" class="dh-card-title">{{ $product->name }}</a>
+                        
+                        <div class="dh-card-rating">
+                            <span>★★★★★</span>
+                            <span class="dh-rating-num">{{ $product->id == 17 ? '4.5' : '5.0' }}</span>
+                            <span class="dh-reviews-cnt">({{ $product->id == 17 ? '7' : ($product->id == 21 ? '12' : '1') }})</span>
+                        </div>
+
+                        <div class="dh-card-price-row">
+                            <span class="dh-card-price-current">₹{{ number_format($product->sale_price ?? $product->price, 0) }}</span>
+                            @if($product->sale_price)
+                                <span class="dh-card-price-old">₹{{ number_format($product->price, 0) }}</span>
+                            @endif
+                        </div>
+
+                        <button type="button" class="dh-btn-card-add" onclick="Ebigcart.addToCart('{{ $product->id }}', 1, event)">
+                            <i class="bi bi-bag"></i> ADD TO BAG
+                        </button>
+                    </div>
                 </div>
-            </div>
-        @endforeach
+            @endforeach
+        </div>
+    </div>
+
+    <!-- Mobile View: 2-Column Grid (2x2 Cards Matching Mobile Reference) -->
+    <div class="dh-daily-mobile-view">
+        <div class="dh-daily-grid-2col">
+            @foreach($bestSellers->take(4) as $index => $product)
+                @php
+                    $inWishlist = in_array($product->id, session()->get('wishlist', []));
+                @endphp
+                <div class="dh-product-card" onclick="if (!event.target.closest('.dh-card-wishlist, .dh-btn-card-add')) window.location.href='{{ route('product.show', $product->slug) }}';">
+                    @if(str_contains(strtolower($product->name), 'kit'))
+                        <span class="dh-card-badge">Kit</span>
+                    @endif
+
+                    <button type="button" class="dh-card-wishlist" onclick="Ebigcart.toggleWishlist('{{ $product->id }}', this, event)" style="{{ $inWishlist ? 'color:#ef4444;' : '' }}" title="Wishlist">
+                        <i class="bi {{ $inWishlist ? 'bi-heart-fill' : 'bi-heart' }}"></i>
+                    </button>
+
+                    <div class="dh-card-img-box">
+                        <img src="{{ $product->primary_image_url }}" alt="{{ $product->name }}" loading="lazy">
+                    </div>
+
+                    <div class="dh-card-body">
+                        <a href="{{ route('product.show', $product->slug) }}" class="dh-card-title">{{ $product->name }}</a>
+                        
+                        <div class="dh-card-rating">
+                            <span>★★★★★</span>
+                            <span class="dh-rating-num">{{ $product->id == 17 ? '4.5' : '5.0' }}</span>
+                            <span class="dh-reviews-cnt">({{ $product->id == 17 ? '7' : ($product->id == 21 ? '12' : '1') }})</span>
+                        </div>
+
+                        <div class="dh-card-price-row">
+                            <span class="dh-card-price-current">₹{{ number_format($product->sale_price ?? $product->price, 0) }}</span>
+                            @if($product->sale_price)
+                                <span class="dh-card-price-old">₹{{ number_format($product->price, 0) }}</span>
+                            @endif
+                        </div>
+
+                        <button type="button" class="dh-btn-card-add" onclick="Ebigcart.addToCart('{{ $product->id }}', 1, event)">
+                            <i class="bi bi-bag"></i> ADD TO BAG
+                        </button>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+
+        <!-- View All Products CTA Button Matching Mobile Reference -->
+        <div style="text-align: center; margin-top: 24px;">
+            <a href="{{ route('shop') }}" class="dh-btn-view-all">
+                VIEW ALL PRODUCTS <i class="bi bi-arrow-right"></i>
+            </a>
+        </div>
     </div>
 </section>
 
@@ -1366,28 +1557,28 @@
         <h2 class="dh-section-title">Benefits of Pure Ayurveda</h2>
     </div>
 
-    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:20px;">
-        <div style="background:#f0f7ff; border:1px solid #dbeafe; border-radius:16px; padding:24px 18px; text-align:center;">
-            <div style="width:50px; height:50px; background:#fff; border-radius:50%; margin:0 auto 15px; display:flex; align-items:center; justify-content:center; font-size:1.4rem; color:#0284c7; box-shadow:0 4px 10px rgba(0,0,0,0.06);"><i class="bi bi-flower2"></i></div>
-            <h4 style="font-size:0.95rem; font-weight:800; color:var(--dh-navy); margin-bottom:8px;">100% Herbal</h4>
+    <div class="dh-benefits-grid">
+        <div class="dh-benefit-card">
+            <div class="dh-benefit-icon"><i class="bi bi-flower2"></i></div>
+            <h4 style="font-size:0.95rem; font-weight:800; color:var(--dh-navy); margin-bottom:6px;">100% Herbal</h4>
             <p style="font-size:0.82rem; color:#64748b; line-height:1.45; margin:0;">Pure botanical extracts sourced directly from certified organic cultivators.</p>
         </div>
 
-        <div style="background:#f0f7ff; border:1px solid #dbeafe; border-radius:16px; padding:24px 18px; text-align:center;">
-            <div style="width:50px; height:50px; background:#fff; border-radius:50%; margin:0 auto 15px; display:flex; align-items:center; justify-content:center; font-size:1.4rem; color:#0284c7; box-shadow:0 4px 10px rgba(0,0,0,0.06);"><i class="bi bi-book-half"></i></div>
-            <h4 style="font-size:0.95rem; font-weight:800; color:var(--dh-navy); margin-bottom:8px;">Ayurvedic Heritage</h4>
+        <div class="dh-benefit-card">
+            <div class="dh-benefit-icon"><i class="bi bi-book-half"></i></div>
+            <h4 style="font-size:0.95rem; font-weight:800; color:var(--dh-navy); margin-bottom:6px;">Ayurvedic Heritage</h4>
             <p style="font-size:0.82rem; color:#64748b; line-height:1.45; margin:0;">Formulations guided by authentic Charaka and Sushruta Samhita principles.</p>
         </div>
 
-        <div style="background:#f0f7ff; border:1px solid #dbeafe; border-radius:16px; padding:24px 18px; text-align:center;">
-            <div style="width:50px; height:50px; background:#fff; border-radius:50%; margin:0 auto 15px; display:flex; align-items:center; justify-content:center; font-size:1.4rem; color:#0284c7; box-shadow:0 4px 10px rgba(0,0,0,0.06);"><i class="bi bi-cup-hot"></i></div>
-            <h4 style="font-size:0.95rem; font-weight:800; color:var(--dh-navy); margin-bottom:8px;">Easy Consumption</h4>
+        <div class="dh-benefit-card">
+            <div class="dh-benefit-icon"><i class="bi bi-cup-hot"></i></div>
+            <h4 style="font-size:0.95rem; font-weight:800; color:var(--dh-navy); margin-bottom:6px;">Easy Consumption</h4>
             <p style="font-size:0.82rem; color:#64748b; line-height:1.45; margin:0;">Seamlessly blends with warm water or milk for fast absorption and convenience.</p>
         </div>
 
-        <div style="background:#f0f7ff; border:1px solid #dbeafe; border-radius:16px; padding:24px 18px; text-align:center;">
-            <div style="width:50px; height:50px; background:#fff; border-radius:50%; margin:0 auto 15px; display:flex; align-items:center; justify-content:center; font-size:1.4rem; color:#0284c7; box-shadow:0 4px 10px rgba(0,0,0,0.06);"><i class="bi bi-award"></i></div>
-            <h4 style="font-size:0.95rem; font-weight:800; color:var(--dh-navy); margin-bottom:8px;">Quality Assured</h4>
+        <div class="dh-benefit-card">
+            <div class="dh-benefit-icon"><i class="bi bi-award"></i></div>
+            <h4 style="font-size:0.95rem; font-weight:800; color:var(--dh-navy); margin-bottom:6px;">Quality Assured</h4>
             <p style="font-size:0.82rem; color:#64748b; line-height:1.45; margin:0;">Every batch tested in NABL-accredited labs for purity and zero heavy metals.</p>
         </div>
     </div>

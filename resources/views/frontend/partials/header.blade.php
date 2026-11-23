@@ -525,13 +525,64 @@
       display: block;
     }
 
+    .flora-mobile-search-btn {
+      display: none;
+    }
+
     @media (max-width: 992px) {
       .flora-top-left, .flora-top-right { display: none; }
       .flora-top-center { width: 100%; justify-content: center; font-size: 0.72rem; }
       .flora-nav-links { display: none; }
-      .flora-mobile-toggle { display: block; }
-      .flora-brand-text { font-size: 1.45rem; }
-      .flora-actions { gap: 16px; }
+      .flora-main-nav {
+        padding: 10px 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .flora-brand {
+        margin: 0 auto;
+      }
+      .flora-brand img {
+        height: 32px !important;
+      }
+      .flora-mobile-search-btn {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        background: none;
+        border: none;
+        color: #ffffff;
+        font-size: 1.15rem;
+        cursor: pointer;
+        padding: 6px;
+        line-height: 1;
+        transition: color 0.2s;
+      }
+      .flora-mobile-search-btn:hover {
+        color: var(--fl-gold);
+      }
+      .flora-mobile-toggle { 
+        display: flex !important; 
+        align-items: center;
+        justify-content: center;
+        background: none;
+        border: 1px solid rgba(212, 175, 55, 0.4);
+        color: var(--fl-gold);
+        border-radius: 8px;
+        padding: 4px 8px;
+        font-size: 1.2rem;
+      }
+      .flora-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .flora-actions .flora-action-btn[id="floraSearchToggle"],
+      .flora-actions .flora-action-btn[title="My Wishlist"],
+      .flora-actions .flora-action-btn[title="My Account"],
+      .flora-actions .flora-action-btn[title="Login / Register"] {
+        display: none !important;
+      }
     }
   </style>
 
@@ -560,9 +611,9 @@
 
   <!-- 2. Main Navigation Bar -->
   <div class="flora-main-nav">
-    <!-- Mobile Hamburger Toggle -->
-    <button class="flora-mobile-toggle" id="floraMobileToggle" aria-label="Toggle Menu">
-      <i class="bi bi-list"></i>
+    <!-- Left: Mobile Search Button (Matching Mobile Reference Header) -->
+    <button type="button" class="flora-mobile-search-btn" onclick="triggerSearchModal(event)" title="Search Remedies">
+      <i class="bi bi-search"></i>
     </button>
 
     <!-- Brand Logo -->
@@ -647,6 +698,11 @@
         <i class="bi bi-bag"></i>
         <span class="flora-count-badge cart-count-badge">0</span>
       </a>
+
+      <!-- Mobile Hamburger Toggle (Right side on mobile) -->
+      <button class="flora-mobile-toggle" id="floraMobileToggle" aria-label="Toggle Menu" style="display:none;">
+        <i class="bi bi-list"></i>
+      </button>
     </div>
 
     <!-- Centered Search Popup Modal (Matching Reference Image 4) -->

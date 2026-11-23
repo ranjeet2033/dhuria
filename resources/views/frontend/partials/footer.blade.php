@@ -348,12 +348,37 @@ a.dhuria-c-val:hover {
 }
 
 @media (max-width: 992px) {
-    .dhuria-value-inner { grid-template-columns: repeat(2, 1fr); }
+    .dhuria-value-inner { 
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 24px 18px;
+    }
     .dhuria-footer-grid { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 600px) {
-    .dhuria-value-inner { grid-template-columns: 1fr; }
-    .dhuria-footer-grid { grid-template-columns: 1fr; }
-    .dhuria-copyright-row { flex-direction: column; text-align: center; }
+    .dhuria-value-inner { 
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 20px 12px;
+    }
+    .dhuria-val-col {
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+        gap: 8px;
+    }
+    .dhuria-val-icon {
+        font-size: 1.75rem;
+        margin-bottom: 2px;
+    }
+    .dhuria-val-title {
+        font-size: 0.85rem;
+        font-weight: 800;
+        margin-bottom: 2px;
+    }
+    .dhuria-val-sub {
+        font-size: 0.72rem;
+        line-height: 1.3;
+    }
+    .dhuria-footer-grid { grid-template-columns: 1fr; gap: 30px; }
+    .dhuria-copyright-row { flex-direction: column; text-align: center; gap: 8px; }
 }
 </style>
