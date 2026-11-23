@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('password'),
         ]);
 
-        // Seed products, categories, and banners using MahaShringar data
-        $this->call(MahaShringarSeeder::class);
+        // Seed products, categories, and banners using Dhuria Ayurveda data
+        $this->call(DhuriaAyurvedaSeeder::class);
     }
 }

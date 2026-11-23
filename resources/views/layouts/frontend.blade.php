@@ -323,16 +323,20 @@
     window.Ebigcart = {
         csrfToken: document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '{{ csrf_token() }}',
         
-        addToCart: function(productId, quantity, event) {
+        addToCart: function(productId, quantity, event, packIndex) {
             if (event) event.preventDefault();
             quantity = quantity || 1;
+            const payload = { product_id: productId, quantity: quantity };
+            if (typeof packIndex !== 'undefined' && packIndex !== null) {
+                payload.pack_index = packIndex;
+            }
             fetch('/cart/add', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': this.csrfToken
                 },
-                body: JSON.stringify({ product_id: productId, quantity: quantity })
+                body: JSON.stringify(payload)
             })
             .then(res => res.json())
             .then(data => {
@@ -349,16 +353,20 @@
             });
         },
 
-        buyNow: function(productId, quantity, event) {
+        buyNow: function(productId, quantity, event, packIndex) {
             if (event) event.preventDefault();
             quantity = quantity || 1;
+            const payload = { product_id: productId, quantity: quantity };
+            if (typeof packIndex !== 'undefined' && packIndex !== null) {
+                payload.pack_index = packIndex;
+            }
             fetch('/cart/add', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': this.csrfToken
                 },
-                body: JSON.stringify({ product_id: productId, quantity: quantity })
+                body: JSON.stringify(payload)
             })
             .then(res => res.json())
             .then(data => {

@@ -74,8 +74,10 @@ class ProductController extends Controller
         }
 
         if (empty($imagePaths)) {
-            $imagePaths[] = 'images/premium_dhoop_product.png';
+            $imagePaths[] = 'images/card_diabetes_pro_hd.jpg';
         }
+
+        $packSizes = $this->parsePackSizes($request);
 
         Product::create([
             'category_id' => $request->category_id,
@@ -84,7 +86,7 @@ class ProductController extends Controller
             'price' => $request->price,
             'sale_price' => $request->sale_price,
             'gst' => $request->gst ?? 0,
-            'sku' => $request->sku ?: 'VB-' . strtoupper(Str::random(6)),
+            'sku' => $request->sku ?: 'DHURIA-' . strtoupper(Str::random(6)),
             'hsn_code' => $request->hsn_code,
             'quantity' => $request->quantity,
             'short_description' => $request->short_description,
@@ -97,7 +99,8 @@ class ProductController extends Controller
             'length' => $request->length,
             'width' => $request->width,
             'height' => $request->height,
-            'images' => json_encode($imagePaths)
+            'images' => json_encode($imagePaths),
+            'pack_sizes' => $packSizes,
         ]);
 
         return redirect()->route('admin.products.index')->with('success', 'Product created successfully.');
@@ -172,6 +175,8 @@ class ProductController extends Controller
             $existingImages[] = 'images/premium_dhoop_product.png';
         }
 
+        $packSizes = $this->parsePackSizes($request);
+
         $product->update([
             'category_id' => $request->category_id,
             'name' => $request->name,
@@ -192,10 +197,39 @@ class ProductController extends Controller
             'length' => $request->length,
             'width' => $request->width,
             'height' => $request->height,
-            'images' => json_encode(array_values($existingImages))
+            'images' => json_encode(array_values($existingImages)),
+            'pack_sizes' => $packSizes,
         ]);
 
         return redirect()->route('admin.products.index')->with('success', 'Product updated successfully.');
+    }
+
+    private function parsePackSizes(Request $request): ?array
+    {
+        if (!$request->has('enable_pack_sizes')) {
+            return [];
+        }
+
+        $raw = $request->input('pack_sizes', []);
+        if (!is_array($raw)) {
+            return null;
+        }
+
+        $cleaned = [];
+        foreach ($raw as $pack) {
+            $name = trim($pack['name'] ?? '');
+            if ($name !== '') {
+                $cleaned[] = [
+                    'name'         => $name,
+                    'badge'        => trim($pack['badge'] ?? ''),
+                    'quantity'     => max(1, (int)($pack['quantity'] ?? 1)),
+                    'multiplier'   => !empty($pack['multiplier']) ? round((float)$pack['multiplier'], 3) : 1.0,
+                    'custom_price' => (!empty($pack['custom_price']) && (float)$pack['custom_price'] > 0) ? round((float)$pack['custom_price'], 2) : null,
+                ];
+            }
+        }
+
+        return count($cleaned) > 0 ? $cleaned : [];
     }
 
     public function destroy(Product $product)

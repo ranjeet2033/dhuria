@@ -71,7 +71,42 @@ class AddressController extends Controller
             ]);
         }
 
-        return redirect()->back()->with('success', 'Address added successfully.');
+        return redirect()->back()->with('success', 'Address added successfully.')->with('tab', 'addresses');
+    }
+
+    public function update(Request $request, UserAddress $address)
+    {
+        // Check owner
+        if ($address->user_id !== auth()->id()) {
+            abort(403);
+        }
+
+        $validated = $request->validate([
+            'phone' => 'required|string|max:20',
+            'address' => 'required|string|max:255',
+            'address2' => 'nullable|string|max:255',
+            'city' => 'required|string|max:100',
+            'state' => 'required|string|max:100',
+            'zip' => 'required|string|max:20',
+        ]);
+
+        $address->update($validated);
+
+        if ($request->has('is_default') && $request->boolean('is_default')) {
+            $address->update(['is_default' => true]);
+            auth()->user()->addresses()->where('id', '!=', $address->id)->update(['is_default' => false]);
+            
+            // Sync with User table for checkout defaults
+            auth()->user()->update([
+                'phone' => $address->phone,
+                'address' => trim($address->address . ($address->address2 ? ', ' . $address->address2 : '')),
+                'city' => $address->city,
+                'state' => $address->state,
+                'zip' => $address->zip,
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Address updated successfully.')->with('tab', 'addresses');
     }
 
     public function setDefault(UserAddress $address)
@@ -93,7 +128,7 @@ class AddressController extends Controller
             'zip' => $address->zip,
         ]);
 
-        return redirect()->back()->with('success', 'Default address updated.');
+        return redirect()->back()->with('success', 'Default address updated.')->with('tab', 'addresses');
     }
 
     public function destroy(UserAddress $address)
@@ -137,6 +172,6 @@ class AddressController extends Controller
             }
         }
 
-        return redirect()->back()->with('success', 'Address deleted successfully.');
+        return redirect()->back()->with('success', 'Address deleted successfully.')->with('tab', 'addresses');
     }
 }

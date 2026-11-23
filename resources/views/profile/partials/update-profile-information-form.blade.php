@@ -47,6 +47,19 @@
                 </div>
                 <x-input-error class="mt-1" :messages="$errors->get('email')" />
             </div>
+
+            <div class="md:col-span-2">
+                <label for="phone" class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">{{ __('Phone Number') }} (for delivery updates)</label>
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400 pointer-events-none">
+                        <i class="fa-solid fa-phone text-xs"></i>
+                    </span>
+                    <input id="phone" name="phone" type="tel" 
+                        class="w-full bg-slate-50 border border-slate-200 focus:bg-white rounded-xl pl-9 pr-4 py-2.5 text-xs font-bold text-slate-800 shadow-2xs focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition duration-200" 
+                        value="{{ old('phone', $user->phone) }}" placeholder="10-digit mobile number" />
+                </div>
+                <x-input-error class="mt-1" :messages="$errors->get('phone')" />
+            </div>
         </div>
 
         @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())

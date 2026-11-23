@@ -32,4 +32,18 @@ class Category extends Model
     {
         return $query->whereNull('parent_id');
     }
+
+    public function getImageUrlAttribute(): string
+    {
+        if (!$this->image) {
+            return asset('images/card_diabetes_pro_hd.jpg');
+        }
+        if (str_starts_with($this->image, 'http://') || str_starts_with($this->image, 'https://')) {
+            return $this->image;
+        }
+        if (file_exists(public_path($this->image))) {
+            return asset($this->image);
+        }
+        return asset('images/card_diabetes_pro_hd.jpg');
+    }
 }

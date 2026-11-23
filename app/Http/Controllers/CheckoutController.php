@@ -377,14 +377,17 @@ class CheckoutController extends Controller
             ]);
         }
 
+        // Save guest order authorization token in session so guest can view confirmation
+        session()->put('guest_order_' . $order->order_number, true);
+
         // --- RAZORPAY PAYMENT ---
         if ($validated['payment_method'] === 'razorpay') {
-            $key = config('services.razorpay.key');
-            $secret = config('services.razorpay.secret');
+            $key = config('services.razorpay.key') ?: \App\Models\Setting::get('razorpay_key');
+            $secret = config('services.razorpay.secret') ?: \App\Models\Setting::get('razorpay_secret');
 
             if (empty($key) || empty($secret)) {
-                $this->restoreCartAndCancelOrder($order, 'Razorpay credentials missing in .env file.');
-                return redirect()->route('checkout.index')->with('error', 'Razorpay payment is not configured yet (RAZORPAY_KEY & RAZORPAY_SECRET missing in .env). Please select Cash on Delivery (COD) to place your order.');
+                $this->restoreCartAndCancelOrder($order, 'Razorpay credentials missing in configuration.');
+                return redirect()->route('checkout.index')->with('error', 'Razorpay payment is not configured yet. Please configure Razorpay keys in Admin Settings or select Cash on Delivery (COD) to place your order.');
             }
 
             try {
@@ -442,7 +445,9 @@ class CheckoutController extends Controller
         }
 
         try {
-            $api = new \Razorpay\Api\Api(config('services.razorpay.key'), config('services.razorpay.secret'));
+            $key = config('services.razorpay.key') ?: \App\Models\Setting::get('razorpay_key');
+            $secret = config('services.razorpay.secret') ?: \App\Models\Setting::get('razorpay_secret');
+            $api = new \Razorpay\Api\Api($key, $secret);
             
             $attributes = array(
                 'razorpay_order_id' => $razorpayOrderId,
@@ -459,6 +464,7 @@ class CheckoutController extends Controller
                 'razorpay_signature' => $razorpaySignature,
             ]);
 
+            session()->put('guest_order_' . $order->order_number, true);
             session()->forget('cart');
             session()->forget('coupon');
 
@@ -542,11 +548,20 @@ class CheckoutController extends Controller
     // Order Success page
     public function success($order_number)
     {
-        $query = Order::where('order_number', $order_number)->with('items');
+        $order = Order::where('order_number', $order_number)->with('items')->firstOrFail();
+
         if (auth()->check()) {
-            $query->where('user_id', auth()->id());
+            // Logged in: can view their own orders or if admin
+            if ($order->user_id && $order->user_id !== auth()->id() && !auth()->user()->is_admin) {
+                abort(403, 'Unauthorized access to this order.');
+            }
+        } else {
+            // Guest order access: permitted if order is a guest order or session has key
+            if ($order->user_id !== null && !session()->has('guest_order_' . $order->order_number)) {
+                return redirect()->route('login')->with('info', 'Please sign in to view this order.');
+            }
         }
-        $order = $query->firstOrFail();
+
         return view('frontend.order_success', compact('order'));
     }
 

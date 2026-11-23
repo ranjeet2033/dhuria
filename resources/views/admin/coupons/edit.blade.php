@@ -31,15 +31,15 @@
             <!-- Code -->
             <div class="space-y-1.5">
                 <label class="text-xs font-bold text-slate-500 uppercase tracking-wider block">Coupon Code *</label>
-                <input type="text" name="code" value="{{ old('code', $coupon->code) }}" required placeholder="e.g. PEPPER10"
-                       class="w-full border border-slate-200 focus:ring-1 focus:ring-[#C49A6C] focus:border-[#C49A6C] rounded-xl text-sm px-4 py-2.5 font-mono uppercase">
+                <input type="text" name="code" value="{{ old('code', $coupon->code) }}" required placeholder="e.g. AYUR20"
+                       class="w-full border border-slate-200 focus:ring-1 focus:ring-amber-500 focus:border-amber-500 rounded-xl text-sm px-4 py-2.5 font-mono uppercase">
             </div>
 
             <!-- Discount Type -->
             <div class="space-y-1.5">
                 <label class="text-xs font-bold text-slate-500 uppercase tracking-wider block">Discount Type *</label>
-                <select name="type" required class="w-full border border-slate-200 focus:ring-1 focus:ring-[#C49A6C] focus:border-[#C49A6C] rounded-xl text-sm px-4 py-2.5 bg-white">
-                    <option value="fixed" @selected(old('type', $coupon->type) === 'fixed')>Fixed Amount ($)</option>
+                <select name="type" required class="w-full border border-slate-200 focus:ring-1 focus:ring-amber-500 focus:border-amber-500 rounded-xl text-sm px-4 py-2.5 bg-white">
+                    <option value="fixed" @selected(old('type', $coupon->type) === 'fixed')>Fixed Amount (&#8377;)</option>
                     <option value="percent" @selected(old('type', $coupon->type) === 'percent')>Percentage (%)</option>
                 </select>
             </div>
@@ -49,15 +49,15 @@
             <!-- Value -->
             <div class="space-y-1.5">
                 <label class="text-xs font-bold text-slate-500 uppercase tracking-wider block">Discount Value *</label>
-                <input type="number" name="value" step="0.01" min="0" value="{{ old('value', $coupon->value) }}" required placeholder="e.g. 50.00 or 10"
-                       class="w-full border border-slate-200 focus:ring-1 focus:ring-[#C49A6C] focus:border-[#C49A6C] rounded-xl text-sm px-4 py-2.5">
+                <input type="number" name="value" step="0.01" min="0" value="{{ old('value', $coupon->value) }}" required placeholder="e.g. 100 or 10"
+                       class="w-full border border-slate-200 focus:ring-1 focus:ring-amber-500 focus:border-amber-500 rounded-xl text-sm px-4 py-2.5">
             </div>
 
             <!-- Expiry Date -->
             <div class="space-y-1.5">
                 <label class="text-xs font-bold text-slate-500 uppercase tracking-wider block">Expiry Date (Optional)</label>
                 <input type="date" name="expiry_date" value="{{ old('expiry_date', $coupon->expiry_date) }}"
-                       class="w-full border border-slate-200 focus:ring-1 focus:ring-[#C49A6C] focus:border-[#C49A6C] rounded-xl text-sm px-4 py-2.5 bg-white">
+                       class="w-full border border-slate-200 focus:ring-1 focus:ring-amber-500 focus:border-amber-500 rounded-xl text-sm px-4 py-2.5 bg-white">
             </div>
         </div>
 
@@ -66,7 +66,7 @@
             <div class="space-y-1.5">
                 <label class="text-xs font-bold text-slate-500 uppercase tracking-wider block">Usage Limit (Optional)</label>
                 <input type="number" name="usage_limit" min="1" value="{{ old('usage_limit', $coupon->usage_limit) }}" placeholder="Leave blank for unlimited"
-                       class="w-full border border-slate-200 focus:ring-1 focus:ring-[#C49A6C] focus:border-[#C49A6C] rounded-xl text-sm px-4 py-2.5">
+                       class="w-full border border-slate-200 focus:ring-1 focus:ring-amber-500 focus:border-amber-500 rounded-xl text-sm px-4 py-2.5">
             </div>
 
             <!-- Status -->
@@ -74,7 +74,7 @@
                 <label class="text-xs font-bold text-slate-500 uppercase tracking-wider block">Status</label>
                 <label class="flex items-center space-x-3 cursor-pointer border border-slate-200 rounded-xl px-4 py-2.5 bg-white h-[45px]">
                     <input type="checkbox" name="is_active" value="1" @checked(old('is_active', $coupon->is_active))
-                           class="rounded border-slate-350 text-[#C49A6C] focus:ring-[#C49A6C] h-4.5 w-4.5">
+                           class="rounded border-slate-350 text-amber-500 focus:ring-amber-500 h-4.5 w-4.5">
                     <span class="text-sm font-semibold text-slate-700">Active</span>
                 </label>
             </div>
@@ -85,7 +85,7 @@
             <a href="{{ route('admin.coupons.index') }}" class="px-5 py-2.5 rounded-xl border border-slate-250 text-slate-500 font-semibold text-sm hover:bg-slate-50 transition">
                 Cancel
             </a>
-            <button type="submit" class="bg-[#C49A6C] hover:bg-[#b0875b] text-white font-bold text-sm px-6 py-2.5 rounded-xl shadow-md shadow-[#C49A6C]/20 transition cursor-pointer">
+            <button type="submit" class="bg-[#d4af37] hover:bg-[#c59b27] text-slate-950 font-extrabold text-sm px-6 py-2.5 rounded-xl shadow-md shadow-[#d4af37]/25 transition cursor-pointer">
                 Update Coupon
             </button>
         </div>

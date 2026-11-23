@@ -47,15 +47,15 @@ Route::post('/cart/remove-coupon', [CartController::class, 'removeCoupon'])->nam
 Route::get('/cart/count', [CartController::class, 'count'])->name('cart.count');
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 
-// Checkout Routes (require login)
+// Checkout Routes (Supports both Guests & Registered Customers)
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
+Route::post('/checkout/razorpay-callback', [CheckoutController::class, 'handleRazorpayCallback'])->name('checkout.razorpay.callback');
+Route::get('/checkout/cancel-payment', [CheckoutController::class, 'cancelRazorpayPayment'])->name('checkout.razorpay.cancel');
+Route::get('/order-success/{order_number}', [CheckoutController::class, 'success'])->name('checkout.success');
+
+// Authenticated Customer Dashboard & Orders
 Route::middleware('auth')->group(function () {
-    Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
-    Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
-    Route::post('/checkout/razorpay-callback', [CheckoutController::class, 'handleRazorpayCallback'])->name('checkout.razorpay.callback');
-    Route::get('/checkout/cancel-payment', [CheckoutController::class, 'cancelRazorpayPayment'])->name('checkout.razorpay.cancel');
-    Route::get('/order-success/{order_number}', [CheckoutController::class, 'success'])->name('checkout.success');
-    
-    // Customer Orders & Returns
     Route::get('/orders', [CustomerOrderController::class, 'index'])->name('orders.index');
     Route::post('/orders/{order}/return', [CustomerOrderController::class, 'requestReturn'])->name('orders.return');
     Route::post('/orders/{order}/cancel', [CustomerOrderController::class, 'cancelOrder'])->name('orders.cancel');
@@ -100,6 +100,7 @@ Route::middleware('auth')->group(function () {
     // Addresses
     Route::get('/addresses', [AddressController::class, 'index'])->name('addresses.index');
     Route::post('/addresses', [AddressController::class, 'store'])->name('addresses.store');
+    Route::put('/addresses/{address}', [AddressController::class, 'update'])->name('addresses.update');
     Route::patch('/addresses/{address}/default', [AddressController::class, 'setDefault'])->name('addresses.setDefault');
     Route::delete('/addresses/{address}', [AddressController::class, 'destroy'])->name('addresses.destroy');
 
@@ -126,6 +127,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('orders', [AdminOrderController::class, 'index'])->name('orders.index');
     Route::get('orders/{order}', [AdminOrderController::class, 'show'])->name('orders.show');
     Route::patch('orders/{order}/status', [AdminOrderController::class, 'updateStatus'])->name('orders.updateStatus');
+    Route::post('orders/{order}/shiprocket/create', [AdminOrderController::class, 'createShiprocketShipment'])->name('orders.shiprocket.create');
+    Route::get('orders/{order}/shiprocket/track', [AdminOrderController::class, 'trackShiprocketShipment'])->name('orders.shiprocket.track');
 
     // Users / Customers
     Route::get('users', [AdminUserController::class, 'index'])->name('users.index');

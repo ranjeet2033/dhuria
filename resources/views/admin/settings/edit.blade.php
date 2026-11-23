@@ -1,168 +1,216 @@
 @extends('layouts.admin')
 
-@section('header_title', 'Global Settings')
+@section('header_title', 'Store & Gateway Settings')
 
 @section('content')
-<div class="max-w-2xl mx-auto bg-white rounded-2xl border border-slate-100 p-6 sm:p-8 shadow-xs">
+<div class="max-w-4xl mx-auto space-y-6">
     
-    <div class="mb-6 flex items-center justify-between">
-        <h3 class="font-serif font-bold text-slate-800 text-lg">System Settings</h3>
+    <div class="flex items-center justify-between pb-2">
+        <div>
+            <h3 class="font-serif font-bold text-slate-900 text-xl tracking-tight">Configuration & Integrations</h3>
+            <p class="text-xs text-slate-500 mt-1">Manage platform credentials, Razorpay gateway, Shiprocket logistics and store contact details.</p>
+        </div>
     </div>
 
     <form method="POST" action="{{ route('admin.settings.update') }}" class="space-y-6">
         @csrf
 
-        <!-- Site Identity -->
-        <div class="bg-slate-50 p-5 rounded-2xl border border-slate-100 space-y-4">
-            <h4 class="font-serif font-bold text-slate-800 text-sm pb-1.5 border-b border-slate-200">Shop Identity</h4>
-
-            <!-- Site Name -->
-            <div class="space-y-1.5">
-                <label class="text-xs font-bold text-slate-500 uppercase tracking-wider block">Shop Name</label>
-                <input type="text" name="site_name" value="{{ $settings['site_name'] ?? 'Ebigcart' }}" placeholder="Ebigcart"
-                       class="w-full border border-slate-200 focus:ring-1 focus:ring-[#C49A6C] focus:border-[#C49A6C] rounded-xl text-sm px-4 py-2.5 bg-white">
+        <!-- Shop Identity -->
+        <div class="bg-white rounded-2xl border border-slate-200/80 p-6 shadow-xs space-y-5">
+            <div class="flex items-center space-x-3 pb-3 border-b border-slate-100">
+                <div class="h-8 w-8 rounded-lg bg-amber-500/10 text-amber-600 flex items-center justify-center font-bold text-sm">
+                    <i class="fa-solid fa-store"></i>
+                </div>
+                <div>
+                    <h4 class="font-bold text-slate-900 text-sm">Brand & Contact Identity</h4>
+                    <span class="text-[11px] text-slate-400">Used across order confirmations, invoices, and customer communications</span>
+                </div>
             </div>
 
-            <!-- Site Email -->
-            <div class="space-y-1.5">
-                <label class="text-xs font-bold text-slate-500 uppercase tracking-wider block">Support Email</label>
-                <input type="email" name="site_email" value="{{ $settings['site_email'] ?? 'Papperlemon1@gmail.com' }}" placeholder="Papperlemon1@gmail.com"
-                       class="w-full border border-slate-200 focus:ring-1 focus:ring-[#C49A6C] focus:border-[#C49A6C] rounded-xl text-sm px-4 py-2.5 bg-white">
-            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Site Name -->
+                <div class="space-y-1.5">
+                    <label class="text-xs font-bold text-slate-600 uppercase tracking-wider block">Store Brand Name</label>
+                    <input type="text" name="site_name" value="{{ $settings['site_name'] ?? 'Dhuria' }}" placeholder="Dhuria"
+                           class="w-full border border-slate-200 focus:ring-1 focus:ring-amber-500 focus:border-amber-500 rounded-xl text-sm px-4 py-2.5 bg-slate-50/50">
+                </div>
 
-            <!-- Site Phone -->
-            <div class="space-y-1.5">
-                <label class="text-xs font-bold text-slate-500 uppercase tracking-wider block">Support Phone</label>
-                <input type="text" name="site_phone" value="{{ $settings['site_phone'] ?? '+1-800-555-0199' }}" placeholder="+1-800-555-0199"
-                       class="w-full border border-slate-200 focus:ring-1 focus:ring-[#C49A6C] focus:border-[#C49A6C] rounded-xl text-sm px-4 py-2.5 bg-white">
+                <!-- Site Email -->
+                <div class="space-y-1.5">
+                    <label class="text-xs font-bold text-slate-600 uppercase tracking-wider block">Customer Support Email</label>
+                    <input type="email" name="site_email" value="{{ $settings['site_email'] ?? 'support@dhuria.in' }}" placeholder="support@dhuria.in"
+                           class="w-full border border-slate-200 focus:ring-1 focus:ring-amber-500 focus:border-amber-500 rounded-xl text-sm px-4 py-2.5 bg-slate-50/50">
+                </div>
+
+                <!-- Site Phone -->
+                <div class="space-y-1.5">
+                    <label class="text-xs font-bold text-slate-600 uppercase tracking-wider block">Helpline Phone Number</label>
+                    <input type="text" name="site_phone" value="{{ $settings['site_phone'] ?? '+91 9220251059' }}" placeholder="+91 9220251059"
+                           class="w-full border border-slate-200 focus:ring-1 focus:ring-amber-500 focus:border-amber-500 rounded-xl text-sm px-4 py-2.5 bg-slate-50/50">
+                </div>
+
+                <!-- WhatsApp Number -->
+                <div class="space-y-1.5">
+                    <label class="text-xs font-bold text-slate-600 uppercase tracking-wider block">WhatsApp Support Number</label>
+                    <input type="text" name="whatsapp_number" value="{{ $settings['whatsapp_number'] ?? '919220251059' }}" placeholder="919220251059"
+                           class="w-full border border-slate-200 focus:ring-1 focus:ring-amber-500 focus:border-amber-500 rounded-xl text-sm px-4 py-2.5 bg-slate-50/50">
+                </div>
             </div>
 
             <!-- Site Address -->
             <div class="space-y-1.5">
-                <label class="text-xs font-bold text-slate-500 uppercase tracking-wider block">Physical Address</label>
-                <textarea name="site_address" rows="3" placeholder="Shop Address..."
-                          class="w-full border border-slate-200 focus:ring-1 focus:ring-[#C49A6C] focus:border-[#C49A6C] rounded-xl text-sm px-4 py-2.5 bg-white">{{ $settings['site_address'] ?? '12800 Northborough Dr, Houston, TX 77067' }}</textarea>
+                <label class="text-xs font-bold text-slate-600 uppercase tracking-wider block">Registered Address / Head Office</label>
+                <textarea name="site_address" rows="2" placeholder="Dhuria Healthcare, New Delhi, India"
+                          class="w-full border border-slate-200 focus:ring-1 focus:ring-amber-500 focus:border-amber-500 rounded-xl text-sm px-4 py-2.5 bg-slate-50/50">{{ $settings['site_address'] ?? 'Dhuria Healthcare, Delhi, India' }}</textarea>
             </div>
         </div>
 
-        <!-- Stripe Payment Settings -->
-        <div class="bg-slate-50 p-5 rounded-2xl border border-slate-100 space-y-4">
-            <h4 class="font-serif font-bold text-slate-800 text-sm pb-1.5 border-b border-slate-200">Stripe Payment</h4>
-
-            <div class="space-y-1.5">
-                <label class="text-xs font-bold text-slate-500 uppercase tracking-wider block">Stripe Publishable Key</label>
-                <input type="text" name="stripe_key" value="{{ $settings['stripe_key'] ?? config('services.stripe.key') }}" placeholder="pk_live_..."
-                       class="w-full border border-slate-200 focus:ring-1 focus:ring-[#C49A6C] focus:border-[#C49A6C] rounded-xl text-sm px-4 py-2.5 bg-white">
+        <!-- Razorpay Payment Gateway Settings -->
+        <div class="bg-white rounded-2xl border border-slate-200/80 p-6 shadow-xs space-y-5">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                <div class="flex items-center space-x-3">
+                    <div class="h-8 w-8 rounded-lg bg-blue-500/10 text-blue-600 flex items-center justify-center font-bold text-sm">
+                        <i class="fa-solid fa-credit-card"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-900 text-sm">Razorpay Payment Gateway</h4>
+                        <span class="text-[11px] text-slate-400">Accept UPI, Credit/Debit Cards, NetBanking, and Wallets on Checkout</span>
+                    </div>
+                </div>
+                <span class="bg-blue-50 text-blue-700 text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-full border border-blue-200">
+                    Live / Test
+                </span>
             </div>
 
-            <div class="space-y-1.5" x-data="{ showSecret: false }">
-                <label class="text-xs font-bold text-slate-500 uppercase tracking-wider block">Stripe Secret Key</label>
-                <div class="relative">
-                    <input :type="showSecret ? 'text' : 'password'" name="stripe_secret" value="{{ $settings['stripe_secret'] ?? config('services.stripe.secret') }}" placeholder="sk_live_..."
-                           class="w-full border border-slate-200 focus:ring-1 focus:ring-[#C49A6C] focus:border-[#C49A6C] rounded-xl text-sm pl-4 pr-10 py-2.5 bg-white">
-                    <button type="button" @click="showSecret = !showSecret" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-[#C49A6C] focus:outline-none cursor-pointer">
-                        <i class="fa-solid text-sm" :class="showSecret ? 'fa-eye-slash' : 'fa-eye'"></i>
-                    </button>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Razorpay Key ID -->
+                <div class="space-y-1.5">
+                    <label class="text-xs font-bold text-slate-600 uppercase tracking-wider block">Razorpay Key ID</label>
+                    <input type="text" name="razorpay_key" value="{{ $settings['razorpay_key'] ?? config('services.razorpay.key') }}" placeholder="rzp_test_... or rzp_live_..."
+                           class="w-full border border-slate-200 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 rounded-xl text-sm px-4 py-2.5 bg-slate-50/50 font-mono">
+                    <span class="text-[10px] text-slate-400">Find in your Razorpay Dashboard &rarr; Settings &rarr; API Keys</span>
                 </div>
+
+                <!-- Razorpay Key Secret -->
+                <div class="space-y-1.5" x-data="{ showSecret: false }">
+                    <label class="text-xs font-bold text-slate-600 uppercase tracking-wider block">Razorpay Key Secret</label>
+                    <div class="relative">
+                        <input :type="showSecret ? 'text' : 'password'" name="razorpay_secret" value="{{ $settings['razorpay_secret'] ?? config('services.razorpay.secret') }}" placeholder="••••••••••••••••••••••••"
+                               class="w-full border border-slate-200 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 rounded-xl text-sm pl-4 pr-10 py-2.5 bg-slate-50/50 font-mono">
+                        <button type="button" @click="showSecret = !showSecret" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-blue-600 focus:outline-none cursor-pointer">
+                            <i class="fa-solid text-sm" :class="showSecret ? 'fa-eye-slash' : 'fa-eye'"></i>
+                        </button>
+                    </div>
+                    <span class="text-[10px] text-slate-400">Keep secret confidential. Used to verify payment signatures securely.</span>
+                </div>
+            </div>
+
+            <!-- Razorpay Webhook Secret -->
+            <div class="space-y-1.5">
+                <label class="text-xs font-bold text-slate-600 uppercase tracking-wider block">Razorpay Webhook Secret (Optional)</label>
+                <input type="text" name="razorpay_webhook_secret" value="{{ $settings['razorpay_webhook_secret'] ?? config('services.razorpay.webhook_secret') }}" placeholder="Enter secret configured in Razorpay Webhooks"
+                       class="w-full border border-slate-200 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 rounded-xl text-sm px-4 py-2.5 bg-slate-50/50 font-mono">
+                <span class="text-[10px] text-slate-400">Webhook URL: <code class="bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded">{{ url('/checkout/razorpay-webhook') }}</code></span>
+            </div>
+        </div>
+
+        <!-- Shiprocket Logistics Integration Settings -->
+        <div class="bg-white rounded-2xl border border-slate-200/80 p-6 shadow-xs space-y-5">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                <div class="flex items-center space-x-3">
+                    <div class="h-8 w-8 rounded-lg bg-purple-500/10 text-purple-600 flex items-center justify-center font-bold text-sm">
+                        <i class="fa-solid fa-truck-fast"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-900 text-sm">Shiprocket Shipping & Logistics</h4>
+                        <span class="text-[11px] text-slate-400">Automated courier dispatch, AWB generation, and real-time live package tracking</span>
+                    </div>
+                </div>
+                <span class="bg-purple-50 text-purple-700 text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-full border border-purple-200">
+                    India Logistics
+                </span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Shiprocket Login Email -->
+                <div class="space-y-1.5">
+                    <label class="text-xs font-bold text-slate-600 uppercase tracking-wider block">Shiprocket Account Email</label>
+                    <input type="email" name="shiprocket_email" value="{{ $settings['shiprocket_email'] ?? '' }}" placeholder="your-shiprocket-account@domain.com"
+                           class="w-full border border-slate-200 focus:ring-1 focus:ring-purple-500 focus:border-purple-500 rounded-xl text-sm px-4 py-2.5 bg-slate-50/50">
+                    <span class="text-[10px] text-slate-400">Email used to log in at shiprocket.in</span>
+                </div>
+
+                <!-- Shiprocket Password -->
+                <div class="space-y-1.5" x-data="{ showSecret: false }">
+                    <label class="text-xs font-bold text-slate-600 uppercase tracking-wider block">Shiprocket Account Password</label>
+                    <div class="relative">
+                        <input :type="showSecret ? 'text' : 'password'" name="shiprocket_password" value="{{ $settings['shiprocket_password'] ?? '' }}" placeholder="••••••••••••••••"
+                               class="w-full border border-slate-200 focus:ring-1 focus:ring-purple-500 focus:border-purple-500 rounded-xl text-sm pl-4 pr-10 py-2.5 bg-slate-50/50">
+                        <button type="button" @click="showSecret = !showSecret" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-purple-600 focus:outline-none cursor-pointer">
+                            <i class="fa-solid text-sm" :class="showSecret ? 'fa-eye-slash' : 'fa-eye'"></i>
+                        </button>
+                    </div>
+                    <span class="text-[10px] text-slate-400">Used for secure external API JWT token generation</span>
+                </div>
+            </div>
+
+            <!-- Shiprocket Pickup Location -->
+            <div class="space-y-1.5">
+                <label class="text-xs font-bold text-slate-600 uppercase tracking-wider block">Registered Pickup Location Nickname</label>
+                <input type="text" name="shiprocket_pickup_location" value="{{ $settings['shiprocket_pickup_location'] ?? 'Primary' }}" placeholder="Primary"
+                       class="w-full border border-slate-200 focus:ring-1 focus:ring-purple-500 focus:border-purple-500 rounded-xl text-sm px-4 py-2.5 bg-slate-50/50">
+                <span class="text-[10px] text-slate-400">Must exactly match the Pickup Location Name created in your Shiprocket Dashboard &rarr; Settings &rarr; Pickup Locations (default: "Primary")</span>
             </div>
         </div>
 
         <!-- Social Media Settings -->
-        <div class="bg-slate-50 p-5 rounded-2xl border border-slate-100 space-y-4">
-            <h4 class="font-serif font-bold text-slate-800 text-sm pb-1.5 border-b border-slate-200">Social Media Links</h4>
-
-            <!-- Facebook -->
-            <div class="space-y-1.5">
-                <label class="text-xs font-bold text-slate-500 uppercase tracking-wider block">Facebook URL</label>
-                <input type="url" name="social_facebook" value="{{ $settings['social_facebook'] ?? '' }}" placeholder="https://facebook.com/yourpage"
-                       class="w-full border border-slate-200 focus:ring-1 focus:ring-[#C49A6C] focus:border-[#C49A6C] rounded-xl text-sm px-4 py-2.5 bg-white">
+        <div class="bg-white rounded-2xl border border-slate-200/80 p-6 shadow-xs space-y-5">
+            <div class="flex items-center space-x-3 pb-3 border-b border-slate-100">
+                <div class="h-8 w-8 rounded-lg bg-rose-500/10 text-rose-600 flex items-center justify-center font-bold text-sm">
+                    <i class="fa-solid fa-share-nodes"></i>
+                </div>
+                <div>
+                    <h4 class="font-bold text-slate-900 text-sm">Social Media Channels</h4>
+                    <span class="text-[11px] text-slate-400">Links rendered in footer and customer contact touchpoints</span>
+                </div>
             </div>
 
-            <!-- Twitter / X -->
-            <div class="space-y-1.5">
-                <label class="text-xs font-bold text-slate-500 uppercase tracking-wider block">Twitter / X URL</label>
-                <input type="url" name="social_twitter" value="{{ $settings['social_twitter'] ?? '' }}" placeholder="https://x.com/yourhandle"
-                       class="w-full border border-slate-200 focus:ring-1 focus:ring-[#C49A6C] focus:border-[#C49A6C] rounded-xl text-sm px-4 py-2.5 bg-white">
-            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Instagram -->
+                <div class="space-y-1.5">
+                    <label class="text-xs font-bold text-slate-600 uppercase tracking-wider block"><i class="fa-brands fa-instagram text-rose-500 mr-1"></i> Instagram</label>
+                    <input type="url" name="social_instagram" value="{{ $settings['social_instagram'] ?? '' }}" placeholder="https://instagram.com/dhuria"
+                           class="w-full border border-slate-200 focus:ring-1 focus:ring-amber-500 focus:border-amber-500 rounded-xl text-sm px-4 py-2.5 bg-slate-50/50">
+                </div>
 
-            <!-- Instagram -->
-            <div class="space-y-1.5">
-                <label class="text-xs font-bold text-slate-500 uppercase tracking-wider block">Instagram URL</label>
-                <input type="url" name="social_instagram" value="{{ $settings['social_instagram'] ?? '' }}" placeholder="https://instagram.com/yourhandle"
-                       class="w-full border border-slate-200 focus:ring-1 focus:ring-[#C49A6C] focus:border-[#C49A6C] rounded-xl text-sm px-4 py-2.5 bg-white">
-            </div>
+                <!-- Facebook -->
+                <div class="space-y-1.5">
+                    <label class="text-xs font-bold text-slate-600 uppercase tracking-wider block"><i class="fa-brands fa-facebook text-blue-600 mr-1"></i> Facebook</label>
+                    <input type="url" name="social_facebook" value="{{ $settings['social_facebook'] ?? '' }}" placeholder="https://facebook.com/dhuria"
+                           class="w-full border border-slate-200 focus:ring-1 focus:ring-amber-500 focus:border-amber-500 rounded-xl text-sm px-4 py-2.5 bg-slate-50/50">
+                </div>
 
-            <!-- LinkedIn -->
-            <div class="space-y-1.5">
-                <label class="text-xs font-bold text-slate-500 uppercase tracking-wider block">LinkedIn URL</label>
-                <input type="url" name="social_linkedin" value="{{ $settings['social_linkedin'] ?? '' }}" placeholder="https://linkedin.com/company/yourcompany"
-                       class="w-full border border-slate-200 focus:ring-1 focus:ring-[#C49A6C] focus:border-[#C49A6C] rounded-xl text-sm px-4 py-2.5 bg-white">
-            </div>
+                <!-- YouTube -->
+                <div class="space-y-1.5">
+                    <label class="text-xs font-bold text-slate-600 uppercase tracking-wider block"><i class="fa-brands fa-youtube text-red-600 mr-1"></i> YouTube</label>
+                    <input type="url" name="social_youtube" value="{{ $settings['social_youtube'] ?? '' }}" placeholder="https://youtube.com/@dhuria"
+                           class="w-full border border-slate-200 focus:ring-1 focus:ring-amber-500 focus:border-amber-500 rounded-xl text-sm px-4 py-2.5 bg-slate-50/50">
+                </div>
 
-            <!-- YouTube -->
-            <div class="space-y-1.5">
-                <label class="text-xs font-bold text-slate-500 uppercase tracking-wider block">YouTube URL</label>
-                <input type="url" name="social_youtube" value="{{ $settings['social_youtube'] ?? '' }}" placeholder="https://youtube.com/c/yourchannel"
-                       class="w-full border border-slate-200 focus:ring-1 focus:ring-[#C49A6C] focus:border-[#C49A6C] rounded-xl text-sm px-4 py-2.5 bg-white">
+                <!-- Twitter / X -->
+                <div class="space-y-1.5">
+                    <label class="text-xs font-bold text-slate-600 uppercase tracking-wider block"><i class="fa-brands fa-x-twitter text-slate-900 mr-1"></i> Twitter / X</label>
+                    <input type="url" name="social_twitter" value="{{ $settings['social_twitter'] ?? '' }}" placeholder="https://x.com/dhuria"
+                           class="w-full border border-slate-200 focus:ring-1 focus:ring-amber-500 focus:border-amber-500 rounded-xl text-sm px-4 py-2.5 bg-slate-50/50">
+                </div>
             </div>
         </div>
 
-        <!-- UPS Shipping Settings -->
-        <div class="bg-slate-50 p-5 rounded-2xl border border-slate-100 space-y-4">
-            <h4 class="font-serif font-bold text-slate-800 text-sm pb-1.5 border-b border-slate-200">UPS Shipping</h4>
-
-            <div class="space-y-1.5">
-                <label class="text-xs font-bold text-slate-500 uppercase tracking-wider block">UPS Client ID</label>
-                <input type="text" name="ups_client_id" value="{{ $settings['ups_client_id'] ?? '' }}" placeholder="UPS OAuth Client ID"
-                       class="w-full border border-slate-200 focus:ring-1 focus:ring-[#C49A6C] focus:border-[#C49A6C] rounded-xl text-sm px-4 py-2.5 bg-white">
-            </div>
-
-            <div class="space-y-1.5" x-data="{ showSecret: false }">
-                <label class="text-xs font-bold text-slate-500 uppercase tracking-wider block">UPS Client Secret</label>
-                <div class="relative">
-                    <input :type="showSecret ? 'text' : 'password'" name="ups_client_secret" value="{{ $settings['ups_client_secret'] ?? '' }}" placeholder="••••••••••••••••"
-                           class="w-full border border-slate-200 focus:ring-1 focus:ring-[#C49A6C] focus:border-[#C49A6C] rounded-xl text-sm pl-4 pr-10 py-2.5 bg-white">
-                    <button type="button" @click="showSecret = !showSecret" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-[#C49A6C] focus:outline-none cursor-pointer">
-                        <i class="fa-solid text-sm" :class="showSecret ? 'fa-eye-slash' : 'fa-eye'"></i>
-                    </button>
-                </div>
-            </div>
-
-            <div class="space-y-1.5">
-                <label class="text-xs font-bold text-slate-500 uppercase tracking-wider block">UPS Account Number</label>
-                <input type="text" name="ups_account_number" value="{{ $settings['ups_account_number'] ?? '' }}" placeholder="6-digit UPS shipper number"
-                       class="w-full border border-slate-200 focus:ring-1 focus:ring-[#C49A6C] focus:border-[#C49A6C] rounded-xl text-sm px-4 py-2.5 bg-white">
-            </div>
-
-            <div class="grid grid-cols-2 gap-3">
-                <div class="space-y-1.5">
-                    <label class="text-xs font-bold text-slate-500 uppercase tracking-wider block">Ship-From Street</label>
-                    <input type="text" name="ups_ship_from_address" value="{{ $settings['ups_ship_from_address'] ?? '12800 Northborough Dr' }}" placeholder="123 Main St"
-                           class="w-full border border-slate-200 focus:ring-1 focus:ring-[#C49A6C] focus:border-[#C49A6C] rounded-xl text-sm px-4 py-2.5 bg-white">
-                </div>
-                <div class="space-y-1.5">
-                    <label class="text-xs font-bold text-slate-500 uppercase tracking-wider block">Ship-From City</label>
-                    <input type="text" name="ups_ship_from_city" value="{{ $settings['ups_ship_from_city'] ?? 'Houston' }}" placeholder="Houston"
-                           class="w-full border border-slate-200 focus:ring-1 focus:ring-[#C49A6C] focus:border-[#C49A6C] rounded-xl text-sm px-4 py-2.5 bg-white">
-                </div>
-                <div class="space-y-1.5">
-                    <label class="text-xs font-bold text-slate-500 uppercase tracking-wider block">Ship-From State</label>
-                    <input type="text" name="ups_ship_from_state" value="{{ $settings['ups_ship_from_state'] ?? 'TX' }}" placeholder="TX" maxlength="2"
-                           class="w-full border border-slate-200 focus:ring-1 focus:ring-[#C49A6C] focus:border-[#C49A6C] rounded-xl text-sm px-4 py-2.5 bg-white">
-                </div>
-                <div class="space-y-1.5">
-                    <label class="text-xs font-bold text-slate-500 uppercase tracking-wider block">Ship-From ZIP</label>
-                    <input type="text" name="ups_ship_from_zip" value="{{ $settings['ups_ship_from_zip'] ?? '77067' }}" placeholder="77067"
-                           class="w-full border border-slate-200 focus:ring-1 focus:ring-[#C49A6C] focus:border-[#C49A6C] rounded-xl text-sm px-4 py-2.5 bg-white">
-                </div>
-            </div>
-            <span class="text-[10px] text-slate-400 block">This is your warehouse/pickup address that UPS will pick shipments from.</span>
-        </div>
-
-        <!-- Submit Buttons -->
-        <div class="flex justify-end pt-4 border-t border-slate-100">
-            <button type="submit" class="w-full sm:w-auto bg-[#C49A6C] hover:bg-[#b0875b] text-white font-bold text-sm px-8 py-3.5 rounded-xl shadow-md shadow-[#C49A6C]/20 transition cursor-pointer">
-                Save Settings
+        <!-- Submit Button -->
+        <div class="flex justify-end pt-2">
+            <button type="submit" class="w-full sm:w-auto bg-[#d4af37] hover:bg-[#c59b27] text-slate-950 font-extrabold text-sm px-8 py-3.5 rounded-xl shadow-lg shadow-[#d4af37]/25 transition cursor-pointer flex items-center justify-center space-x-2">
+                <i class="fa-solid fa-floppy-disk"></i>
+                <span>Save All Settings</span>
             </button>
         </div>
     </form>

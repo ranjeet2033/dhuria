@@ -10,9 +10,9 @@
         <!-- Search & Filter Form -->
         <form method="GET" action="{{ route('admin.orders.index') }}" class="flex flex-wrap items-center gap-3 w-full sm:w-auto">
             <input type="text" name="search" value="{{ request('search') }}" placeholder="Search by Order No, name, email..." 
-                   class="w-full sm:w-72 border border-slate-200 focus:ring-1 focus:ring-[#C49A6C] focus:border-[#C49A6C] rounded-xl text-sm px-4 py-2.5 bg-slate-50">
+                   class="w-full sm:w-72 border border-slate-200 focus:ring-1 focus:ring-amber-500 focus:border-amber-500 rounded-xl text-sm px-4 py-2.5 bg-slate-50">
             
-            <select name="status" class="w-full sm:w-44 border border-slate-200 focus:ring-1 focus:ring-[#C49A6C] focus:border-[#C49A6C] rounded-xl text-sm px-4 py-2.5 bg-slate-50">
+            <select name="status" class="w-full sm:w-44 border border-slate-200 focus:ring-1 focus:ring-amber-500 focus:border-amber-500 rounded-xl text-sm px-4 py-2.5 bg-slate-50">
                 <option value="">All Statuses</option>
                 <option value="pending" @selected(request('status') === 'pending')>Pending</option>
                 <option value="processing" @selected(request('status') === 'processing')>Processing</option>
@@ -91,7 +91,7 @@
                             <td class="px-6 py-4 font-bold text-slate-900">&#8377;{{ number_format($order->total_amount, 2) }}</td>
                             <td class="px-6 py-4 text-xs text-slate-400">{{ $order->created_at->format('M d, Y g:i A') }}</td>
                             <td class="px-6 py-4 text-right">
-                                <a href="{{ route('admin.orders.show', $order->id) }}" class="text-xs font-bold bg-slate-100 hover:bg-[#C49A6C] hover:text-white px-3.5 py-2.5 rounded-lg transition duration-200">
+                                <a href="{{ route('admin.orders.show', $order->id) }}" class="text-xs font-bold bg-slate-100 hover:bg-[#d4af37] hover:text-slate-950 px-3.5 py-2 rounded-lg transition duration-150">
                                     Manage
                                 </a>
                             </td>

@@ -244,16 +244,23 @@
                                                         </div>
                                                     @endif
 
-                                                    @if($order->delivery_type === 'online_delivery' && $order->ups_tracking_number)
+                                                    @if($order->shiprocket_awb_code)
                                                         <div class="pt-2 border-t border-slate-200/60 space-y-1">
                                                             <div class="flex justify-between items-center">
-                                                                <span class="text-slate-500 text-[10px]">UPS Tracking</span>
+                                                                <span class="text-slate-500 text-[10px]">Shiprocket AWB</span>
+                                                                <span class="font-mono font-bold text-slate-800">{{ $order->shiprocket_awb_code }}</span>
+                                                            </div>
+                                                            <a href="https://shiprocket.co/tracking/{{ $order->shiprocket_awb_code }}" target="_blank"
+                                                               class="w-full text-center block text-white font-extrabold text-[9px] py-1.5 rounded-lg transition bg-primary hover:bg-primary-dark" style="text-decoration: none !important;">
+                                                                <i class="fa-solid fa-magnifying-glass text-[8px] mr-1"></i> Track on Shiprocket
+                                                            </a>
+                                                        </div>
+                                                    @elseif($order->ups_tracking_number)
+                                                        <div class="pt-2 border-t border-slate-200/60 space-y-1">
+                                                            <div class="flex justify-between items-center">
+                                                                <span class="text-slate-500 text-[10px]">Tracking No.</span>
                                                                 <span class="font-mono font-bold text-slate-800">{{ $order->ups_tracking_number }}</span>
                                                             </div>
-                                                            <a href="https://www.ups.com/track?tracknum={{ $order->ups_tracking_number }}" target="_blank"
-                                                               class="w-full text-center block text-white font-extrabold text-[9px] py-1.5 rounded-lg transition bg-primary hover:bg-primary-dark" style="text-decoration: none !important;">
-                                                                <i class="fa-solid fa-magnifying-glass text-[8px] mr-1"></i> Track on UPS.com
-                                                            </a>
                                                         </div>
                                                     @endif
                                                 </div>
@@ -261,9 +268,9 @@
                                         </div>
 
                                         <!-- Cancel Order Section -->
-                                        @if($order->status === 'pending')
+                                        @if(in_array($order->status, ['pending', 'processing']))
                                             <div class="mt-4 pt-3.5 border-t border-slate-200/60">
-                                                <div x-data="{ showCancelForm: false }">
+                                                <div x-data="{ showCancelForm: false, reason: 'Ordered by mistake' }">
                                                     <button type="button" @click.stop="showCancelForm = !showCancelForm" class="inline-flex items-center gap-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer">
                                                         <i class="fa-solid fa-ban"></i>
                                                         <span>Cancel Order</span>
@@ -272,9 +279,26 @@
                                                     <form x-show="showCancelForm" @click.stop="" action="{{ route('orders.cancel', $order->id) }}" method="POST" class="mt-3 bg-white border border-rose-200 rounded-xl p-4 space-y-3 shadow-2xs">
                                                         @csrf
                                                         <div>
-                                                            <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Refund Account Details (Optional)</label>
-                                                            <textarea name="refund_account_details" rows="2" placeholder="Provide Zelle email/phone or Bank Account details for refund..." class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs text-gray-900 shadow-2xs focus:outline-none focus:border-rose-500 focus:ring-1 focus:ring-rose-500/20 transition"></textarea>
+                                                            <label class="block text-[10px] font-bold text-slate-700 uppercase tracking-wider mb-1">Reason for Cancellation <span class="text-red-500">*</span></label>
+                                                            <select name="cancellation_reason" x-model="reason" required class="w-full border border-slate-200 focus:ring-1 focus:ring-rose-500 focus:border-rose-500 rounded-lg text-xs px-3 py-2 bg-slate-50">
+                                                                <option value="Ordered by mistake">Ordered by mistake</option>
+                                                                <option value="Found better price or discount elsewhere">Found better price or discount elsewhere</option>
+                                                                <option value="Expected delivery time is too long">Expected delivery time is too long</option>
+                                                                <option value="Incorrect shipping address selected">Incorrect shipping address selected</option>
+                                                                <option value="Change of mind / No longer required">Change of mind / No longer required</option>
+                                                                <option value="Other reasons">Other reasons</option>
+                                                            </select>
                                                         </div>
+                                                        <div>
+                                                            <label class="block text-[10px] font-bold text-slate-700 uppercase tracking-wider mb-1">Additional Comments (Optional)</label>
+                                                            <textarea name="cancellation_comments" rows="2" placeholder="Help us improve our service..." class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs text-gray-900 shadow-2xs focus:outline-none focus:border-rose-500 focus:ring-1 focus:ring-rose-500/20 transition"></textarea>
+                                                        </div>
+                                                        @if($order->payment_method === 'razorpay' && $order->payment_status === 'completed')
+                                                            <div class="p-2.5 bg-emerald-50 border border-emerald-200 rounded-lg text-[10px] text-emerald-800 leading-relaxed">
+                                                                <i class="fa-solid fa-shield-halved text-emerald-600 mr-1"></i>
+                                                                Prepaid Refund: Your payment of &#8377;{{ number_format($order->total_amount, 2) }} will be automatically credited back to your original payment method via Razorpay.
+                                                            </div>
+                                                        @endif
                                                         <div class="flex gap-2">
                                                             <button type="submit" onclick="return confirm('Are you sure you want to cancel this order? This action cannot be undone.');" class="bg-rose-600 hover:bg-rose-700 text-white font-bold px-4 py-2 rounded-lg text-xs transition cursor-pointer">Confirm Cancel</button>
                                                             <button type="button" @click="showCancelForm = false" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold px-4 py-2 rounded-lg text-xs transition cursor-pointer">Keep Order</button>
@@ -285,46 +309,45 @@
                                         @endif
 
                                         <!-- Return Order Section -->
-                                        @if($order->status === 'completed' && $order->return_status === null)
+                                        @if(in_array($order->status, ['delivered', 'completed']) && $order->return_status === null)
                                             <div class="mt-4 pt-3.5 border-t border-slate-200/60">
-                                                <div x-data="{ showReturnForm: false, returnType: '' }">
+                                                <div x-data="{ showReturnForm: false, returnType: 'return' }">
                                                     <button type="button" @click.stop="showReturnForm = !showReturnForm" 
-                                                            class="inline-flex items-center gap-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer">
+                                                            class="inline-flex items-center gap-1.5 bg-[#081a30] hover:bg-[#0c2544] text-[#d4af37] px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer">
                                                         <i class="fa-solid fa-arrow-rotate-left"></i>
-                                                        <span>Request Return</span>
+                                                        <span>Request Return / Replacement</span>
                                                     </button>
 
-                                                    <form x-show="showReturnForm" @click.stop="" action="{{ route('orders.return', $order->id) }}" method="POST" class="mt-3 bg-white border border-rose-200 rounded-xl p-4 space-y-3 shadow-2xs">
+                                                    <form x-show="showReturnForm" @click.stop="" action="{{ route('orders.return', $order->id) }}" method="POST" class="mt-3 bg-white border border-slate-200 rounded-xl p-4 space-y-3 shadow-2xs">
                                                         @csrf
                                                         <div>
-                                                            <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Request Type <span class="text-red-500">*</span></label>
-                                                            <select name="return_type" x-model="returnType" required class="w-full border border-slate-200 focus:ring-1 focus:ring-rose-500 focus:border-rose-500 rounded-lg text-xs px-3 py-2 bg-slate-50">
-                                                                <option value="">Select an option</option>
-                                                                <option value="return">Return for Refund</option>
-                                                                <option value="replace">Replace Product</option>
+                                                            <label class="block text-[10px] font-bold text-slate-700 uppercase tracking-wider mb-1">Request Type <span class="text-red-500">*</span></label>
+                                                            <select name="return_type" x-model="returnType" required class="w-full border border-slate-200 focus:ring-1 focus:ring-primary focus:border-primary rounded-lg text-xs px-3 py-2 bg-slate-50">
+                                                                <option value="return">Return for Full Refund</option>
+                                                                <option value="replace">Replace Product (Exchange)</option>
                                                             </select>
                                                         </div>
                                                         <div>
-                                                            <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Reason for Return <span class="text-red-500">*</span></label>
-                                                            <select name="return_reason" required class="w-full border border-slate-200 focus:ring-1 focus:ring-rose-500 focus:border-rose-500 rounded-lg text-xs px-3 py-2 bg-slate-50">
-                                                                <option value="">Select a reason</option>
-                                                                <option value="Damaged Goods">Damaged / Defective Goods</option>
-                                                                <option value="Incorrect Item">Incorrect Item Shipped</option>
-                                                                <option value="Short Shipment">Short Shipment (Missing Units)</option>
-                                                                <option value="Quality Issues">Quality Not Satisfactory</option>
-                                                                <option value="Other">Other (Specify in comments)</option>
+                                                            <label class="block text-[10px] font-bold text-slate-700 uppercase tracking-wider mb-1">Reason for Return / Exchange <span class="text-red-500">*</span></label>
+                                                            <select name="return_reason" required class="w-full border border-slate-200 focus:ring-1 focus:ring-primary focus:border-primary rounded-lg text-xs px-3 py-2 bg-slate-50">
+                                                                <option value="Damaged or defective packaging upon delivery">Damaged or defective packaging upon delivery</option>
+                                                                <option value="Wrong product or formulation received">Wrong product or formulation received</option>
+                                                                <option value="Product seal was broken">Product seal was broken</option>
+                                                                <option value="Expired or near-expiry product">Expired or near-expiry product</option>
+                                                                <option value="Not satisfied with product quality">Not satisfied with product quality</option>
+                                                                <option value="Other medical or personal reasons">Other medical or personal reasons</option>
                                                             </select>
                                                         </div>
                                                         <div>
-                                                            <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Comments / Details <span class="text-red-500">*</span></label>
-                                                            <textarea name="return_comments" rows="2" required placeholder="Describe the issue, quantities, or product names..." class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs text-gray-900 shadow-2xs focus:outline-none focus:border-rose-500 focus:ring-1 focus:ring-rose-500/20 transition"></textarea>
+                                                            <label class="block text-[10px] font-bold text-slate-700 uppercase tracking-wider mb-1">Comments / Details <span class="text-slate-400">(optional)</span></label>
+                                                            <textarea name="return_comments" rows="2" placeholder="Describe the issue in detail..." class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs text-gray-900 shadow-2xs focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 transition"></textarea>
                                                         </div>
                                                         <div x-show="returnType === 'return'">
-                                                            <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Refund Account Details</label>
-                                                            <textarea name="refund_account_details" rows="2" x-bind:required="returnType === 'return'" placeholder="Provide Zelle email/phone or Bank Account & Routing number..." class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs text-gray-900 shadow-2xs focus:outline-none focus:border-rose-500 focus:ring-1 focus:ring-rose-500/20 transition"></textarea>
+                                                            <label class="block text-[10px] font-bold text-slate-700 uppercase tracking-wider mb-1">Refund Account Details (for COD orders)</label>
+                                                            <input type="text" name="refund_account_details" placeholder="e.g. UPI ID: name@upi or Bank A/C No + IFSC" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs text-gray-900 shadow-2xs focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 transition">
                                                         </div>
-                                                        <div class="flex gap-2">
-                                                            <button type="submit" class="bg-rose-600 hover:bg-rose-700 text-white font-bold px-4 py-2 rounded-lg text-xs transition cursor-pointer">Submit Return Request</button>
+                                                        <div class="flex gap-2 pt-1">
+                                                            <button type="submit" class="bg-primary hover:bg-primary-dark text-white font-bold px-4 py-2 rounded-lg text-xs transition cursor-pointer">Submit Request</button>
                                                             <button type="button" @click="showReturnForm = false" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold px-4 py-2 rounded-lg text-xs transition cursor-pointer">Cancel</button>
                                                         </div>
                                                     </form>

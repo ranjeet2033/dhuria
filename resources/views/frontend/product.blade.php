@@ -1007,36 +1007,45 @@
             </div>
             <div class="dh-p-price-sub">Inclusive of all taxes. Free express shipping pan-India.</div>
 
-            <!-- Pack Selector -->
-            <div style="font-size:0.75rem; font-weight:800; color:#475569; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.5px;">SELECT PACK SIZE:</div>
-            <div class="dh-p-packs-row">
-                <div class="dh-p-pack-btn active" onclick="selectPack(1, 1, this)">
-                    <span class="dh-p-pack-name">Pack of 1</span>
-                    <span class="dh-p-pack-save">Regular Supply</span>
+            <!-- Pack Selector (Dynamic Admin Controlled) -->
+            @php
+                $packOptions = $product->formatted_pack_sizes;
+            @endphp
+            @if(!empty($packOptions) && is_array($packOptions) && count($packOptions) > 0)
+                <div style="font-size:0.75rem; font-weight:800; color:#475569; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.5px;">SELECT PACK SIZE:</div>
+                <div class="dh-p-packs-row">
+                    @foreach($packOptions as $idx => $pack)
+                        @php
+                            $pQty = (int)($pack['quantity'] ?? $pack['qty'] ?? 1);
+                            $pName = !empty($pack['name']) ? $pack['name'] : ('Pack of ' . $pQty);
+                            $pBadge = $pack['badge'] ?? '';
+                            $pMult = (float)($pack['multiplier'] ?? 1.0);
+                            $pCustom = (!empty($pack['custom_price']) && (float)$pack['custom_price'] > 0) ? (float)$pack['custom_price'] : 0;
+                        @endphp
+                        <div class="dh-p-pack-btn {{ $idx === 0 ? 'active' : '' }}" 
+                             onclick="selectPack({{ $pQty }}, {{ $pMult }}, this, {{ $pCustom }}, {{ $idx }})">
+                            <span class="dh-p-pack-name">{{ $pName }}</span>
+                            @if(!empty($pBadge))
+                                <span class="dh-p-pack-save">{{ $pBadge }}</span>
+                            @endif
+                        </div>
+                    @endforeach
                 </div>
-                <div class="dh-p-pack-btn" onclick="selectPack(2, 1.85, this)">
-                    <span class="dh-p-pack-name">Pack of 2</span>
-                    <span class="dh-p-pack-save">Save Extra 15%</span>
-                </div>
-                <div class="dh-p-pack-btn" onclick="selectPack(3, 2.5, this)">
-                    <span class="dh-p-pack-name">Pack of 3</span>
-                    <span class="dh-p-pack-save">Best Value Combo</span>
-                </div>
-            </div>
+            @endif
 
             <!-- Actions Row -->
             <div class="dh-p-actions-row">
                 <div class="dh-qty-stepper">
                     <button type="button" class="dh-qty-btn" onclick="updateQty(-1)">-</button>
-                    <input type="number" id="productQty" value="1" min="1" readonly class="dh-qty-input">
+                    <input type="number" id="productQty" value="{{ !empty($packOptions) ? ($packOptions[0]['quantity'] ?? $packOptions[0]['qty'] ?? 1) : 1 }}" min="1" readonly class="dh-qty-input">
                     <button type="button" class="dh-qty-btn" onclick="updateQty(1)">+</button>
                 </div>
 
-                <button type="button" class="dh-btn-add-cart" onclick="Ebigcart.addToCart('{{ $product->id }}', parseInt(document.getElementById('productQty').value), event)">
+                <button type="button" class="dh-btn-add-cart" onclick="Ebigcart.addToCart('{{ $product->id }}', parseInt(document.getElementById('productQty').value), event, selectedPackIndex)">
                     <i class="bi bi-bag"></i> ADD TO CART
                 </button>
 
-                <button type="button" class="dh-btn-buy-cash" onclick="Ebigcart.buyNow('{{ $product->id }}', parseInt(document.getElementById('productQty').value), event)">
+                <button type="button" class="dh-btn-buy-cash" onclick="Ebigcart.buyNow('{{ $product->id }}', parseInt(document.getElementById('productQty').value), event, selectedPackIndex)">
                     <i class="bi bi-lightning-fill"></i> BUY WITH CASH / UPI
                 </button>
             </div>
@@ -1330,15 +1339,23 @@ function slideImage(direction) {
 
 const baseSalePrice = {{ $product->sale_price ?? $product->price }};
 const baseRegPrice = {{ $product->price }};
+let selectedPackIndex = 0;
 
-function selectPack(packQty, multiplier, el) {
+function selectPack(packQty, multiplier, el, customPrice, packIdx) {
     document.querySelectorAll('.dh-p-pack-btn').forEach(b => b.classList.remove('active'));
     el.classList.add('active');
     document.getElementById('productQty').value = packQty;
+    selectedPackIndex = (typeof packIdx !== 'undefined') ? packIdx : 0;
 
-    const newSale = Math.round(baseSalePrice * multiplier);
+    let newSale = 0;
+    if (customPrice && customPrice > 0) {
+        newSale = Math.round(customPrice);
+    } else {
+        newSale = Math.round(baseSalePrice * multiplier);
+    }
+
     const newReg = Math.round(baseRegPrice * packQty);
-    const newSave = newReg - newSale;
+    const newSave = Math.max(0, newReg - newSale);
 
     const curEl = document.getElementById('dynPriceCurrent');
     const oldEl = document.getElementById('dynPriceOld');
@@ -1346,7 +1363,14 @@ function selectPack(packQty, multiplier, el) {
 
     if (curEl) curEl.innerText = '₹' + newSale.toLocaleString('en-IN');
     if (oldEl) oldEl.innerText = '₹' + newReg.toLocaleString('en-IN');
-    if (saveEl) saveEl.innerText = 'SAVE ₹' + newSave.toLocaleString('en-IN');
+    if (saveEl) {
+        if (newSave > 0) {
+            saveEl.style.display = 'inline-block';
+            saveEl.innerText = 'SAVE ₹' + newSave.toLocaleString('en-IN');
+        } else {
+            saveEl.style.display = 'none';
+        }
+    }
 }
 
 function updateQty(delta) {

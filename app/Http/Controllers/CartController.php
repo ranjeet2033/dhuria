@@ -60,17 +60,52 @@ class CartController extends Controller
         // Prepare image
         $image = $product->primary_image_url;
 
-        $price = $product->sale_price ?? $product->price;
+        $basePrice = (float)($product->sale_price ?? $product->price);
+        $effectiveUnitPrice = $basePrice;
+        $packName = null;
+
+        // Check if a pack size is selected or matching
+        $packSizes = $product->formatted_pack_sizes;
+        $packIndex = $request->input('pack_index', null);
+
+        if ($packIndex !== null && isset($packSizes[$packIndex])) {
+            $selectedPack = $packSizes[$packIndex];
+            $packQty = (int)($selectedPack['quantity'] ?? 1);
+            $packName = $selectedPack['name'] ?? null;
+            if (!empty($selectedPack['custom_price']) && (float)$selectedPack['custom_price'] > 0) {
+                $effectiveUnitPrice = round((float)$selectedPack['custom_price'] / max(1, $packQty), 2);
+            } elseif (!empty($selectedPack['multiplier'])) {
+                $effectiveUnitPrice = round(($basePrice * (float)$selectedPack['multiplier']) / max(1, $packQty), 2);
+            }
+        } elseif (is_array($packSizes) && count($packSizes) > 0) {
+            // Find if current quantity directly matches any pack option
+            foreach ($packSizes as $p) {
+                if ((int)($p['quantity'] ?? 0) === $quantity) {
+                    $packName = $p['name'] ?? null;
+                    if (!empty($p['custom_price']) && (float)$p['custom_price'] > 0) {
+                        $effectiveUnitPrice = round((float)$p['custom_price'] / max(1, $quantity), 2);
+                    } elseif (!empty($p['multiplier'])) {
+                        $effectiveUnitPrice = round(($basePrice * (float)$p['multiplier']) / max(1, $quantity), 2);
+                    }
+                    break;
+                }
+            }
+        }
 
         if (isset($cart[$productId])) {
             $cart[$productId]['quantity'] += $quantity;
+            $cart[$productId]['price'] = $effectiveUnitPrice;
+            if ($packName) {
+                $cart[$productId]['pack_name'] = $packName;
+            }
         } else {
             $cart[$productId] = [
                 'name' => $product->name,
                 'quantity' => $quantity,
-                'price' => $price,
+                'price' => $effectiveUnitPrice,
                 'image' => $image,
-                'slug' => $product->slug
+                'slug' => $product->slug,
+                'pack_name' => $packName,
             ];
         }
 
@@ -162,36 +197,90 @@ class CartController extends Controller
 
     public function applyCoupon(Request $request)
     {
-        $code = $request->input('code');
+        $code = trim($request->input('code', $request->input('coupon_code', '')));
+
+        if (empty($code)) {
+            $msg = 'Please enter a coupon code.';
+            if ($request->expectsJson() || $request->isJson() || $request->ajax()) {
+                return response()->json(['success' => false, 'message' => $msg], 422);
+            }
+            return back()->with('error', $msg);
+        }
+
         $coupon = \App\Models\Coupon::where('code', $code)
             ->where('is_active', true)
             ->first();
 
         if (!$coupon) {
-            return back()->with('error', 'Invalid or inactive coupon code.');
+            $msg = 'Invalid or inactive coupon code.';
+            if ($request->expectsJson() || $request->isJson() || $request->ajax()) {
+                return response()->json(['success' => false, 'message' => $msg], 422);
+            }
+            return back()->with('error', $msg);
         }
 
         if ($coupon->expiry_date && $coupon->expiry_date < now()->format('Y-m-d')) {
-            return back()->with('error', 'This coupon has expired.');
+            $msg = 'This coupon has expired.';
+            if ($request->expectsJson() || $request->isJson() || $request->ajax()) {
+                return response()->json(['success' => false, 'message' => $msg], 422);
+            }
+            return back()->with('error', $msg);
         }
 
         if ($coupon->usage_limit !== null && $coupon->used >= $coupon->usage_limit) {
-            return back()->with('error', 'This coupon has reached its usage limit.');
+            $msg = 'This coupon has reached its maximum usage limit.';
+            if ($request->expectsJson() || $request->isJson() || $request->ajax()) {
+                return response()->json(['success' => false, 'message' => $msg], 422);
+            }
+            return back()->with('error', $msg);
         }
+
+        // Calculate cart subtotal
+        $cart = session()->get('cart', []);
+        $subtotal = 0;
+        foreach ($cart as $item) {
+            $subtotal += ($item['price'] * $item['quantity']);
+        }
+
+        $discount = 0;
+        if ($coupon->type === 'fixed') {
+            $discount = min($subtotal, (float)$coupon->value);
+        } else {
+            $discount = round($subtotal * ((float)$coupon->value / 100), 2);
+        }
+        $newTotal = max(0, $subtotal - $discount);
 
         // Save coupon details in session
         session()->put('coupon', [
             'code' => $coupon->code,
             'type' => $coupon->type,
-            'value' => $coupon->value
+            'value' => (float)$coupon->value,
+            'discount' => $discount,
         ]);
 
-        return back()->with('success', 'Coupon applied successfully!');
+        $msg = 'Coupon applied successfully!';
+        if ($request->expectsJson() || $request->isJson() || $request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => $msg,
+                'coupon' => $coupon->code,
+                'discount' => $discount,
+                'new_total' => $newTotal
+            ]);
+        }
+
+        return back()->with('success', $msg);
     }
 
-    public function removeCoupon()
+    public function removeCoupon(Request $request)
     {
         session()->forget('coupon');
-        return back()->with('success', 'Coupon removed.');
+        $msg = 'Coupon removed successfully.';
+
+        if ($request->expectsJson() || $request->isJson() || $request->ajax()) {
+            return response()->json(['success' => true, 'message' => $msg]);
+        }
+
+        return back()->with('success', $msg);
     }
 }

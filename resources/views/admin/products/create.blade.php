@@ -133,9 +133,102 @@
 
             <label class="flex items-center space-x-3 cursor-pointer">
                 <input type="checkbox" name="is_active" value="1" @checked(old('is_active', true))
-                       class="rounded border-slate-350 text-[#C49A6C] focus:ring-[#C49A6C] h-4.5 w-4.5">
+                       class="rounded border-slate-350 text-amber-500 focus:ring-amber-500 h-4.5 w-4.5">
                 <span class="text-sm font-semibold text-slate-700">Publish Active</span>
             </label>
+        </div>
+
+        <!-- Pack Sizes & Bundle Discounts (Storefront "SELECT PACK SIZE") -->
+        <div class="bg-white rounded-2xl border border-slate-200/90 p-6 shadow-xs space-y-4" x-data="packManager()">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-slate-100 gap-3">
+                <div class="flex items-center space-x-3">
+                    <div class="h-9 w-9 rounded-xl bg-amber-500/10 text-amber-600 flex items-center justify-center font-bold text-sm">
+                        <i class="fa-solid fa-boxes-stacked"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-900 text-sm">Pack Sizes & Combo Bundles (Storefront "SELECT PACK SIZE")</h4>
+                        <span class="text-[11px] text-slate-400">Configure multi-pack buttons, savings badges, and discount multipliers</span>
+                    </div>
+                </div>
+                <label class="flex items-center space-x-2.5 cursor-pointer bg-slate-50 border border-slate-200 px-3.5 py-1.5 rounded-xl hover:bg-slate-100 transition">
+                    <input type="checkbox" name="enable_pack_sizes" value="1" x-model="enabled" class="rounded border-slate-300 text-amber-500 focus:ring-amber-500 h-4 w-4">
+                    <span class="text-xs font-bold text-slate-700">Enable Pack Sizes</span>
+                </label>
+            </div>
+
+            <div x-show="enabled" x-cloak class="space-y-4">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead>
+                            <tr class="bg-slate-50 text-slate-500 text-[10px] font-extrabold uppercase tracking-wider border-b border-slate-200">
+                                <th class="p-2.5">Pack Name *</th>
+                                <th class="p-2.5">Badge / Savings Subtitle</th>
+                                <th class="p-2.5 w-24">Units (Qty) *</th>
+                                <th class="p-2.5 w-28">Multiplier</th>
+                                <th class="p-2.5 w-32">Custom Price (&#8377;)</th>
+                                <th class="p-2.5 w-12 text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            <template x-for="(pack, index) in packs" :key="index">
+                                <tr class="hover:bg-slate-50/50 transition">
+                                    <td class="p-2">
+                                        <input type="text" :name="'pack_sizes[' + index + '][name]'" x-model="pack.name" placeholder="e.g. Pack of 1" required
+                                               class="w-full border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs focus:ring-1 focus:ring-amber-500 focus:border-amber-500 bg-white">
+                                    </td>
+                                    <td class="p-2">
+                                        <input type="text" :name="'pack_sizes[' + index + '][badge]'" x-model="pack.badge" placeholder="e.g. Save Extra 15%"
+                                               class="w-full border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs focus:ring-1 focus:ring-amber-500 focus:border-amber-500 bg-white">
+                                    </td>
+                                    <td class="p-2">
+                                        <input type="number" min="1" :name="'pack_sizes[' + index + '][quantity]'" x-model="pack.quantity" required
+                                               class="w-full border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs focus:ring-1 focus:ring-amber-500 focus:border-amber-500 bg-white text-center">
+                                    </td>
+                                    <td class="p-2">
+                                        <input type="number" step="0.01" min="0.1" :name="'pack_sizes[' + index + '][multiplier]'" x-model="pack.multiplier" placeholder="1.0"
+                                               class="w-full border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs focus:ring-1 focus:ring-amber-500 focus:border-amber-500 bg-white text-center">
+                                    </td>
+                                    <td class="p-2">
+                                        <input type="number" step="0.01" min="0" :name="'pack_sizes[' + index + '][custom_price]'" x-model="pack.custom_price" placeholder="Optional"
+                                               class="w-full border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs focus:ring-1 focus:ring-amber-500 focus:border-amber-500 bg-white">
+                                    </td>
+                                    <td class="p-2 text-center">
+                                        <button type="button" @click="removePack(index)" class="text-rose-500 hover:text-rose-700 p-1.5 rounded-lg hover:bg-rose-50 transition cursor-pointer" title="Delete">
+                                            <i class="fa-solid fa-trash-can"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-2">
+                    <button type="button" @click="addPack()" class="inline-flex items-center gap-1.5 text-xs font-bold text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-200 px-3.5 py-2 rounded-xl transition cursor-pointer">
+                        <i class="fa-solid fa-plus text-[10px]"></i>
+                        <span>Add Another Pack Option</span>
+                    </button>
+                    <span class="text-[11px] text-slate-400">Multiplier formula: (Single Price &times; Multiplier) &rarr; e.g. Pack of 2 &times; 1.85 gives 15% discount.</span>
+                </div>
+
+                <!-- Live Preview on Admin Screen -->
+                <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-3.5 mt-2">
+                    <span class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider block mb-2">Live Storefront Preview</span>
+                    <div class="flex flex-wrap gap-2.5">
+                        <template x-for="(pack, index) in packs" :key="index">
+                            <div class="border rounded-xl px-4 py-2 text-center transition"
+                                 :class="index === 0 ? 'border-amber-500 bg-amber-50/50 shadow-xs' : 'border-slate-200 bg-white'">
+                                <span class="block font-bold text-slate-800 text-xs" x-text="pack.name || 'Pack Name'"></span>
+                                <span class="block font-semibold text-emerald-600 text-[10px]" x-text="pack.badge || ''"></span>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </div>
+            
+            <div x-show="!enabled" x-cloak class="text-xs text-slate-400 italic py-2">
+                Pack size selector is disabled for this product. Only single unit ordering will be displayed on the store.
+            </div>
         </div>
 
         <!-- Product Image Upload -->
@@ -358,6 +451,34 @@ function removeSelectedFile(index) {
         }
     }
     renderImagePreviews();
+}
+
+function packManager() {
+    return {
+        enabled: true,
+        packs: [
+            { name: 'Pack of 1', badge: 'Regular Supply', quantity: 1, multiplier: 1.0, custom_price: '' },
+            { name: 'Pack of 2', badge: 'Save Extra 15%', quantity: 2, multiplier: 1.85, custom_price: '' },
+            { name: 'Pack of 3', badge: 'Best Value Combo', quantity: 3, multiplier: 2.5, custom_price: '' }
+        ],
+        addPack() {
+            const nextQty = this.packs.length + 1;
+            this.packs.push({
+                name: 'Pack of ' + nextQty,
+                badge: 'Extra Value',
+                quantity: nextQty,
+                multiplier: (nextQty * 0.85).toFixed(2),
+                custom_price: ''
+            });
+        },
+        removePack(index) {
+            if (this.packs.length <= 1) {
+                alert('At least one pack size option is recommended.');
+                return;
+            }
+            this.packs.splice(index, 1);
+        }
+    };
 }
 
 document.addEventListener('DOMContentLoaded', function() {

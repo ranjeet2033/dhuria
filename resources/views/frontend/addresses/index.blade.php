@@ -21,7 +21,7 @@
         <div class="flex flex-col lg:flex-row gap-6">
             @include('frontend.partials.customer_sidebar')
             
-            <div class="w-full lg:w-3/4 space-y-5">
+            <div class="w-full lg:w-3/4 space-y-5" x-data="{ editingAddress: null }">
                 <!-- Address List -->
                 <div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-2xs">
                     <h3 class="text-xs font-extrabold uppercase tracking-wider text-slate-900 mb-4 border-b border-slate-100 pb-3 flex items-center gap-2" style="font-family: 'Outfit', sans-serif;">
@@ -72,18 +72,26 @@
                                         @endif
                                     </div>
 
-                                    <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
-                                        @if(!$addr->is_default)
-                                            <form method="POST" action="{{ route('addresses.setDefault', $addr) }}">
-                                                @csrf
-                                                @method('PATCH')
-                                                <button type="submit" class="text-primary hover:text-primary-dark font-extrabold text-[10px] tracking-wider uppercase cursor-pointer transition">
-                                                    Set as Default
-                                                </button>
-                                            </form>
-                                        @else
-                                            <span class="text-slate-400 font-extrabold text-[10px] tracking-wider uppercase">Active Default</span>
-                                        @endif
+                                    <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between flex-wrap gap-2">
+                                        <div class="flex items-center gap-3">
+                                            @if(!$addr->is_default)
+                                                <form method="POST" action="{{ route('addresses.setDefault', $addr) }}">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <button type="submit" class="text-primary hover:text-primary-dark font-extrabold text-[10px] tracking-wider uppercase cursor-pointer transition">
+                                                        Set as Default
+                                                    </button>
+                                                </form>
+                                            @else
+                                                <span class="text-slate-400 font-extrabold text-[10px] tracking-wider uppercase">Active Default</span>
+                                            @endif
+
+                                            <button type="button" 
+                                                    @click="editingAddress = {{ json_encode($addr) }}"
+                                                    class="text-sky-700 hover:text-sky-900 font-extrabold text-[10px] tracking-wider uppercase cursor-pointer transition flex items-center gap-1">
+                                                <i class="fa-regular fa-pen-to-square text-xs"></i> Edit
+                                            </button>
+                                        </div>
 
                                         <form method="POST" action="{{ route('addresses.destroy', $addr) }}" onsubmit="return confirm('Are you sure you want to delete this address?');">
                                             @csrf
@@ -226,6 +234,89 @@
                             </button>
                         </div>
                     </form>
+                </div>
+
+                <!-- Alpine Edit Address Modal -->
+                <div x-show="editingAddress !== null" 
+                     x-cloak 
+                     class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs"
+                     @click.self="editingAddress = null">
+                    <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 space-y-4">
+                        <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                            <h3 class="text-sm font-black uppercase tracking-wider text-slate-900 flex items-center gap-2">
+                                <i class="fa-solid fa-pen-to-square text-primary"></i> Edit Delivery Address
+                            </h3>
+                            <button type="button" @click="editingAddress = null" class="text-slate-400 hover:text-slate-700 p-1">
+                                <i class="fa-solid fa-xmark text-sm"></i>
+                            </button>
+                        </div>
+
+                        <form :action="'{{ url('/addresses') }}/' + (editingAddress ? editingAddress.id : '')" method="POST" class="space-y-4">
+                            @csrf
+                            @method('put')
+
+                            <div>
+                                <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1">
+                                    Street Address / Building <span class="text-rose-500">*</span>
+                                </label>
+                                <input type="text" name="address" :value="editingAddress ? editingAddress.address : ''" required
+                                       class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-medium focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary">
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1">
+                                    Apartment, Suite, Unit <span class="text-slate-400 font-normal">(optional)</span>
+                                </label>
+                                <input type="text" name="address2" :value="editingAddress ? editingAddress.address2 : ''"
+                                       class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-medium focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary">
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1">City *</label>
+                                    <input type="text" name="city" :value="editingAddress ? editingAddress.city : ''" required
+                                           class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-medium focus:outline-none focus:border-primary">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1">State *</label>
+                                    <input type="text" name="state" :value="editingAddress ? editingAddress.state : ''" required
+                                           class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-medium focus:outline-none focus:border-primary">
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1">Pincode *</label>
+                                    <input type="text" name="zip" :value="editingAddress ? editingAddress.zip : ''" required
+                                           class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-medium focus:outline-none focus:border-primary">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1">Phone *</label>
+                                    <input type="tel" name="phone" :value="editingAddress ? editingAddress.phone : ''" required
+                                           class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-xs text-slate-900 font-medium focus:outline-none focus:border-primary">
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-2 pt-2">
+                                <input type="checkbox" name="is_default" id="standalone_edit_is_default" value="1" 
+                                       :checked="editingAddress && editingAddress.is_default"
+                                       class="rounded border-slate-300 text-primary focus:ring-primary">
+                                <label for="standalone_edit_is_default" class="text-xs text-slate-700 font-bold select-none cursor-pointer">
+                                    Make this my default delivery address
+                                </label>
+                            </div>
+
+                            <div class="pt-3 border-t border-slate-100 flex items-center justify-end gap-3">
+                                <button type="button" @click="editingAddress = null" class="text-xs font-bold text-slate-600 hover:text-slate-900 px-4 py-2">
+                                    Cancel
+                                </button>
+                                <button type="submit" 
+                                        class="bg-primary hover:bg-primary-dark text-white font-black px-6 py-2.5 rounded-xl text-xs uppercase tracking-wider transition shadow-sm cursor-pointer">
+                                    Update Address
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

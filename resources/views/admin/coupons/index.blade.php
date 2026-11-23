@@ -6,8 +6,12 @@
 <div class="space-y-6">
 
     <!-- Actions Panel -->
-    <div class="flex justify-end items-center bg-white p-5 rounded-2xl border border-slate-100 shadow-xs">
-        <a href="{{ route('admin.coupons.create') }}" class="w-full sm:w-auto text-center bg-[#C49A6C] hover:bg-[#b0875b] text-white font-bold text-sm px-6 py-3 rounded-xl shadow-md shadow-[#C49A6C]/25 transition cursor-pointer flex items-center justify-center space-x-2">
+    <div class="flex justify-between items-center bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs">
+        <div>
+            <h3 class="font-serif font-bold text-slate-900 text-base">Promotional Coupons</h3>
+            <span class="text-xs text-slate-400">Create discount vouchers with percentage or fixed deductions</span>
+        </div>
+        <a href="{{ route('admin.coupons.create') }}" class="w-full sm:w-auto text-center bg-[#d4af37] hover:bg-[#c59b27] text-slate-950 font-extrabold text-xs px-5 py-2.5 rounded-xl shadow-md shadow-[#d4af37]/25 transition cursor-pointer flex items-center justify-center space-x-2">
             <i class="fa-solid fa-plus"></i>
             <span>Add Coupon</span>
         </a>
@@ -57,7 +61,7 @@
                             </td>
                             <td class="px-6 py-4">
                                 <span class="font-medium text-slate-700">
-                                    {{ $coupon->used }} / {{ $coupon->usage_limit ?: '8' }}
+                                    {{ $coupon->used }} / {{ $coupon->usage_limit ?: 'Unlimited' }}
                                 </span>
                             </td>
                             <td class="px-6 py-4">
@@ -69,7 +73,7 @@
                             </td>
                             <td class="px-6 py-4 text-right">
                                 <div class="flex justify-end items-center space-x-2">
-                                    <a href="{{ route('admin.coupons.edit', $coupon->id) }}" class="p-2 bg-slate-100 hover:bg-[#C49A6C] hover:text-white rounded-lg text-slate-600 transition" title="Edit">
+                                    <a href="{{ route('admin.coupons.edit', $coupon->id) }}" class="p-2 bg-slate-100 hover:bg-[#d4af37] hover:text-slate-950 rounded-lg text-slate-600 transition" title="Edit">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </a>
                                     <form method="POST" action="{{ route('admin.coupons.destroy', $coupon->id) }}" onsubmit="return confirm('Are you sure you want to delete this coupon?')">

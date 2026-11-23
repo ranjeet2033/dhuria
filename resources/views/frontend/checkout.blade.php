@@ -275,17 +275,34 @@
                             </div>
 
                             <!-- Coupon Code Form -->
-                            <div class="mb-5 pb-5 border-b border-white/10">
-                                <div class="flex gap-2">
-                                    <input type="text" id="coupon_code" placeholder="Coupon code" 
-                                           class="flex-1 bg-white/10 border border-white/15 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-amber-400">
-                                    <button type="button" onclick="applyCoupon()" 
-                                            class="bg-[#d4af37] hover:bg-[#e5c04b] text-slate-950 font-extrabold text-xs px-4 py-2.5 rounded-xl transition">
-                                        Apply
-                                    </button>
+                            @if(session('coupon'))
+                                <div class="mb-5 pb-5 border-b border-white/10">
+                                    <div class="flex items-center justify-between bg-emerald-500/10 border border-emerald-500/25 rounded-xl px-3.5 py-2.5">
+                                        <div class="flex items-center gap-2">
+                                            <i class="fa-solid fa-ticket text-amber-400 text-sm"></i>
+                                            <div>
+                                                <div class="text-[10px] text-emerald-400 font-bold uppercase tracking-wider">Coupon Applied</div>
+                                                <div class="text-xs font-black text-white">{{ session('coupon.code') }}</div>
+                                            </div>
+                                        </div>
+                                        <button type="button" onclick="removeCoupon()" class="text-xs text-rose-400 hover:text-rose-300 font-bold hover:underline transition">
+                                            Remove
+                                        </button>
+                                    </div>
                                 </div>
-                                <div id="coupon-msg" class="text-[11px] mt-1.5 hidden"></div>
-                            </div>
+                            @else
+                                <div class="mb-5 pb-5 border-b border-white/10">
+                                    <div class="flex gap-2">
+                                        <input type="text" id="coupon_code" placeholder="Enter coupon code" 
+                                               class="flex-1 bg-white/10 border border-white/15 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-amber-400">
+                                        <button type="button" onclick="applyCoupon()" 
+                                                class="bg-[#d4af37] hover:bg-[#e5c04b] text-slate-950 font-extrabold text-xs px-4 py-2.5 rounded-xl transition">
+                                            Apply
+                                        </button>
+                                    </div>
+                                    <div id="coupon-msg" class="text-[11px] mt-1.5 hidden"></div>
+                                </div>
+                            @endif
 
                             <!-- Cost Breakdown -->
                             <div class="space-y-2.5 mb-5 text-xs">
@@ -388,6 +405,23 @@
         .catch(err => {
             msg.className = 'text-[11px] mt-1.5 text-rose-400 block';
             msg.innerText = 'Error applying coupon. Please try again.';
+        });
+    }
+
+    function removeCoupon() {
+        fetch('{{ route('cart.removeCoupon') }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            window.location.reload();
+        })
+        .catch(err => {
+            window.location.reload();
         });
     }
 

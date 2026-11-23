@@ -83,7 +83,7 @@ class ShiprocketService
                 $maxHeight = max($maxHeight, (int) $product->height);
             }
 
-            $sku = $product ? $product->sku : 'VB-DHOOP-STICK';
+            $sku = ($product && !empty($product->sku)) ? $product->sku : ('DHURIA-' . $item->product_id);
 
             $orderItems[] = [
                 'name' => $item->product_name,
@@ -153,5 +153,98 @@ class ShiprocketService
         }
         
         throw new \Exception($message);
+    }
+
+    /**
+     * Generate AWB for a shipment.
+     */
+    public function generateAwb($shipmentId, $courierId = null)
+    {
+        $token = $this->getToken();
+        $payload = ['shipment_id' => $shipmentId];
+        if ($courierId) {
+            $payload['courier_id'] = $courierId;
+        }
+
+        $response = Http::withToken($token)->post("{$this->baseUrl}/courier/assign/awb", $payload);
+
+        if ($response->successful()) {
+            return $response->json();
+        }
+
+        Log::error('Shiprocket AWB Generation Failed: ' . $response->body());
+        throw new \Exception($response->json('message') ?? 'Unable to generate AWB.');
+    }
+
+    /**
+     * Track shipment by AWB code.
+     */
+    public function trackByAwb($awbCode)
+    {
+        $token = $this->getToken();
+        $response = Http::withToken($token)->get("{$this->baseUrl}/courier/track/awb/{$awbCode}");
+
+        if ($response->successful()) {
+            return $response->json();
+        }
+
+        Log::warning('Shiprocket AWB Tracking Failed for ' . $awbCode . ': ' . $response->body());
+        return null;
+    }
+
+    /**
+     * Track shipment by Order ID.
+     */
+    public function trackByOrderId($orderId)
+    {
+        $token = $this->getToken();
+        $response = Http::withToken($token)->get("{$this->baseUrl}/courier/track", [
+            'order_id' => $orderId
+        ]);
+
+        if ($response->successful()) {
+            return $response->json();
+        }
+
+        Log::warning('Shiprocket Order Tracking Failed for ' . $orderId . ': ' . $response->body());
+        return null;
+    }
+
+    /**
+     * Generate Shipping Label PDF URL.
+     */
+    public function generateLabel($shipmentId)
+    {
+        $token = $this->getToken();
+        $response = Http::withToken($token)->post("{$this->baseUrl}/courier/generate/label", [
+            'shipment_id' => [$shipmentId]
+        ]);
+
+        if ($response->successful()) {
+            return $response->json('label_url');
+        }
+
+        Log::error('Shiprocket Label Generation Failed: ' . $response->body());
+        throw new \Exception($response->json('message') ?? 'Unable to generate shipping label.');
+    }
+
+    /**
+     * Check Pincode Serviceability.
+     */
+    public function checkServiceability($pickupPincode, $deliveryPincode, $weight = 0.5, $cod = false)
+    {
+        $token = $this->getToken();
+        $response = Http::withToken($token)->get("{$this->baseUrl}/courier/serviceability", [
+            'pickup_postcode'   => $pickupPincode,
+            'delivery_postcode' => $deliveryPincode,
+            'weight'            => $weight,
+            'cod'               => $cod ? 1 : 0,
+        ]);
+
+        if ($response->successful()) {
+            return $response->json();
+        }
+
+        return null;
     }
 }
