@@ -530,7 +530,16 @@
     margin: 0 auto;
 }
 @media (max-width: 860px) {
-    .dh-fbt-grid { grid-template-columns: 1fr; max-width: 360px; }
+    .dh-fbt-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 12px !important; max-width: 100% !important; }
+    .dh-fbt-img-wrap { height: 160px !important; }
+}
+@media (max-width: 480px) {
+    .dh-fbt-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
+    .dh-fbt-img-wrap { height: 140px !important; }
+    .dh-fbt-body { padding: 10px 8px 12px !important; }
+    .dh-fbt-name { font-size: 0.8rem !important; }
+    .dh-fbt-price-cur { font-size: 0.88rem !important; }
+    .dh-fbt-btn-add { font-size: 0.7rem !important; padding: 7px 6px !important; }
 }
 .dh-fbt-card {
     background: #ffffff;

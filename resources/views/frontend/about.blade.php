@@ -112,6 +112,14 @@
     color: #061528 !important;
     transform: translateY(-2px);
 }
+@media (max-width: 768px) {
+    .dh-about-page { padding: 20px 15px 50px; }
+    .dh-about-title { font-size: 1.8rem; }
+    .dh-about-lead { font-size: 0.95rem; }
+    .dh-about-doc-grid { grid-template-columns: 1fr !important; text-align: center; padding: 20px !important; }
+    .dh-founder-card { padding: 20px !important; }
+    .dh-founder-title { font-size: 1.3rem; }
+}
 </style>
 
 <div class="dh-about-page">
@@ -127,7 +135,7 @@
     <h3 class="dh-about-section-heading">Our Commitment to Purity:</h3>
     
     <!-- Doctor Card Embedded -->
-    <div style="background: linear-gradient(135deg, #0a223f 0%, #051323 100%); border-radius: 20px; border: 1px solid rgba(212,175,55,0.35); padding: 30px 40px; display: grid; grid-template-columns: 180px 1fr; align-items: center; gap: 30px; margin-bottom: 25px;">
+    <div class="dh-about-doc-grid" style="background: linear-gradient(135deg, #0a223f 0%, #051323 100%); border-radius: 20px; border: 1px solid rgba(212,175,55,0.35); padding: 30px 40px; display: grid; grid-template-columns: 180px 1fr; align-items: center; gap: 30px; margin-bottom: 25px;">
         <div style="width: 150px; height: 150px; border-radius: 50%; border: 3px solid #d4af37; overflow: hidden; background: #fff; margin: 0 auto;">
             <img src="{{ asset('images/doctor_portrait.jpg') }}" alt="Doctor Endorsement" style="width: 100%; height: 100%; object-fit: cover;">
         </div>

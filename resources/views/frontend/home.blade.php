@@ -1261,92 +1261,93 @@
 </style>
 
 <!-- ========================================================
-     1. BANNER SECTION SLIDER
+     1. BANNER SECTION SLIDER (100% DATABASE DYNAMIC)
      ======================================================== -->
 <section class="dh-hero-slider-wrap">
     <div class="owl-carousel dh-hero-slider owl-theme">
-        
-        <!-- SLIDE 1: LIVER DETOX (EXACT MATCH TO REFERENCE IMAGE 2) -->
-        <div class="dh-slide-liver">
-            <div class="dh-slide-liver-content">
-                <div class="dh-slide-brand-tag">
-                    <img src="{{ asset('images/dhuria_logo_white.png') }}" alt="dhuria">
-                </div>
-                <h1 class="dh-slide-liver-title">Detox your liver, live healthier!</h1>
-                <p class="dh-slide-liver-sub">
-                    Experience the pure power of nature with our Liver Detox Herbal Formulation.
-                </p>
+        @if(isset($banners) && $banners->where('type', 'hero')->count() > 0)
+            @foreach($banners->where('type', 'hero') as $index => $banner)
+                @php
+                    $isPilecurex = str_contains(strtolower($banner->title), 'pilecurex');
+                    $isDiabetes = str_contains(strtolower($banner->title), 'diabetes') || str_contains(strtolower($banner->title), 'madhucurex');
+                @endphp
+                @if($isPilecurex)
+                    <!-- SLIDE: PILECUREX KIT (DYNAMIC FROM DB) -->
+                    <div class="dh-slide-pilecurex">
+                        <div class="dh-pilecurex-left" style="background-image: url('{{ $banner->image_url }}');"></div>
+                        <div class="dh-pilecurex-right">
+                            <h2 class="dh-pilecurex-title">{{ $banner->title }}</h2>
+                            <p class="dh-pilecurex-desc">{{ $banner->subtitle }}</p>
 
-                <div class="dh-slide-actions">
-                    <a href="{{ route('product.show', 'liver-detox-capsule') }}" class="dh-btn-order-now">
-                        <span>Order Now</span> <i class="bi bi-cart3"></i>
-                    </a>
-                </div>
+                            <a href="{{ $banner->link ?: route('product.show', 'pilecurex-kit') }}" class="dh-btn-order-now" style="background:linear-gradient(135deg, #ff7a00 0%, #ea580c 100%); color:#fff !important; width:fit-content; margin-bottom:25px;">
+                                <span>ORDER NOW</span>
+                            </a>
 
-                <div class="dh-slide-trust-row">
-                    <div class="dh-google-pill">
-                        <span class="dh-google-icon">G</span>
-                        <div>
-                            <div class="dh-google-score">4.9 <span class="dh-google-stars">★★★★★</span></div>
-                            <span class="dh-google-sub">Trusted by 50,000+ Customers</span>
+                            <div class="dh-slide-trust-row">
+                                <div class="dh-google-pill">
+                                    <span class="dh-google-icon">G</span>
+                                    <div>
+                                        <div class="dh-google-score">4.9 <span class="dh-google-stars">★★★★★</span></div>
+                                        <span class="dh-google-sub">21,773+ reviews &bull; Many Happy Reviews</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                @elseif($isDiabetes)
+                    <!-- SLIDE: DIABETES PRO MADHUCUREX (DYNAMIC FROM DB) -->
+                    <div class="dh-slide-diabetes">
+                        <div class="dh-slide-liver-content">
+                            <div class="dh-slide-brand-tag">
+                                <span style="background:rgba(212,175,55,0.2); border:1px solid var(--dh-gold); padding:4px 14px; border-radius:20px; font-size:0.75rem; text-transform:uppercase;">आओ आयुर्वेद अपनाएं</span>
+                            </div>
+                            <h2 style="font-family:'Cinzel',serif; font-size:2.8rem; font-weight:900; color:#ffffff; margin:0 0 10px 0;">{{ $banner->title }}</h2>
+                            <h3 style="font-size:1.6rem; color:#fde68a; margin-bottom:15px; font-weight:700;">शुगर और संपूर्ण स्वास्थ्य संतुलन बनाए रखे</h3>
+                            <p class="dh-slide-liver-sub">{{ $banner->subtitle }}</p>
 
-            <div class="dh-slide-liver-img-wrap">
-                <img src="{{ asset('images/liver_detox_product.jpg') }}" alt="dhuria Liver Detox Capsule">
-            </div>
-        </div>
+                            <a href="{{ $banner->link ?: route('product.show', 'diabetes-pro-madhucurex-powder') }}" class="dh-btn-order-now" style="background:linear-gradient(135deg, #d4af37 0%, #b89326 100%); color:#061528 !important; width:fit-content;">
+                                <span>BUY NOW</span> <i class="bi bi-cart3"></i>
+                            </a>
+                        </div>
 
-        <!-- SLIDE 2: PILECUREX KIT -->
-        <div class="dh-slide-pilecurex">
-            <div class="dh-pilecurex-left"></div>
-
-            <div class="dh-pilecurex-right">
-                <h2 class="dh-pilecurex-title">PILECUREX KIT</h2>
-                <p class="dh-pilecurex-desc">
-                    Natural Ayurvedic Care for Relief from Piles Discomfort
-                </p>
-
-                <a href="{{ route('product.show', 'pilecurex-kit') }}" class="dh-btn-order-now" style="background:linear-gradient(135deg, #ff7a00 0%, #ea580c 100%); color:#fff !important; width:fit-content; margin-bottom:25px;">
-                    <span>ORDER NOW</span>
-                </a>
-
-                <div class="dh-slide-trust-row">
-                    <div class="dh-google-pill">
-                        <span class="dh-google-icon">G</span>
-                        <div>
-                            <div class="dh-google-score">4.9 <span class="dh-google-stars">★★★★★</span></div>
-                            <span class="dh-google-sub">21,773+ reviews &bull; Many Happy Reviews</span>
+                        <div class="dh-slide-liver-img-wrap">
+                            <img src="{{ $banner->image_url }}" alt="{{ $banner->title }}">
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
+                @else
+                    <!-- SLIDE: GENERAL AYURVEDIC / LIVER DETOX (DYNAMIC FROM DB) -->
+                    <div class="dh-slide-liver">
+                        <div class="dh-slide-liver-content">
+                            <div class="dh-slide-brand-tag">
+                                <img src="{{ asset('images/dhuria_logo_white.png') }}" alt="dhuria">
+                            </div>
+                            <h1 class="dh-slide-liver-title">{{ $banner->title }}</h1>
+                            <p class="dh-slide-liver-sub">{{ $banner->subtitle }}</p>
 
-        <!-- SLIDE 3: DIABETES PRO MADHUCUREX -->
-        <div class="dh-slide-diabetes">
-            <div class="dh-slide-liver-content">
-                <div class="dh-slide-brand-tag">
-                    <span style="background:rgba(212,175,55,0.2); border:1px solid var(--dh-gold); padding:4px 14px; border-radius:20px; font-size:0.75rem; text-transform:uppercase;">आओ आयुर्वेद अपनाएं</span>
-                </div>
-                <h2 style="font-family:'Cinzel',serif; font-size:2.8rem; font-weight:900; color:#ffffff; margin:0 0 10px 0;">Diabetes Pro MadhuCurex</h2>
-                <h3 style="font-size:1.6rem; color:#fde68a; margin-bottom:15px; font-weight:700;">शुगर और संपूर्ण स्वास्थ्य संतुलन बनाए रखे</h3>
-                <p class="dh-slide-liver-sub">
-                    जामुन, करेला, गुड़मार और विजयसार का वैदिक अर्क। मेटाबोलिक संतुलन और ऊर्जा में लाभकारी।
-                </p>
+                            <div class="dh-slide-actions">
+                                <a href="{{ $banner->link ?: route('shop') }}" class="dh-btn-order-now">
+                                    <span>Order Now</span> <i class="bi bi-cart3"></i>
+                                </a>
+                            </div>
 
-                <a href="{{ route('product.show', 'diabetes-pro-madhucurex-powder') }}" class="dh-btn-order-now" style="background:linear-gradient(135deg, #d4af37 0%, #b89326 100%); color:#061528 !important; width:fit-content;">
-                    <span>BUY NOW</span> <i class="bi bi-cart3"></i>
-                </a>
-            </div>
+                            <div class="dh-slide-trust-row">
+                                <div class="dh-google-pill">
+                                    <span class="dh-google-icon">G</span>
+                                    <div>
+                                        <div class="dh-google-score">4.9 <span class="dh-google-stars">★★★★★</span></div>
+                                        <span class="dh-google-sub">Trusted by 50,000+ Customers</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-            <div class="dh-slide-liver-img-wrap">
-                <img src="{{ asset('images/diabetes_pro_product.jpg') }}" alt="Diabetes Pro MadhuCurex">
-            </div>
-        </div>
-
+                        <div class="dh-slide-liver-img-wrap">
+                            <img src="{{ $banner->image_url }}" alt="{{ $banner->title }}">
+                        </div>
+                    </div>
+                @endif
+            @endforeach
+        @endif
     </div>
 </section>
 
@@ -1806,19 +1807,24 @@
 @endif
 
 <!-- ========================================================
-     11. MID PROMO BANNER (CHOOSE PURE - MATCHING IMAGE 3)
+     11. MID PROMO BANNER (CHOOSE PURE - 100% DATABASE DYNAMIC)
      ======================================================== -->
+@php
+    $promoBanner = isset($banners) ? $banners->where('type', 'promo')->first() : null;
+@endphp
 <div style="max-width:1200px; margin:45px auto; border-radius:20px; overflow:hidden; position:relative; box-shadow:0 10px 30px rgba(0,0,0,0.1);">
-    <img src="{{ asset('images/enriched_nature_banner.jpg') }}" alt="Choose Pure Choose Ayurveda" style="width:100%; max-height:200px; object-fit:cover; display:block;">
-    <div style="position:absolute; inset:0; background:linear-gradient(to right, rgba(8, 26, 48, 0.85) 35%, rgba(8, 26, 48, 0.4) 100%); display:flex; align-items:center; justify-content:space-between; padding:25px 45px; flex-wrap:wrap; gap:20px;">
-        <div>
-            <h3 style="font-family:'Brush Script MT','Great Vibes',cursive,serif; font-size:2.8rem; color:#fef08a; margin:0; line-height:1.1;">Choose Pure &bull; Choose Ayurveda</h3>
-            <p style="font-size:0.92rem; color:#e2e8f0; margin:6px 0 0 0; letter-spacing:0.5px;">Authentic formulations crafted to bring health, balance &amp; peace to your home.</p>
+    <a href="{{ $promoBanner->link ?? route('shop') }}" style="display:block; text-decoration:none;">
+        <img src="{{ $promoBanner ? $promoBanner->image_url : asset('images/enriched_nature_banner.jpg') }}" alt="{{ $promoBanner->title ?? 'Choose Pure Choose Ayurveda' }}" style="width:100%; max-height:200px; object-fit:cover; display:block;">
+        <div style="position:absolute; inset:0; background:linear-gradient(to right, rgba(8, 26, 48, 0.85) 35%, rgba(8, 26, 48, 0.4) 100%); display:flex; align-items:center; justify-content:space-between; padding:25px 45px; flex-wrap:wrap; gap:20px;">
+            <div>
+                <h3 style="font-family:'Brush Script MT','Great Vibes',cursive,serif; font-size:2.8rem; color:#fef08a; margin:0; line-height:1.1;">{{ $promoBanner->title ?? 'Choose Pure • Choose Ayurveda' }}</h3>
+                <p style="font-size:0.92rem; color:#e2e8f0; margin:6px 0 0 0; letter-spacing:0.5px;">{{ $promoBanner->subtitle ?? 'Authentic formulations crafted to bring health, balance & peace to your home.' }}</p>
+            </div>
+            <div style="display:flex; align-items:center; gap:12px;">
+                <img src="{{ asset('images/dhuria_logo_white.png') }}" alt="Dhuria" style="height:38px; width:auto; object-fit:contain;">
+            </div>
         </div>
-        <div style="display:flex; align-items:center; gap:12px;">
-            <img src="{{ asset('images/dhuria_logo_white.png') }}" alt="Dhuria" style="height:38px; width:auto; object-fit:contain;">
-        </div>
-    </div>
+    </a>
 </div>
 
 <!-- ========================================================

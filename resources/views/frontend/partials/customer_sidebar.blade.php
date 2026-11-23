@@ -19,14 +19,14 @@
         height: 48px !important;
         min-width: 48px !important;
         border-radius: 14px !important;
-        background: linear-gradient(135deg, #b71c1c 0%, #e11d48 100%) !important;
-        color: #ffffff !important;
+        background: linear-gradient(135deg, #081a30 0%, #1e3a5f 100%) !important;
+        color: #d4af37 !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
         font-size: 18px !important;
         font-weight: 800 !important;
-        box-shadow: 0 3px 8px rgba(183, 28, 28, 0.3) !important;
+        box-shadow: 0 3px 8px rgba(8, 26, 48, 0.25) !important;
     }
     .cp-nav-list {
         display: flex !important;
@@ -47,15 +47,15 @@
     }
     .cp-nav-item:hover {
         background: #f8fafc !important;
-        color: #b71c1c !important;
+        color: #081a30 !important;
     }
     .cp-nav-item.active {
-        background: #b71c1c !important;
+        background: #081a30 !important;
         color: #ffffff !important;
-        box-shadow: 0 4px 10px rgba(183, 28, 28, 0.25) !important;
+        box-shadow: 0 4px 10px rgba(8, 26, 48, 0.25) !important;
     }
     .cp-nav-item.active i {
-        color: #ffffff !important;
+        color: #d4af37 !important;
     }
 </style>
 
@@ -147,7 +147,7 @@
         <div style="margin-top: 18px; padding: 14px; border-radius: 14px; background: #0f172a; color: #ffffff; position: relative; overflow: hidden;">
             <div style="font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: #fbbf24; margin-bottom: 4px;">Need Assistance?</div>
             <p style="font-size: 11px; color: #94a3b8; margin: 0 0 10px 0; line-height: 1.4;">Contact our support team for quick order help.</p>
-            <a href="{{ url('/contact') }}" style="display: inline-flex; align-items: center; gap: 6px; background: #b71c1c; color: #ffffff; padding: 6px 12px; border-radius: 8px; font-size: 11px; font-weight: 800; text-decoration: none;">
+            <a href="{{ url('/contact') }}" style="display: inline-flex; align-items: center; gap: 6px; background: #c8923a; color: #ffffff; padding: 6px 12px; border-radius: 8px; font-size: 11px; font-weight: 800; text-decoration: none;">
                 <i class="fa-solid fa-comments"></i> Get Support
             </a>
         </div>

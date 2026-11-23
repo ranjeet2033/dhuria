@@ -189,6 +189,12 @@
     .dh-quick-cards-grid { grid-template-columns: 1fr; }
     .dh-contact-split { grid-template-columns: 1fr; }
 }
+@media (max-width: 600px) {
+    .dh-contact-wrap { padding: 20px 15px 50px; }
+    .dh-contact-title { font-size: 1.8rem; }
+    .dh-inquiry-box { padding: 20px; }
+    .dh-form-row-2col { grid-template-columns: 1fr !important; }
+}
 </style>
 
 <div class="dh-contact-wrap">
@@ -242,7 +248,7 @@
             <p style="font-size:0.88rem; color:#64748b; margin-bottom:20px;">Fill in your details and our Ayurvedic advisors will get back to you with personalized assistance.</p>
 
             <form onsubmit="event.preventDefault(); alert('Thank you! Your inquiry has been submitted. Our Ayurvedic practitioners will contact you shortly.'); this.reset();">
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
+                <div class="dh-form-row-2col" style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
                     <div class="dh-form-group">
                         <label class="dh-form-label">Your Full Name *</label>
                         <input type="text" class="dh-form-input" placeholder="e.g. Ramesh Kumar" required>
@@ -253,7 +259,7 @@
                     </div>
                 </div>
 
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
+                <div class="dh-form-row-2col" style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
                     <div class="dh-form-group">
                         <label class="dh-form-label">Email Address (Optional)</label>
                         <input type="email" class="dh-form-input" placeholder="e.g. ramesh@example.com">

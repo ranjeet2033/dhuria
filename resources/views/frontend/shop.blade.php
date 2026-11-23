@@ -4,8 +4,8 @@
 
 @section('content')
 <div class="container" style="max-width: 1280px; margin: 0 auto; padding: 40px 20px 80px 20px;">
-    <!-- Centered Header matching Image 2 (media_1795458482219_cea0b7fa.png) -->
-    <div style="margin-bottom: 40px; text-align: center;">
+    <!-- Centered Header matching Image 2 -->
+    <div style="margin-bottom: 30px; text-align: center;">
         <h1 style="font-size: 2.3rem; font-weight: 800; color: #081a30; margin: 0 0 10px 0; letter-spacing: -0.02em; text-transform: uppercase;">
             OUR AYURVEDIC COLLECTION
         </h1>
@@ -13,18 +13,51 @@
             Meticulously crafted 100% natural formulations for holistic healing and balanced living.
         </p>
 
-        <!-- Clean Filter Pills (All, MadhuCurex, Liver Detox, Pilecurex, etc.) -->
-        <div style="display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 8px; margin-top: 18px;">
-            <a href="{{ route('shop') }}" 
-               style="padding: 7px 18px; border-radius: 30px; font-size: 12px; font-weight: 700; text-decoration: none; transition: all 0.2s; {{ !request('cat') ? 'background: #081a30; color: #ffffff;' : 'background: #f1f5f9; color: #475569;' }}">
-                All Products
-            </a>
-            @foreach($categories as $cat)
-                <a href="{{ route('shop', ['cat' => $cat->slug]) }}" 
-                   style="padding: 7px 18px; border-radius: 30px; font-size: 12px; font-weight: 700; text-decoration: none; transition: all 0.2s; {{ request('cat') == $cat->slug ? 'background: #081a30; color: #ffffff;' : 'background: #f1f5f9; color: #475569;' }}">
-                    {{ $cat->name }}
+        <!-- Sleek Horizontal Scrollable Category Filter Pills -->
+        <div class="dh-shop-cat-bar-wrap">
+            <div class="dh-shop-cat-rail">
+                <a href="{{ route('shop') }}" class="dh-shop-cat-pill {{ !request('cat') ? 'active' : '' }}">
+                    <i class="bi bi-grid-fill"></i> All Formulations
                 </a>
-            @endforeach
+                @foreach($categories as $cat)
+                    <a href="{{ route('shop', array_merge(request()->except(['cat', 'page']), ['cat' => $cat->slug])) }}" 
+                       class="dh-shop-cat-pill {{ request('cat') == $cat->slug ? 'active' : '' }}">
+                        {{ $cat->name }}
+                    </a>
+                @endforeach
+            </div>
+        </div>
+    </div>
+
+    <!-- Toolbar: Count + Active Filters + Sort By + Mobile Filter Drawer Button -->
+    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; margin-bottom: 24px; padding: 12px 18px; background: #ffffff; border-radius: 16px; border: 1px solid #e2e8f0; box-shadow: 0 2px 10px rgba(0,0,0,0.02);">
+        <div style="font-size: 0.85rem; font-weight: 700; color: #475569;">
+            Showing <span style="color: #081a30; font-weight: 800;">{{ $products->total() }}</span> Formulations
+            @if(request('search'))
+                for "<span style="color: #081a30;">{{ request('search') }}</span>"
+            @endif
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+            @if(request()->hasAny(['cat', 'search', 'sort_by', 'highlight', 'max_price']))
+                <a href="{{ route('shop') }}" style="font-size: 0.75rem; font-weight: 700; color: #ef4444; background: #fef2f2; border: 1px solid #fecaca; border-radius: 20px; padding: 5px 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
+                    <i class="bi bi-x-circle-fill"></i> Clear Filters
+                </a>
+            @endif
+
+            <!-- Sort By Selector -->
+            <form action="{{ route('shop') }}" method="GET" style="display: flex; align-items: center; margin: 0;">
+                @foreach(request()->except(['sort_by', 'page']) as $k => $v)
+                    <input type="hidden" name="{{ $k }}" value="{{ $v }}">
+                @endforeach
+                <label for="shopSortBy" style="font-size: 0.78rem; font-weight: 700; color: #64748b; margin-right: 6px; white-space: nowrap;">Sort by:</label>
+                <select id="shopSortBy" name="sort_by" onchange="this.form.submit()" style="padding: 6px 12px; border-radius: 10px; border: 1px solid #cbd5e1; font-size: 0.8rem; font-weight: 700; color: #081a30; background: #f8fafc; outline: none; cursor: pointer;">
+                    <option value="latest" {{ request('sort_by') == 'latest' ? 'selected' : '' }}>Newest First</option>
+                    <option value="bestseller" {{ request('sort_by') == 'bestseller' ? 'selected' : '' }}>Best Selling</option>
+                    <option value="price_low" {{ request('sort_by') == 'price_low' ? 'selected' : '' }}>Price: Low to High</option>
+                    <option value="price_high" {{ request('sort_by') == 'price_high' ? 'selected' : '' }}>Price: High to Low</option>
+                </select>
+            </form>
         </div>
     </div>
 
@@ -88,6 +121,70 @@
 </div>
 
 <style>
+/* SLEEK HORIZONTAL SWIPEABLE CATEGORY CHIPS BAR */
+.dh-shop-cat-bar-wrap {
+    margin-top: 18px;
+    margin-bottom: 6px;
+    width: 100%;
+}
+.dh-shop-cat-rail {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 6px 4px 10px 4px;
+    justify-content: center;
+}
+.dh-shop-cat-rail::-webkit-scrollbar {
+    display: none;
+}
+.dh-shop-cat-pill {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 18px;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    background: #ffffff;
+    color: #475569;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+.dh-shop-cat-pill:hover {
+    border-color: #cbd5e1;
+    color: #081a30;
+    background: #f8fafc;
+}
+.dh-shop-cat-pill.active {
+    background: #081a30;
+    color: #ffffff;
+    border-color: #081a30;
+    box-shadow: 0 4px 12px rgba(8, 26, 48, 0.2);
+}
+.dh-shop-cat-pill.active i {
+    color: #d4af37;
+}
+
+@media (max-width: 820px) {
+    .dh-shop-cat-rail {
+        justify-content: flex-start;
+        padding-left: 2px;
+        padding-right: 2px;
+    }
+    .dh-shop-cat-pill {
+        padding: 7px 14px;
+        font-size: 12px;
+    }
+}
+
 /* 4-COLUMN RESPONSIVE COLLECTION GRID MATCHING IMAGE 2 */
 .dh-collection-grid {
     display: grid;
@@ -104,15 +201,59 @@
 
 @media (max-width: 768px) {
     .dh-collection-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 14px;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 12px !important;
+    }
+    .dh-card-img-box {
+        height: 170px !important;
+    }
+    .dh-card-body {
+        padding: 12px 10px 14px 10px !important;
+    }
+    .dh-card-title {
+        font-size: 13px !important;
+        height: 36px !important;
+        margin-bottom: 4px !important;
+    }
+    .dh-card-price-current {
+        font-size: 15px !important;
+    }
+    .dh-card-price-old {
+        font-size: 11px !important;
+    }
+    .dh-btn-card-add {
+        padding: 9px 8px !important;
+        font-size: 10px !important;
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 420px) {
     .dh-collection-grid {
-        grid-template-columns: 1fr;
-        gap: 16px;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 8px !important;
+    }
+    .dh-product-card {
+        border-radius: 14px !important;
+    }
+    .dh-card-img-box {
+        height: 145px !important;
+        border-radius: 14px 14px 0 0 !important;
+    }
+    .dh-card-title {
+        font-size: 11.5px !important;
+        line-height: 1.3 !important;
+        height: 30px !important;
+    }
+    .dh-card-price-current {
+        font-size: 14px !important;
+    }
+    .dh-card-price-old {
+        font-size: 10.5px !important;
+    }
+    .dh-btn-card-add {
+        padding: 8px 6px !important;
+        font-size: 9.5px !important;
+        letter-spacing: 0.02em !important;
     }
 }
 

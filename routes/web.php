@@ -26,6 +26,7 @@ Route::get('/about', [FrontendController::class, 'about'])->name('about');
 Route::get('/shop', [FrontendController::class, 'shop'])->name('shop');
 Route::get('/product/{slug}', [FrontendController::class, 'product'])->name('product.show');
 Route::get('/contact', [FrontendController::class, 'contact'])->name('contact');
+Route::get('/api/search/live', [FrontendController::class, 'liveSearch'])->name('api.search.live');
 
 // PWA Download App Landing Page
 Route::view('/download-app', 'frontend.download_app')->name('download.app');

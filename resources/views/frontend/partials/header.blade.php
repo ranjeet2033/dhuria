@@ -1,6 +1,6 @@
 @php
     $headerCategories = \App\Models\Category::parents()->with('children.children')->where('is_active', true)->get();
-    $searchFeaturedProducts = \App\Models\Product::where('is_active', true)->take(4)->get();
+    $searchFeaturedProducts = \App\Models\Product::where('is_active', true)->get();
 @endphp
 
 <!-- ========================================================
@@ -268,18 +268,18 @@
       border: 1.5px solid var(--fl-navy-dark);
     }
 
-    /* Centered Search Popup Modal (Matching Reference) */
+    /* Centered Search Popup Modal (Matching Modern E-Commerce Standard) */
     .flora-search-modal-backdrop {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(3, 12, 24, 0.72);
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
+      background: rgba(3, 12, 24, 0.78);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       z-index: 100000;
       align-items: flex-start;
       justify-content: center;
-      padding: 50px 16px 20px;
+      padding: 40px 16px 20px;
       overflow-y: auto;
     }
     .flora-search-modal-backdrop.active {
@@ -287,16 +287,17 @@
     }
     .flora-search-modal-box {
       width: 100%;
-      max-width: 580px;
+      max-width: 620px;
       background: #ffffff;
       border-radius: 24px;
-      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.5);
       padding: 24px;
       color: #0f172a;
       font-family: 'Outfit', sans-serif;
       animation: searchModalSlideDown 0.22s cubic-bezier(0.16, 1, 0.3, 1);
       border: 1px solid rgba(226, 232, 240, 0.95);
       position: relative;
+      margin-bottom: 40px;
     }
     @keyframes searchModalSlideDown {
       from {
@@ -316,7 +317,7 @@
       border: 1.5px solid #e2e8f0;
       border-radius: 16px;
       padding: 10px 14px;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
       transition: all 0.2s;
     }
     .flora-search-input-wrap:focus-within {
@@ -329,7 +330,7 @@
       background: transparent;
       border: none;
       outline: none;
-      font-size: 0.92rem;
+      font-size: 0.95rem;
       font-weight: 500;
       color: #0f172a;
       padding: 0 10px;
@@ -337,9 +338,23 @@
     .flora-search-input-field::placeholder {
       color: #94a3b8;
     }
+    .flora-search-spinner {
+      display: none;
+      width: 18px;
+      height: 18px;
+      border: 2px solid #e2e8f0;
+      border-top-color: #d4af37;
+      border-radius: 50%;
+      animation: spinSearch 0.6s linear infinite;
+      margin-right: 8px;
+      flex-shrink: 0;
+    }
+    @keyframes spinSearch {
+      to { transform: rotate(360deg); }
+    }
     .flora-search-close-btn {
-      width: 28px;
-      height: 28px;
+      width: 30px;
+      height: 30px;
       border-radius: 50%;
       background: #f1f5f9;
       border: none;
@@ -347,7 +362,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.75rem;
+      font-size: 0.8rem;
       cursor: pointer;
       transition: all 0.2s;
       flex-shrink: 0;
@@ -357,38 +372,41 @@
       color: #0f172a;
     }
     .flora-search-sec-title {
-      font-size: 0.68rem;
+      font-size: 0.7rem;
       font-weight: 800;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: #94a3b8;
+      color: #64748b;
       display: flex;
       align-items: center;
-      gap: 6px;
+      justify-content: space-between;
       margin-bottom: 10px;
     }
     .flora-search-pill-list {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
     .flora-search-pill {
       font-size: 0.75rem;
       font-weight: 600;
       color: #334155;
-      background: #ffffff;
+      background: #f8fafc;
       border: 1px solid #e2e8f0;
       border-radius: 20px;
       padding: 5px 14px;
       text-decoration: none;
       cursor: pointer;
       transition: all 0.18s;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
     }
     .flora-search-pill:hover {
-      background: #f8fafc;
+      background: #081a30;
       border-color: #081a30;
-      color: #081a30;
+      color: #ffffff;
       transform: translateY(-1px);
     }
     .flora-search-remedies-header {
@@ -397,29 +415,48 @@
       justify-content: space-between;
       margin-bottom: 10px;
     }
+    .flora-search-scroll-list {
+      max-height: 400px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+    .flora-search-scroll-list::-webkit-scrollbar {
+      width: 5px;
+    }
+    .flora-search-scroll-list::-webkit-scrollbar-track {
+      background: #f1f5f9;
+      border-radius: 4px;
+    }
+    .flora-search-scroll-list::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    .flora-search-scroll-list::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
     .flora-search-remedy-item {
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 9px 12px;
+      padding: 10px 14px;
       border-radius: 14px;
-      border: 1px solid #f1f5f9;
-      background: #fcfdfe;
+      border: 1px solid #eef2f6;
+      background: #ffffff;
       text-decoration: none;
       color: inherit;
       margin-bottom: 8px;
-      transition: all 0.18s;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .flora-search-remedy-item:hover {
-      background: #ffffff;
+      background: #f8fafc;
       border-color: #cbd5e1;
-      box-shadow: 0 4px 12px rgba(8, 26, 48, 0.04);
-      transform: translateX(2px);
+      box-shadow: 0 4px 14px rgba(8, 26, 48, 0.06);
+      transform: translateY(-1px);
     }
     .flora-search-remedy-thumb {
-      width: 44px;
-      height: 44px;
-      border-radius: 10px;
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
       background: #f8fafc;
       display: flex;
       align-items: center;
@@ -427,7 +464,7 @@
       padding: 4px;
       flex-shrink: 0;
       overflow: hidden;
-      border: 1px solid #f1f5f9;
+      border: 1px solid #e2e8f0;
     }
     .flora-search-remedy-thumb img {
       max-width: 100%;
@@ -439,29 +476,68 @@
       min-width: 0;
     }
     .flora-search-remedy-name {
-      font-size: 0.82rem;
+      font-size: 0.88rem;
       font-weight: 700;
-      color: #0f172a;
+      color: #081a30;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      margin-bottom: 3px;
+      margin-bottom: 4px;
     }
     .flora-search-remedy-price-row {
       display: flex;
       align-items: center;
-      gap: 6px;
-      font-size: 0.78rem;
+      gap: 8px;
+      font-size: 0.82rem;
+      flex-wrap: wrap;
     }
     .flora-search-badge-ayur {
-      font-size: 0.62rem;
+      font-size: 0.65rem;
+      font-weight: 700;
+      background: #f1f5f9;
+      color: #475569;
+      padding: 2px 8px;
+      border-radius: 6px;
+      border: 1px solid #e2e8f0;
+    }
+    .flora-search-badge-discount {
+      font-size: 0.65rem;
       font-weight: 800;
-      background: #e0f2fe;
-      color: #0369a1;
+      background: #ecfdf5;
+      color: #059669;
       padding: 2px 7px;
       border-radius: 6px;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
+      border: 1px solid #a7f3d0;
+    }
+    .flora-search-view-all-btn {
+      display: block;
+      width: 100%;
+      text-align: center;
+      background: #081a30;
+      color: #ffffff !important;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      text-decoration: none !important;
+      margin-top: 14px;
+      transition: background 0.2s, transform 0.2s;
+      letter-spacing: 0.5px;
+    }
+    .flora-search-view-all-btn:hover {
+      background: #0d2544;
+      transform: translateY(-1px);
+    }
+    .flora-search-empty-state {
+      text-align: center;
+      padding: 35px 15px;
+      color: #64748b;
+    }
+    .flora-search-empty-state i {
+      font-size: 2.2rem;
+      color: #cbd5e1;
+      display: block;
+      margin-bottom: 8px;
     }
     .flora-search-quick-links {
       display: flex;
@@ -486,43 +562,307 @@
       border-color: #081a30;
     }
 
-    /* Mobile Hamburger Menu */
+    /* Mobile Hamburger Button */
     .flora-mobile-toggle {
       display: none;
-      background: none;
-      border: 1px solid var(--fl-gold);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(212, 175, 55, 0.35);
       color: var(--fl-gold);
-      border-radius: 6px;
-      padding: 6px 10px;
+      border-radius: 10px;
+      padding: 7px 11px;
       font-size: 1.25rem;
       cursor: pointer;
+      line-height: 1;
+      transition: all 0.2s ease;
+    }
+    .flora-mobile-toggle:hover {
+      background: rgba(212, 175, 55, 0.15);
+      border-color: var(--fl-gold);
     }
 
-    .flora-mobile-drawer {
-      display: none;
-      background: var(--fl-navy-main);
-      border-top: 1px solid rgba(212, 175, 55, 0.25);
-      padding: 20px;
+    /* LUXURY SLIDING OFFCANVAS SIDEBAR (DRAWER) */
+    .dh-sidebar-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(3, 12, 24, 0.7);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      z-index: 100001;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
     }
-    .flora-mobile-drawer.active {
-      display: block;
+    .dh-sidebar-backdrop.active {
+      opacity: 1;
+      visibility: visible;
     }
-    .flora-mobile-drawer ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
+
+    .dh-sidebar-panel {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 325px;
+      max-width: 86vw;
+      height: 100%;
+      height: 100dvh;
+      background: #081a30;
+      color: #ffffff;
+      z-index: 100002;
+      transform: translateX(100%);
+      transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: -10px 0 40px rgba(0, 0, 0, 0.55);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      font-family: 'Outfit', sans-serif;
     }
-    .flora-mobile-drawer li {
-      margin-bottom: 12px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-      padding-bottom: 8px;
+    .dh-sidebar-panel.active {
+      transform: translateX(0);
     }
-    .flora-mobile-drawer a {
+
+    .dh-sidebar-head {
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background: #061528;
+    }
+    .dh-sidebar-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .dh-sidebar-logo {
+      height: 32px;
+      width: auto;
+      object-fit: contain;
+    }
+    .dh-sidebar-tag {
+      font-size: 8px;
+      font-weight: 800;
+      letter-spacing: 0.2em;
+      color: #d4af37;
+      text-transform: uppercase;
+    }
+    .dh-sidebar-close-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #cbd5e1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .dh-sidebar-close-btn:hover {
+      background: rgba(239, 68, 68, 0.2);
+      color: #ef4444;
+      border-color: #ef4444;
+    }
+
+    /* User Profile Snippet in Sidebar */
+    .dh-sidebar-user-card {
+      padding: 14px 18px;
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.12) 0%, rgba(13, 37, 68, 0.6) 100%);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    }
+    .dh-sb-user-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    .dh-sb-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: #d4af37;
+      color: #081a30;
+      font-weight: 900;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .dh-sb-user-name {
+      font-size: 14px;
+      font-weight: 800;
+      color: #ffffff;
+      line-height: 1.2;
+    }
+    .dh-sb-user-badge {
+      font-size: 10px;
+      color: #cbd5e1;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 2px;
+    }
+    .dh-sb-user-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .dh-sb-action-link {
+      flex: 1;
+      padding: 6px 10px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 700;
       color: #f1f5f9;
       text-decoration: none;
-      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: background 0.2s;
+    }
+    .dh-sb-action-link:hover {
+      background: rgba(212, 175, 55, 0.25);
+      color: #d4af37;
+    }
+
+    .dh-sb-guest-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .dh-sb-guest-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+    .dh-sb-guest-sub {
+      font-size: 10px;
+      color: #94a3b8;
+      margin: 2px 0 0 0;
+    }
+    .dh-sb-login-btn {
+      background: linear-gradient(135deg, #d4af37 0%, #b89326 100%);
+      color: #061528 !important;
+      font-size: 11px;
+      font-weight: 900;
+      padding: 7px 14px;
+      border-radius: 20px;
+      text-decoration: none !important;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
+    }
+
+    /* Scrollable Navigation */
+    .dh-sidebar-scroll {
+      flex: 1;
+      overflow-y: auto;
+      padding: 14px 18px 24px;
+    }
+    .dh-sidebar-scroll::-webkit-scrollbar {
+      width: 4px;
+    }
+    .dh-sidebar-scroll::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 4px;
+    }
+    .dh-sb-sec-title {
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+      color: #64748b;
+      text-transform: uppercase;
+      margin: 16px 0 8px;
+    }
+    .dh-sb-nav-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      border-radius: 12px;
+      color: #f1f5f9;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 3px;
+      transition: all 0.18s ease;
+    }
+    .dh-sb-nav-item:hover, .dh-sb-nav-item.active {
+      background: rgba(255, 255, 255, 0.08);
+      color: #d4af37;
+    }
+    .dh-sb-nav-item i {
+      font-size: 14px;
+      width: 20px;
+      color: #94a3b8;
+    }
+    .dh-sb-nav-item:hover i, .dh-sb-nav-item.active i {
+      color: #d4af37;
+    }
+    .dh-sb-cat-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px 8px 16px;
+      border-radius: 10px;
+      color: #cbd5e1;
+      text-decoration: none;
+      font-size: 12px;
       font-weight: 600;
-      display: block;
+      margin-bottom: 2px;
+      border-left: 2px solid transparent;
+      transition: all 0.18s ease;
+    }
+    .dh-sb-cat-link:hover, .dh-sb-cat-link.active {
+      background: rgba(255, 255, 255, 0.05);
+      color: #ffffff;
+      border-left-color: #d4af37;
+    }
+    .dh-sb-cat-link i {
+      font-size: 11px;
+      color: #d4af37;
+    }
+
+    /* Sidebar Footer Support Box */
+    .dh-sb-support-box {
+      margin-top: 18px;
+      padding: 14px;
+      background: #040e1c;
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      border-radius: 14px;
+      text-align: center;
+    }
+    .dh-sb-wa-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #25d366;
+      color: #ffffff !important;
+      padding: 9px 14px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 800;
+      text-decoration: none !important;
+      margin-bottom: 8px;
+      box-shadow: 0 4px 12px rgba(37, 211, 102, 0.25);
+    }
+    .dh-sb-phone-link {
+      font-size: 11px;
+      color: #94a3b8;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .dh-sb-phone-link:hover {
+      color: #d4af37;
     }
 
     .flora-mobile-search-btn {
@@ -700,174 +1040,491 @@
       </a>
 
       <!-- Mobile Hamburger Toggle (Right side on mobile) -->
-      <button class="flora-mobile-toggle" id="floraMobileToggle" aria-label="Toggle Menu" style="display:none;">
+      <button class="flora-mobile-toggle" id="floraMobileToggle" aria-label="Toggle Menu">
         <i class="bi bi-list"></i>
       </button>
     </div>
 
-    <!-- Centered Search Popup Modal (Matching Reference Image 4) -->
+    <!-- Centered Search Popup Modal (Matching Modern E-Commerce Standard) -->
     <div class="flora-search-modal-backdrop" id="floraSearchModalBackdrop">
       <div class="flora-search-modal-box" id="floraSearchModalBox" onclick="event.stopPropagation()">
         <!-- Search Input Form -->
-        <form action="{{ route('shop') }}" method="GET" id="floraSearchForm">
+        <form action="{{ route('shop') }}" method="GET" id="floraSearchForm" onsubmit="saveRecentSearch(document.getElementById('floraSearchInput').value)">
           <div class="flora-search-input-wrap">
-            <i class="bi bi-search" style="color: #94a3b8; font-size: 1.05rem; flex-shrink: 0;"></i>
-            <input type="text" name="search" id="floraSearchInput" class="flora-search-input-field" placeholder="Search remedies, kits..." value="{{ request('search') }}" autocomplete="off">
+            <i class="bi bi-search" style="color: #d4af37; font-size: 1.1rem; flex-shrink: 0;"></i>
+            <input type="text" name="search" id="floraSearchInput" class="flora-search-input-field" placeholder="Search Ayurvedic remedies, kits, powders..." value="{{ request('search') }}" autocomplete="off">
+            <div class="flora-search-spinner" id="floraSearchSpinner"></div>
             <button type="button" class="flora-search-close-btn" id="floraSearchCloseBtn" title="Close Search">
               <i class="bi bi-x-lg"></i>
             </button>
           </div>
         </form>
 
-        <!-- Popular Searches Section -->
-        <div class="flora-search-sec-title">
-          <i class="bi bi-stars" style="color: #f59e0b;"></i>
-          <span>Popular Searches</span>
-        </div>
-        <div class="flora-search-pill-list">
-          <a href="{{ route('shop', ['search' => 'Pilecurex Kit']) }}" class="flora-search-pill">Pilecurex Kit</a>
-          <a href="{{ route('shop', ['search' => 'MadhuCurex']) }}" class="flora-search-pill">MadhuCurex</a>
-          <a href="{{ route('shop', ['search' => 'Liver Detox']) }}" class="flora-search-pill">Liver Detox</a>
-          <a href="{{ route('shop', ['search' => 'Paachan Sathi']) }}" class="flora-search-pill">Paachan Sathi</a>
-          <a href="{{ route('shop', ['search' => 'Diabetes Care']) }}" class="flora-search-pill">Diabetes Care</a>
-        </div>
-
-        <!-- Featured Remedies Section -->
-        <div class="flora-search-remedies-header">
-          <div class="flora-search-sec-title" style="margin-bottom: 0;">
-            <i class="bi bi-activity" style="color: #0284c7;"></i>
-            <span>Featured Remedies</span>
+        <!-- Dynamic Live Search Results Container (Hidden initially) -->
+        <div id="floraSearchLiveView" style="display: none;">
+          <!-- Category Suggestions -->
+          <div id="floraSearchCatWrap" style="display: none; margin-bottom: 12px;">
+            <div class="flora-search-sec-title">
+              <span>Matching Categories</span>
+            </div>
+            <div id="floraSearchCatResults" class="flora-search-pill-list"></div>
           </div>
-          <a href="{{ route('shop') }}" style="font-size: 0.72rem; font-weight: 700; color: #475569; text-decoration: none;">View all &rarr;</a>
-        </div>
 
-        <div id="floraSearchRemediesList">
-          @foreach($searchFeaturedProducts as $sProd)
-            <a href="{{ route('product.show', $sProd->slug) }}" class="flora-search-remedy-item" data-title="{{ strtolower($sProd->name) }}">
-              <div class="flora-search-remedy-thumb">
-                <img src="{{ $sProd->primary_image_url }}" alt="{{ $sProd->name }}">
-              </div>
-              <div class="flora-search-remedy-info">
-                <div class="flora-search-remedy-name">{{ $sProd->name }}</div>
-                <div class="flora-search-remedy-price-row">
-                  @if($sProd->sale_price)
-                    <strong style="color: #081a30; font-weight: 800;">&#8377;{{ number_format($sProd->sale_price, 0) }}</strong>
-                    <span style="color: #94a3b8; text-decoration: line-through; font-size: 0.72rem;">&#8377;{{ number_format($sProd->price, 0) }}</span>
-                  @else
-                    <strong style="color: #081a30; font-weight: 800;">&#8377;{{ number_format($sProd->price, 0) }}</strong>
-                  @endif
-                  <span class="flora-search-badge-ayur">Ayurvedic</span>
-                </div>
-              </div>
-              <i class="bi bi-chevron-right" style="color: #cbd5e1; font-size: 0.85rem; margin-left: auto;"></i>
+          <!-- Live Product Results -->
+          <div class="flora-search-sec-title">
+            <span id="floraSearchLiveCountLabel">Live Formulations</span>
+          </div>
+          <div id="floraSearchProdResults" class="flora-search-scroll-list"></div>
+
+          <!-- View All Results Button -->
+          <a href="#" id="floraSearchAllLink" class="flora-search-view-all-btn">
+            View all results &rarr;
+          </a>
+
+          <!-- No Results State -->
+          <div id="floraSearchNoResults" class="flora-search-empty-state" style="display: none;">
+            <i class="bi bi-search"></i>
+            <p style="font-weight: 800; color: #081a30; font-size: 1rem; margin-bottom: 4px;">No Formulations Found</p>
+            <p style="font-size: 0.82rem; margin-bottom: 16px; color: #64748b;">We couldn't find any remedies matching your search query.</p>
+            <a href="{{ route('shop') }}" class="flora-search-pill" style="background:#081a30; color:#ffffff; border-color:#081a30; padding: 7px 18px;">
+              <i class="bi bi-grid-fill text-amber-400"></i> Browse All Formulations
             </a>
-          @endforeach
+          </div>
         </div>
 
-        <!-- Quick Links Section -->
-        <div class="flora-search-sec-title" style="margin-top: 18px; margin-bottom: 8px;">
-          <span>Quick Links</span>
-        </div>
-        <div class="flora-search-quick-links">
-          <a href="{{ route('shop') }}" class="flora-search-quick-link">All Products</a>
-          <a href="{{ route('about') }}" class="flora-search-quick-link">About Us</a>
-          <a href="{{ route('contact') }}" class="flora-search-quick-link">Contact Support</a>
+        <!-- Initial Default Search View (Recent + Popular + All Dynamic Products) -->
+        <div id="floraSearchInitialView">
+          <!-- Recent Searches Section (Loaded via JS localStorage) -->
+          <div id="floraRecentSearchesWrap" style="display: none; margin-bottom: 14px;">
+            <div class="flora-search-sec-title">
+              <span><i class="bi bi-clock-history"></i> Recent Searches</span>
+              <button type="button" onclick="clearRecentSearches()" style="background:none; border:none; color:#ef4444; font-size:0.68rem; font-weight:700; cursor:pointer;">Clear</button>
+            </div>
+            <div id="floraRecentSearchesList" class="flora-search-pill-list" style="margin-bottom: 12px;"></div>
+          </div>
+
+          <!-- Popular Searches Section -->
+          <div class="flora-search-sec-title">
+            <span><i class="bi bi-stars" style="color: #f59e0b;"></i> Popular Searches</span>
+          </div>
+          <div class="flora-search-pill-list">
+            <button type="button" class="flora-search-pill" onclick="quickSearch('MadhuCurex')">MadhuCurex</button>
+            <button type="button" class="flora-search-pill" onclick="quickSearch('Pilecurex Kit')">Pilecurex Kit</button>
+            <button type="button" class="flora-search-pill" onclick="quickSearch('Liver Detox')">Liver Detox</button>
+            <button type="button" class="flora-search-pill" onclick="quickSearch('Paachan Sathi')">Paachan Sathi</button>
+            <button type="button" class="flora-search-pill" onclick="quickSearch('Shilajit')">Shilajit Resin</button>
+            <button type="button" class="flora-search-pill" onclick="quickSearch('Triphala')">Triphala Churna</button>
+            <button type="button" class="flora-search-pill" onclick="quickSearch('Joint Care')">Joint Care</button>
+          </div>
+
+          <!-- Dynamic Remedies Section -->
+          <div class="flora-search-remedies-header">
+            <div class="flora-search-sec-title" style="margin-bottom: 0;">
+              <span><i class="bi bi-shield-check" style="color: #10b981;"></i> Ayurvedic Formulations</span>
+            </div>
+            <a href="{{ route('shop') }}" style="font-size: 0.72rem; font-weight: 700; color: #475569; text-decoration: none;">View all ({{ $searchFeaturedProducts->count() }}) &rarr;</a>
+          </div>
+
+          <div id="floraSearchRemediesList" class="flora-search-scroll-list">
+            @foreach($searchFeaturedProducts as $sProd)
+              <a href="{{ route('product.show', $sProd->slug) }}" class="flora-search-remedy-item" onclick="saveRecentSearch('{{ addslashes($sProd->name) }}')">
+                <div class="flora-search-remedy-thumb">
+                  <img src="{{ $sProd->primary_image_url }}" alt="{{ $sProd->name }}" loading="lazy">
+                </div>
+                <div class="flora-search-remedy-info">
+                  <div class="flora-search-remedy-name">{{ $sProd->name }}</div>
+                  <div class="flora-search-remedy-price-row">
+                    @if($sProd->sale_price)
+                      <strong style="color: #081a30; font-weight: 800;">&#8377;{{ number_format($sProd->sale_price, 0) }}</strong>
+                      <span style="color: #94a3b8; text-decoration: line-through; font-size: 0.75rem;">&#8377;{{ number_format($sProd->price, 0) }}</span>
+                      @php
+                        $discPct = round((($sProd->price - $sProd->sale_price) / $sProd->price) * 100);
+                      @endphp
+                      @if($discPct > 0)
+                        <span class="flora-search-badge-discount">{{ $discPct }}% OFF</span>
+                      @endif
+                    @else
+                      <strong style="color: #081a30; font-weight: 800;">&#8377;{{ number_format($sProd->price, 0) }}</strong>
+                    @endif
+                    <span class="flora-search-badge-ayur">{{ $sProd->category->name ?? 'Pure Ayurveda' }}</span>
+                  </div>
+                </div>
+                <i class="bi bi-chevron-right" style="color: #cbd5e1; font-size: 0.85rem; margin-left: auto;"></i>
+              </a>
+            @endforeach
+          </div>
+
+          <!-- Quick Category Links Section -->
+          <div class="flora-search-sec-title" style="margin-top: 16px; margin-bottom: 8px;">
+            <span>Browse Categories</span>
+          </div>
+          <div class="flora-search-quick-links">
+            @foreach($headerCategories as $hCat)
+              <a href="{{ route('shop', ['cat' => $hCat->slug]) }}" class="flora-search-quick-link">{{ $hCat->name }}</a>
+            @endforeach
+          </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Mobile Drawer Menu -->
-  <div class="flora-mobile-drawer" id="floraMobileDrawer">
-    <ul>
-      <li><a href="/">Home</a></li>
-      <li><a href="{{ route('shop') }}">MadhuCurex / Shop All</a></li>
-      @foreach($headerCategories as $hCat)
-        <li style="padding-left: 15px;"><a href="{{ route('shop', ['cat' => $hCat->slug]) }}">&bull; {{ $hCat->name }}</a></li>
-      @endforeach
-      <li><a href="{{ route('about') }}">About Us</a></li>
-      <li><a href="{{ route('contact') }}">Contact Us</a></li>
-      <li><a href="{{ route('terms') }}">Terms &amp; Conditions</a></li>
-      <li><a href="{{ route('privacy') }}">Privacy Policy</a></li>
-      <li><a href="{{ route('refund') }}">Refund &amp; Cancellation</a></li>
+  <!-- LUXURY SLIDING OFFCANVAS SIDEBAR (MOBILE DRAWER) -->
+  <div class="dh-sidebar-backdrop" id="dhSidebarBackdrop"></div>
+  <aside class="dh-sidebar-panel" id="dhSidebarPanel" aria-label="Mobile Navigation">
+    <!-- Sidebar Header -->
+    <div class="dh-sidebar-head">
+      <div class="dh-sidebar-brand">
+        <img src="{{ asset('images/dhuria_logo_white.png') }}" alt="Dhuria" class="dh-sidebar-logo">
+        <span class="dh-sidebar-tag">PURE AYURVEDA &bull; VEDIC CARE</span>
+      </div>
+      <button type="button" class="dh-sidebar-close-btn" id="dhSidebarCloseBtn" aria-label="Close Menu">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <!-- User Profile / Welcome Card -->
+    <div class="dh-sidebar-user-card">
       @auth
-        <li><a href="{{ route('dashboard') }}"><i class="bi bi-person-circle"></i> My Account</a></li>
+        <div class="dh-sb-user-row">
+          <div class="dh-sb-avatar">
+            {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+          </div>
+          <div class="dh-sb-user-meta">
+            <div class="dh-sb-user-name">{{ Auth::user()->name }}</div>
+            <div class="dh-sb-user-badge">
+              <i class="bi bi-patch-check-fill text-green-400"></i> Active Customer
+            </div>
+          </div>
+        </div>
+        <div class="dh-sb-user-actions">
+          <a href="{{ route('orders.index') }}" class="dh-sb-action-link">
+            <i class="bi bi-box-seam"></i> My Orders
+          </a>
+          <a href="{{ route('dashboard') }}" class="dh-sb-action-link">
+            <i class="bi bi-person-gear"></i> Dashboard
+          </a>
+        </div>
       @else
-        <li><a href="{{ route('login') }}"><i class="bi bi-box-arrow-in-right"></i> Login / Register</a></li>
+        <div class="dh-sb-guest-row">
+          <div class="dh-sb-guest-info">
+            <div class="dh-sb-guest-title">Namaste! Welcome</div>
+            <p class="dh-sb-guest-sub">Sign in to track orders &amp; offers</p>
+          </div>
+          <a href="{{ route('login') }}" class="dh-sb-login-btn">
+            <span>SIGN IN</span> <i class="bi bi-arrow-right"></i>
+          </a>
+        </div>
       @endauth
-    </ul>
-  </div>
+    </div>
+
+    <!-- Scrollable Navigation Menu -->
+    <div class="dh-sidebar-scroll">
+      <!-- Main Navigation -->
+      <div class="dh-sb-sec-title">EXPLORE STORE</div>
+      <a href="/" class="dh-sb-nav-item {{ request()->is('/') ? 'active' : '' }}">
+        <span><i class="bi bi-house-door"></i> Home</span>
+        <i class="bi bi-chevron-right text-xs opacity-40"></i>
+      </a>
+      <a href="{{ route('shop') }}" class="dh-sb-nav-item {{ request()->is('shop') && !request('cat') ? 'active' : '' }}">
+        <span><i class="bi bi-grid-fill text-amber-400"></i> All Formulations</span>
+        <span class="text-[9px] bg-amber-400/20 text-amber-300 font-extrabold px-2 py-0.5 rounded-full uppercase">SHOP ALL</span>
+      </a>
+      <a href="{{ route('wishlist.index') }}" class="dh-sb-nav-item {{ request()->is('wishlist') ? 'active' : '' }}">
+        <span><i class="bi bi-heart"></i> My Wishlist</span>
+        <span class="flora-count-badge wishlist-count-badge" style="position:static; margin-left:auto;">0</span>
+      </a>
+      <a href="{{ route('cart.index') }}" class="dh-sb-nav-item {{ request()->is('cart') ? 'active' : '' }}">
+        <span><i class="bi bi-bag"></i> Shopping Bag</span>
+        <span class="flora-count-badge cart-count-badge" style="position:static; margin-left:auto;">0</span>
+      </a>
+
+      <!-- Ayurvedic Categories Group -->
+      <div class="dh-sb-sec-title">AYURVEDIC CATEGORIES</div>
+      @foreach($headerCategories as $hCat)
+        <a href="{{ route('shop', ['cat' => $hCat->slug]) }}" class="dh-sb-cat-link {{ request('cat') == $hCat->slug ? 'active' : '' }}">
+          <i class="bi bi-flower1"></i>
+          <span>{{ $hCat->name }}</span>
+        </a>
+      @endforeach
+
+      <!-- Help, About & Policies -->
+      <div class="dh-sb-sec-title">ABOUT &amp; SUPPORT</div>
+      <a href="{{ route('about') }}" class="dh-sb-nav-item {{ request()->is('about') ? 'active' : '' }}">
+        <span><i class="bi bi-info-circle"></i> About Dhuria Heritage</span>
+        <i class="bi bi-chevron-right text-xs opacity-40"></i>
+      </a>
+      <a href="{{ route('contact') }}" class="dh-sb-nav-item {{ request()->is('contact') ? 'active' : '' }}">
+        <span><i class="bi bi-headset"></i> Contact &amp; Practitioners</span>
+        <i class="bi bi-chevron-right text-xs opacity-40"></i>
+      </a>
+      <a href="{{ route('terms') }}" class="dh-sb-nav-item {{ request()->is('terms*') ? 'active' : '' }}">
+        <span><i class="bi bi-file-earmark-text"></i> Terms &amp; Conditions</span>
+      </a>
+      <a href="{{ route('privacy') }}" class="dh-sb-nav-item {{ request()->is('privacy*') ? 'active' : '' }}">
+        <span><i class="bi bi-shield-check"></i> Privacy Policy</span>
+      </a>
+      <a href="{{ route('refund') }}" class="dh-sb-nav-item {{ request()->is('refund*') ? 'active' : '' }}">
+        <span><i class="bi bi-arrow-return-left"></i> Refund &amp; Cancellation</span>
+      </a>
+
+      @auth
+        <form method="POST" action="{{ route('logout') }}" style="margin-top: 14px;">
+          @csrf
+          <button type="submit" class="dh-sb-nav-item w-full" style="background: rgba(239, 68, 68, 0.12); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.25); cursor: pointer;">
+            <span><i class="bi bi-box-arrow-right text-rose-400"></i> Log Out</span>
+            <i class="bi bi-chevron-right text-xs opacity-40"></i>
+          </button>
+        </form>
+      @endauth
+
+      <!-- Quick Support Box inside Sidebar -->
+      <div class="dh-sb-support-box">
+        <a href="https://wa.me/919220251059?text=Hello%20Dhuria%20Healthcare,%20I%20would%20like%20to%20consult%20an%20Ayurvedic%20Practitioner" target="_blank" class="dh-sb-wa-btn">
+          <i class="bi bi-whatsapp"></i> Chat with Ayurvedic Doctor
+        </a>
+        <a href="tel:+919220251059" class="dh-sb-phone-link">
+          <i class="bi bi-telephone-fill text-amber-400"></i> Helpline: +91 9220251059
+        </a>
+        <div style="font-size: 9px; color: #64748b; margin-top: 8px; letter-spacing: 0.5px; text-transform: uppercase;">
+          100% Ayurvedic &bull; AYUSH Standard
+        </div>
+      </div>
+    </div>
+  </aside>
 </header>
 
 <script>
+function getRecentSearches() {
+  try {
+    return JSON.parse(localStorage.getItem('dhuria_recent_searches') || '[]');
+  } catch(e) {
+    return [];
+  }
+}
+
+function saveRecentSearch(term) {
+  if (!term || typeof term !== 'string') return;
+  term = term.trim();
+  if (term.length < 2) return;
+  let searches = getRecentSearches();
+  searches = searches.filter(s => s.toLowerCase() !== term.toLowerCase());
+  searches.unshift(term);
+  if (searches.length > 5) searches = searches.slice(0, 5);
+  localStorage.setItem('dhuria_recent_searches', JSON.stringify(searches));
+  renderRecentSearches();
+}
+
+function clearRecentSearches() {
+  localStorage.removeItem('dhuria_recent_searches');
+  renderRecentSearches();
+}
+
+function renderRecentSearches() {
+  const wrap = document.getElementById('floraRecentSearchesWrap');
+  const list = document.getElementById('floraRecentSearchesList');
+  if (!wrap || !list) return;
+  const searches = getRecentSearches();
+  if (searches.length === 0) {
+    wrap.style.display = 'none';
+    list.innerHTML = '';
+  } else {
+    wrap.style.display = 'block';
+    list.innerHTML = searches.map(s => `
+      <button type="button" class="flora-search-pill" onclick="quickSearch('${s.replace(/'/g, "\\'")}')">
+        <i class="bi bi-clock-history text-slate-400 text-[10px]"></i> ${s}
+      </button>
+    `).join('');
+  }
+}
+
+window.quickSearch = function(term) {
+  const input = document.getElementById('floraSearchInput');
+  if (!input) return;
+  input.value = term;
+  input.dispatchEvent(new Event('input', { bubbles: true }));
+  input.focus();
+};
+
 document.addEventListener("DOMContentLoaded", function() {
   const searchToggle = document.getElementById('floraSearchToggle');
   const searchModalBackdrop = document.getElementById('floraSearchModalBackdrop');
   const searchCloseBtn = document.getElementById('floraSearchCloseBtn');
   const searchInput = document.getElementById('floraSearchInput');
+  const searchSpinner = document.getElementById('floraSearchSpinner');
+  const initialView = document.getElementById('floraSearchInitialView');
+  const liveView = document.getElementById('floraSearchLiveView');
+  const prodResults = document.getElementById('floraSearchProdResults');
+  const catWrap = document.getElementById('floraSearchCatWrap');
+  const catResults = document.getElementById('floraSearchCatResults');
+  const noResults = document.getElementById('floraSearchNoResults');
+  const allLink = document.getElementById('floraSearchAllLink');
+  const liveCountLabel = document.getElementById('floraSearchLiveCountLabel');
 
-  function openSearchModal() {
+  window.triggerSearchModal = function(e) {
+    if (e && typeof e.preventDefault === 'function') e.preventDefault();
+    window.openFloraSearch();
+  };
+
+  window.openFloraSearch = function() {
     if (searchModalBackdrop) {
       searchModalBackdrop.classList.add('active');
       document.body.style.overflow = 'hidden';
+      renderRecentSearches();
       setTimeout(() => {
         if (searchInput) searchInput.focus();
       }, 100);
     }
-  }
+  };
 
-  function closeSearchModal() {
+  window.closeFloraSearch = function() {
     if (searchModalBackdrop) {
       searchModalBackdrop.classList.remove('active');
       document.body.style.overflow = '';
     }
-  }
+  };
 
   if (searchToggle) {
     searchToggle.addEventListener('click', function(e) {
       e.preventDefault();
-      openSearchModal();
+      window.openFloraSearch();
     });
   }
 
   if (searchCloseBtn) {
-    searchCloseBtn.addEventListener('click', closeSearchModal);
+    searchCloseBtn.addEventListener('click', window.closeFloraSearch);
   }
 
   if (searchModalBackdrop) {
     searchModalBackdrop.addEventListener('click', function(e) {
       if (e.target === searchModalBackdrop) {
-        closeSearchModal();
+        window.closeFloraSearch();
       }
     });
   }
 
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape' && searchModalBackdrop && searchModalBackdrop.classList.contains('active')) {
-      closeSearchModal();
-    }
-  });
+  // Sidebar Controls
+  const mobileToggle = document.getElementById('floraMobileToggle');
+  const sidebarBackdrop = document.getElementById('dhSidebarBackdrop');
+  const sidebarPanel = document.getElementById('dhSidebarPanel');
+  const sidebarCloseBtn = document.getElementById('dhSidebarCloseBtn');
 
-  if (searchInput) {
-    searchInput.addEventListener('input', function() {
-      const q = this.value.trim().toLowerCase();
-      const items = document.querySelectorAll('.flora-search-remedy-item');
-      items.forEach(el => {
-        const title = el.getAttribute('data-title') || '';
-        if (!q || title.includes(q)) {
-          el.style.display = 'flex';
-        } else {
-          el.style.display = 'none';
-        }
-      });
+  window.openMobileSidebar = function() {
+    if (sidebarBackdrop && sidebarPanel) {
+      sidebarBackdrop.classList.add('active');
+      sidebarPanel.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+  };
+
+  window.closeMobileSidebar = function() {
+    if (sidebarBackdrop && sidebarPanel) {
+      sidebarBackdrop.classList.remove('active');
+      sidebarPanel.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  };
+
+  if (mobileToggle) {
+    mobileToggle.addEventListener('click', function(e) {
+      e.preventDefault();
+      window.openMobileSidebar();
     });
   }
 
-  const mobileToggle = document.getElementById('floraMobileToggle');
-  const mobileDrawer = document.getElementById('floraMobileDrawer');
-  if (mobileToggle && mobileDrawer) {
-    mobileToggle.addEventListener('click', function() {
-      mobileDrawer.classList.toggle('active');
+  if (sidebarCloseBtn) {
+    sidebarCloseBtn.addEventListener('click', window.closeMobileSidebar);
+  }
+
+  if (sidebarBackdrop) {
+    sidebarBackdrop.addEventListener('click', window.closeMobileSidebar);
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      if (sidebarPanel && sidebarPanel.classList.contains('active')) {
+        window.closeMobileSidebar();
+      }
+      if (searchModalBackdrop && searchModalBackdrop.classList.contains('active')) {
+        window.closeFloraSearch();
+      }
+    }
+  });
+
+  // AJAX Live Search with Debounce
+  let searchTimer = null;
+  if (searchInput) {
+    searchInput.addEventListener('input', function() {
+      const q = this.value.trim();
+      clearTimeout(searchTimer);
+
+      if (q.length === 0) {
+        if (searchSpinner) searchSpinner.style.display = 'none';
+        if (initialView) initialView.style.display = 'block';
+        if (liveView) liveView.style.display = 'none';
+        renderRecentSearches();
+        return;
+      }
+
+      if (searchSpinner) searchSpinner.style.display = 'block';
+
+      searchTimer = setTimeout(() => {
+        fetch(`/api/search/live?q=${encodeURIComponent(q)}`)
+          .then(res => res.json())
+          .then(data => {
+            if (searchSpinner) searchSpinner.style.display = 'none';
+            if (initialView) initialView.style.display = 'none';
+            if (liveView) liveView.style.display = 'block';
+
+            // Matching Categories
+            if (data.categories && data.categories.length > 0) {
+              catWrap.style.display = 'block';
+              catResults.innerHTML = data.categories.map(c => `
+                <a href="${c.url}" class="flora-search-pill" style="background: #f8fafc; border-color: #cbd5e1; color: #081a30; font-weight:700;">
+                  <i class="bi bi-tag-fill text-amber-500 text-[10px]"></i> ${c.name}
+                </a>
+              `).join('');
+            } else {
+              catWrap.style.display = 'none';
+            }
+
+            // Products
+            if (data.products && data.products.length > 0) {
+              noResults.style.display = 'none';
+              prodResults.style.display = 'block';
+              allLink.style.display = 'block';
+              allLink.href = data.all_results_url;
+              allLink.innerHTML = `View all ${data.total} results for "${q}" &rarr;`;
+              liveCountLabel.textContent = `Formulations (${data.total})`;
+
+              prodResults.innerHTML = data.products.map(p => `
+                <a href="${p.url}" class="flora-search-remedy-item" onclick="saveRecentSearch('${p.name.replace(/'/g, "\\'")}')">
+                  <div class="flora-search-remedy-thumb">
+                    <img src="${p.image}" alt="${p.name}" loading="lazy">
+                  </div>
+                  <div class="flora-search-remedy-info">
+                    <div class="flora-search-remedy-name">${p.name}</div>
+                    <div class="flora-search-remedy-price-row">
+                      <strong style="color: #081a30; font-weight: 800;">&#8377;${p.price}</strong>
+                      ${p.old_price ? `<span style="color: #94a3b8; text-decoration: line-through; font-size: 0.75rem;">&#8377;${p.old_price}</span>` : ''}
+                      ${p.discount ? `<span class="flora-search-badge-discount">${p.discount}% OFF</span>` : ''}
+                      <span class="flora-search-badge-ayur">${p.category}</span>
+                    </div>
+                  </div>
+                  <i class="bi bi-chevron-right" style="color: #cbd5e1; font-size: 0.85rem; margin-left: auto;"></i>
+                </a>
+              `).join('');
+            } else {
+              prodResults.style.display = 'none';
+              allLink.style.display = 'none';
+              noResults.style.display = 'block';
+              liveCountLabel.textContent = 'Results';
+            }
+          })
+          .catch(err => {
+            if (searchSpinner) searchSpinner.style.display = 'none';
+            console.error('Search error:', err);
+          });
+      }, 200);
     });
   }
 });

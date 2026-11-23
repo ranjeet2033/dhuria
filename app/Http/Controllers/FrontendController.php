@@ -114,6 +114,8 @@ class FrontendController extends Controller
                 $query->orderByRaw('COALESCE(sale_price, price) desc');
             } elseif ($sort == 'latest') {
                 $query->latest();
+            } elseif ($sort == 'popularity' || $sort == 'bestseller') {
+                $query->orderBy('is_bestseller', 'desc')->orderBy('id', 'desc');
             } else {
                 $query->orderBy('id', 'desc');
             }
@@ -141,6 +143,83 @@ class FrontendController extends Controller
     public function contact()
     {
         return view('frontend.contact');
+    }
+
+    public function liveSearch(Request $request)
+    {
+        $q = trim($request->input('q', ''));
+        if (strlen($q) < 1) {
+            $popular = Product::where('is_active', true)
+                ->where(function($query) {
+                    $query->where('is_bestseller', true)->orWhere('is_featured', true);
+                })
+                ->with('category')
+                ->take(8)
+                ->get();
+            $categories = Category::where('is_active', true)->take(6)->get();
+            return response()->json([
+                'success' => true,
+                'is_empty' => true,
+                'popular' => $popular->map(fn($p) => [
+                    'id' => $p->id,
+                    'name' => $p->name,
+                    'slug' => $p->slug,
+                    'category' => $p->category->name ?? 'Pure Ayurveda',
+                    'price' => number_format($p->sale_price ?? $p->price, 0),
+                    'old_price' => $p->sale_price ? number_format($p->price, 0) : null,
+                    'discount' => ($p->sale_price && $p->price > $p->sale_price) ? round((($p->price - $p->sale_price) / $p->price) * 100) : null,
+                    'image' => $p->primary_image_url,
+                    'url' => route('product.show', $p->slug)
+                ]),
+                'categories' => $categories->map(fn($c) => [
+                    'name' => $c->name,
+                    'slug' => $c->slug,
+                    'url' => route('shop', ['cat' => $c->slug])
+                ])
+            ]);
+        }
+
+        $productQuery = Product::where('is_active', true)
+            ->where(function($query) use ($q) {
+                $query->where('name', 'like', "%{$q}%")
+                      ->orWhere('description', 'like', "%{$q}%")
+                      ->orWhere('short_description', 'like', "%{$q}%")
+                      ->orWhereHas('category', function($catQ) use ($q) {
+                          $catQ->where('name', 'like', "%{$q}%");
+                      });
+            });
+
+        $totalCount = (clone $productQuery)->count();
+        $products = (clone $productQuery)->with('category')->take(12)->get();
+
+        $matchingCategories = Category::where('is_active', true)
+            ->where('name', 'like', "%{$q}%")
+            ->take(5)
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'is_empty' => false,
+            'query' => $q,
+            'total' => $totalCount,
+            'all_results_url' => route('shop', ['search' => $q]),
+            'categories' => $matchingCategories->map(fn($c) => [
+                'name' => $c->name,
+                'slug' => $c->slug,
+                'url' => route('shop', ['cat' => $c->slug])
+            ]),
+            'products' => $products->map(fn($p) => [
+                'id' => $p->id,
+                'name' => $p->name,
+                'slug' => $p->slug,
+                'category' => $p->category->name ?? 'Pure Ayurveda',
+                'price' => number_format($p->sale_price ?? $p->price, 0),
+                'old_price' => $p->sale_price ? number_format($p->price, 0) : null,
+                'discount' => ($p->sale_price && $p->price > $p->sale_price) ? round((($p->price - $p->sale_price) / $p->price) * 100) : null,
+                'image' => $p->primary_image_url,
+                'url' => route('product.show', $p->slug)
+            ])
+        ]);
     }
 
     public function apiProductDetails($slug)
