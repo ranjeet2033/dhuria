@@ -13,12 +13,29 @@ class AdminController extends Controller
 {
     public function dashboard()
     {
-        $totalSales = Order::where('payment_status', 'completed')->sum('total_amount');
-        $totalOrders = Order::count();
-        $pendingOrders = Order::where('status', 'pending')->count();
-        $completedOrders = Order::where('status', 'completed')->count();
-        $totalProducts = Product::count();
-        $totalUsers = User::where('is_admin', false)->count();
+        $totalSales = \Illuminate\Support\Facades\Cache::remember('admin_dash_sales', 60, function() {
+            return Order::where('payment_status', 'completed')->sum('total_amount');
+        });
+
+        $totalOrders = \Illuminate\Support\Facades\Cache::remember('admin_dash_orders', 60, function() {
+            return Order::count();
+        });
+
+        $pendingOrders = \Illuminate\Support\Facades\Cache::remember('admin_dash_pending_orders', 30, function() {
+            return Order::where('status', 'pending')->count();
+        });
+
+        $completedOrders = \Illuminate\Support\Facades\Cache::remember('admin_dash_completed_orders', 60, function() {
+            return Order::where('status', 'completed')->count();
+        });
+
+        $totalProducts = \Illuminate\Support\Facades\Cache::remember('admin_dash_products', 120, function() {
+            return Product::count();
+        });
+
+        $totalUsers = \Illuminate\Support\Facades\Cache::remember('admin_dash_users', 120, function() {
+            return User::where('is_admin', false)->count();
+        });
 
         $recentOrders = Order::with('user')->latest()->take(5)->get();
 
@@ -35,7 +52,9 @@ class AdminController extends Controller
 
     public function settings()
     {
-        $settings = Setting::pluck('value', 'key')->all();
+        $settings = \Illuminate\Support\Facades\Cache::remember('site_settings', 3600, function() {
+            return Setting::pluck('value', 'key')->all();
+        });
         return view('admin.settings.edit', compact('settings'));
     }
 
@@ -49,6 +68,8 @@ class AdminController extends Controller
                 ['value' => $value]
             );
         }
+
+        \Illuminate\Support\Facades\Cache::forget('site_settings');
 
         return redirect()->back()->with('success', 'Settings updated successfully.');
     }

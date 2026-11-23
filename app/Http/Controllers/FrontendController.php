@@ -12,20 +12,32 @@ class FrontendController extends Controller
 {
     public function home(Request $request)
     {
-        $banners = Banner::where('is_active', true)->get();
-        $testimonials = Testimonial::where('is_active', true)->get();
-        $bestSellers = Product::where('is_active', true)->where('is_bestseller', true)->latest()->take(10)->get();
-        $featuredProducts = Product::where('is_active', true)->where('is_featured', true)->latest()->take(10)->get();
-        $dealOfWeek = Product::where('is_active', true)->where('deal_of_week', true)->first();
-        $categories = Category::where('is_active', true)->get();
+        $banners = \Illuminate\Support\Facades\Cache::remember('home_banners', 3600, function() {
+            return Banner::where('is_active', true)->get();
+        });
 
-        // Fallbacks if database has no flagged products
-        if ($bestSellers->isEmpty()) {
-            $bestSellers = Product::where('is_active', true)->latest()->take(10)->get();
-        }
-        if ($featuredProducts->isEmpty()) {
-            $featuredProducts = Product::where('is_active', true)->latest()->take(10)->get();
-        }
+        $testimonials = \Illuminate\Support\Facades\Cache::remember('home_testimonials', 3600, function() {
+            return Testimonial::where('is_active', true)->get();
+        });
+
+        $bestSellers = \Illuminate\Support\Facades\Cache::remember('home_bestsellers', 1800, function() {
+            $prods = Product::where('is_active', true)->where('is_bestseller', true)->latest()->take(10)->get();
+            return $prods->isEmpty() ? Product::where('is_active', true)->latest()->take(10)->get() : $prods;
+        });
+
+        $featuredProducts = \Illuminate\Support\Facades\Cache::remember('home_featured_products', 1800, function() {
+            $prods = Product::where('is_active', true)->where('is_featured', true)->latest()->take(10)->get();
+            return $prods->isEmpty() ? Product::where('is_active', true)->latest()->take(10)->get() : $prods;
+        });
+
+        $dealOfWeek = \Illuminate\Support\Facades\Cache::remember('home_deal_of_week', 1800, function() {
+            return Product::where('is_active', true)->where('deal_of_week', true)->first();
+        });
+
+        $categories = \Illuminate\Support\Facades\Cache::remember('home_categories', 3600, function() {
+            return Category::where('is_active', true)->get();
+        });
+
         $spotlightProduct1 = Product::where('name', 'like', '%MadhuCurex%')->first() ?? $dealOfWeek ?? $bestSellers->first();
         $spotlightProduct2 = Product::where('name', 'like', '%Pilecurex%')->first() ?? ($featuredProducts->count() > 1 ? $featuredProducts->skip(1)->first() : $bestSellers->skip(1)->first());
 

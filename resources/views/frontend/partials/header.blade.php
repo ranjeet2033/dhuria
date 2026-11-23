@@ -1,6 +1,10 @@
 @php
-    $headerCategories = \App\Models\Category::parents()->with('children.children')->where('is_active', true)->get();
-    $searchFeaturedProducts = \App\Models\Product::where('is_active', true)->get();
+    $headerCategories = \Illuminate\Support\Facades\Cache::remember('site_header_categories', 3600, function() {
+        return \App\Models\Category::parents()->with('children.children')->where('is_active', true)->get();
+    });
+    $searchFeaturedProducts = \Illuminate\Support\Facades\Cache::remember('site_search_featured_products', 3600, function() {
+        return \App\Models\Product::where('is_active', true)->take(8)->get();
+    });
 @endphp
 
 <!-- ========================================================

@@ -20,7 +20,9 @@ class Setting extends Model
     public static function get($key, $default = null)
     {
         if (self::$cachedSettings === null) {
-            self::$cachedSettings = self::pluck('value', 'key')->all();
+            self::$cachedSettings = \Illuminate\Support\Facades\Cache::remember('site_settings', 3600, function() {
+                return self::pluck('value', 'key')->all();
+            });
         }
         return self::$cachedSettings[$key] ?? $default;
     }

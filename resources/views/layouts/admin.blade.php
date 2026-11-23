@@ -19,11 +19,15 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Styles / Scripts -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Resource Hints & Preconnect for High Speed Loading -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
 
-    <!-- Alpine.js -->
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Styles / Scripts (Fast Local Cached) -->
+    <script src="{{ asset('js/tailwind.play.js') }}"></script>
+
+    <!-- Alpine.js (Fast Local Cached) -->
+    <script defer src="{{ asset('js/alpine.min.js') }}"></script>
     <style>
         body { font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; }
         .font-serif { font-family: 'Playfair Display', Georgia, serif; }
@@ -85,8 +89,8 @@
                     <i class="fa-solid fa-truck-fast w-5 text-center text-slate-400"></i>
                     <span>Orders</span>
                     @php
-                        $pendingOrdersCount = \App\Models\Order::where('status', 'pending')->count();
-                        $pendingReturnsCount = \App\Models\Order::where('return_status', 'pending')->count();
+                        $pendingOrdersCount = \Illuminate\Support\Facades\Cache::remember('admin_nav_pending_orders', 60, fn() => \App\Models\Order::where('status', 'pending')->count());
+                        $pendingReturnsCount = \Illuminate\Support\Facades\Cache::remember('admin_nav_pending_returns', 60, fn() => \App\Models\Order::where('return_status', 'pending')->count());
                     @endphp
                     <div class="ml-auto flex items-center gap-1.5">
                         @if($pendingOrdersCount > 0)

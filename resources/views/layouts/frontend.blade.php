@@ -13,7 +13,14 @@
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/dhuria_logo.png') }}">
     <link rel="apple-touch-icon" href="{{ asset('images/dhuria_logo.png') }}">
     
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Resource Hints & Preconnect for High Speed Loading -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+
+    <!-- Local Fast High-Performance Scripts -->
+    <script src="{{ asset('js/tailwind.play.js') }}"></script>
     <script>
         tailwind.config = { 
             corePlugins: { preflight: false },
@@ -33,8 +40,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     
-    <!-- Alpine.js -->
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Alpine.js (Local Fast Cached) -->
+    <script defer src="{{ asset('js/alpine.min.js') }}"></script>
     
     <!-- Legacy CSS (Will be phased out later) -->
     <link rel="stylesheet" href="/mahashringar_assets/custom.css">
