@@ -621,7 +621,7 @@
     }
 
     .dh-sidebar-head {
-      padding: 18px 20px;
+      padding: 10px 16px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -631,23 +631,26 @@
     .dh-sidebar-brand {
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 0;
     }
     .dh-sidebar-logo {
-      height: 32px;
+      height: 24px;
       width: auto;
       object-fit: contain;
+      margin-top: -2px;
     }
     .dh-sidebar-tag {
-      font-size: 8px;
+      font-size: 7.5px;
       font-weight: 800;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.16em;
       color: #d4af37;
       text-transform: uppercase;
+      margin-top: 1px;
+      line-height: 1;
     }
     .dh-sidebar-close-btn {
-      width: 34px;
-      height: 34px;
+      width: 30px;
+      height: 30px;
       border-radius: 50%;
       background: rgba(255, 255, 255, 0.08);
       border: 1px solid rgba(255, 255, 255, 0.12);
@@ -655,7 +658,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.9rem;
+      font-size: 0.82rem;
       cursor: pointer;
       transition: all 0.2s ease;
     }
@@ -665,62 +668,62 @@
       border-color: #ef4444;
     }
 
-    /* User Profile Snippet in Sidebar */
+    /* User Profile Snippet in Sidebar - Compact, No Extra Gap */
     .dh-sidebar-user-card {
-      padding: 14px 18px;
+      padding: 8px 14px;
       background: linear-gradient(135deg, rgba(212, 175, 55, 0.12) 0%, rgba(13, 37, 68, 0.6) 100%);
       border-bottom: 1px solid rgba(212, 175, 55, 0.2);
     }
     .dh-sb-user-row {
       display: flex;
       align-items: center;
-      gap: 12px;
-      margin-bottom: 10px;
+      gap: 10px;
+      margin-bottom: 6px;
     }
     .dh-sb-avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
       background: #d4af37;
       color: #081a30;
       font-weight: 900;
-      font-size: 16px;
+      font-size: 13px;
       display: flex;
       align-items: center;
       justify-content: center;
     }
     .dh-sb-user-name {
-      font-size: 14px;
+      font-size: 12.5px;
       font-weight: 800;
       color: #ffffff;
       line-height: 1.2;
     }
     .dh-sb-user-badge {
-      font-size: 10px;
+      font-size: 9.5px;
       color: #cbd5e1;
       display: flex;
       align-items: center;
       gap: 4px;
-      margin-top: 2px;
+      margin-top: 1px;
     }
     .dh-sb-user-actions {
       display: flex;
-      gap: 8px;
+      gap: 6px;
     }
     .dh-sb-action-link {
       flex: 1;
-      padding: 6px 10px;
+      padding: 4px 8px;
       background: rgba(255, 255, 255, 0.08);
       border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 8px;
-      font-size: 11px;
+      border-radius: 6px;
+      font-size: 10.5px;
       font-weight: 700;
       color: #f1f5f9;
       text-decoration: none;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
+      gap: 5px;
       transition: background 0.2s;
     }
     .dh-sb-action-link:hover {
@@ -732,65 +735,69 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
+      gap: 8px;
     }
     .dh-sb-guest-title {
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 800;
       color: #ffffff;
     }
     .dh-sb-guest-sub {
-      font-size: 10px;
+      font-size: 9.5px;
       color: #94a3b8;
-      margin: 2px 0 0 0;
+      margin: 1px 0 0 0;
     }
     .dh-sb-login-btn {
       background: linear-gradient(135deg, #d4af37 0%, #b89326 100%);
       color: #061528 !important;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 900;
-      padding: 7px 14px;
-      border-radius: 20px;
+      padding: 5px 12px;
+      border-radius: 16px;
       text-decoration: none !important;
       display: inline-flex;
       align-items: center;
-      gap: 5px;
+      gap: 4px;
       flex-shrink: 0;
-      box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
+      box-shadow: 0 2px 6px rgba(212, 175, 55, 0.25);
     }
 
-    /* Scrollable Navigation */
+    /* Scrollable Navigation - Tight, Zero Extra Gaps */
     .dh-sidebar-scroll {
       flex: 1;
       overflow-y: auto;
-      padding: 14px 18px 24px;
+      padding: 6px 12px 16px;
     }
     .dh-sidebar-scroll::-webkit-scrollbar {
-      width: 4px;
+      width: 3px;
     }
     .dh-sidebar-scroll::-webkit-scrollbar-thumb {
       background: rgba(255, 255, 255, 0.15);
-      border-radius: 4px;
+      border-radius: 3px;
     }
     .dh-sb-sec-title {
-      font-size: 9px;
+      font-size: 8.5px;
       font-weight: 800;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.12em;
       color: #64748b;
       text-transform: uppercase;
-      margin: 16px 0 8px;
+      margin: 8px 0 3px;
+      padding-left: 4px;
+    }
+    .dh-sidebar-scroll > .dh-sb-sec-title:first-child {
+      margin-top: 2px;
     }
     .dh-sb-nav-item {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 10px 12px;
-      border-radius: 12px;
+      padding: 7px 10px;
+      border-radius: 8px;
       color: #f1f5f9;
       text-decoration: none;
-      font-size: 13px;
+      font-size: 12.5px;
       font-weight: 700;
-      margin-bottom: 3px;
+      margin-bottom: 1px;
       transition: all 0.18s ease;
     }
     .dh-sb-nav-item:hover, .dh-sb-nav-item.active {
@@ -798,8 +805,8 @@
       color: #d4af37;
     }
     .dh-sb-nav-item i {
-      font-size: 14px;
-      width: 20px;
+      font-size: 13px;
+      width: 18px;
       color: #94a3b8;
     }
     .dh-sb-nav-item:hover i, .dh-sb-nav-item.active i {
@@ -808,14 +815,14 @@
     .dh-sb-cat-link {
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 8px 12px 8px 16px;
-      border-radius: 10px;
+      gap: 8px;
+      padding: 6px 10px 6px 12px;
+      border-radius: 8px;
       color: #cbd5e1;
       text-decoration: none;
       font-size: 12px;
       font-weight: 600;
-      margin-bottom: 2px;
+      margin-bottom: 1px;
       border-left: 2px solid transparent;
       transition: all 0.18s ease;
     }
@@ -825,41 +832,41 @@
       border-left-color: #d4af37;
     }
     .dh-sb-cat-link i {
-      font-size: 11px;
+      font-size: 10px;
       color: #d4af37;
     }
 
     /* Sidebar Footer Support Box */
     .dh-sb-support-box {
-      margin-top: 18px;
-      padding: 14px;
+      margin-top: 10px;
+      padding: 10px;
       background: #040e1c;
       border: 1px solid rgba(212, 175, 55, 0.2);
-      border-radius: 14px;
+      border-radius: 10px;
       text-align: center;
     }
     .dh-sb-wa-btn {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 6px;
       background: #25d366;
       color: #ffffff !important;
-      padding: 9px 14px;
-      border-radius: 10px;
-      font-size: 12px;
+      padding: 7px 12px;
+      border-radius: 8px;
+      font-size: 11.5px;
       font-weight: 800;
       text-decoration: none !important;
-      margin-bottom: 8px;
-      box-shadow: 0 4px 12px rgba(37, 211, 102, 0.25);
+      margin-bottom: 5px;
+      box-shadow: 0 3px 10px rgba(37, 211, 102, 0.2);
     }
     .dh-sb-phone-link {
-      font-size: 11px;
+      font-size: 10.5px;
       color: #94a3b8;
       text-decoration: none;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
     }
     .dh-sb-phone-link:hover {
       color: #d4af37;
