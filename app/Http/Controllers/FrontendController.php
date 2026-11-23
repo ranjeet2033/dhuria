@@ -26,11 +26,13 @@ class FrontendController extends Controller
         if ($featuredProducts->isEmpty()) {
             $featuredProducts = Product::where('is_active', true)->latest()->take(10)->get();
         }
+        $spotlightProduct1 = Product::where('name', 'like', '%MadhuCurex%')->first() ?? $dealOfWeek ?? $bestSellers->first();
+        $spotlightProduct2 = Product::where('name', 'like', '%Pilecurex%')->first() ?? ($featuredProducts->count() > 1 ? $featuredProducts->skip(1)->first() : $bestSellers->skip(1)->first());
 
         // Paginated "All Products" grid for the infinite scroll section
         $allProducts = Product::where('is_active', true)->latest()->paginate(10)->withQueryString();
 
-        return view('frontend.home', compact('banners', 'testimonials', 'bestSellers', 'featuredProducts', 'dealOfWeek', 'categories', 'allProducts'));
+        return view('frontend.home', compact('banners', 'testimonials', 'bestSellers', 'featuredProducts', 'dealOfWeek', 'spotlightProduct1', 'spotlightProduct2', 'categories', 'allProducts'));
     }
 
     public function about()
@@ -128,7 +130,11 @@ class FrontendController extends Controller
     public function product($slug)
     {
         $product = Product::where('slug', $slug)->where('is_active', true)->firstOrFail();
-        $relatedProducts = Product::where('category_id', $product->category_id)->where('id', '!=', $product->id)->take(4)->get();
+        $relatedProducts = Product::where('category_id', $product->category_id)->where('id', '!=', $product->id)->take(3)->get();
+        if ($relatedProducts->count() < 3) {
+            $more = Product::where('id', '!=', $product->id)->whereNotIn('id', $relatedProducts->pluck('id'))->take(3 - $relatedProducts->count())->get();
+            $relatedProducts = $relatedProducts->concat($more);
+        }
         return view('frontend.product', compact('product', 'relatedProducts'));
     }
 

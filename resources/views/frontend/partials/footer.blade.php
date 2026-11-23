@@ -1,197 +1,359 @@
-<footer class="padt70 ">
-    <!-- Size Chart Modal -->
-    <div id="size-chart-modal" class="modal">
-        <div class="modal-content">
-            <span class="close">Ã—</span>
-            <h2>Size Chart</h2>
+<!-- ========================================================
+     DHURIA LUXURY FOOTER (MATCHING USER REFERENCE DESIGN)
+     ======================================================== -->
+
+<!-- 1. Value Proposition 4-Col Bar (White/Light Section) -->
+<div class="dhuria-value-bar">
+    <div class="dhuria-value-inner">
+        <div class="dhuria-val-col">
+            <div class="dhuria-val-icon"><i class="bi bi-flower1"></i></div>
             <div>
-                <img id="size-chart-modal-img" src="#/" style="max-width:100%;height:auto;" alt="Size Chart">
-                <p id="size-chart-modal-none" style="display:none;text-align:center;padding:20px;">No size chart available for this product.</p>
+                <h5 class="dhuria-val-title">100% Natural Products</h5>
+                <p class="dhuria-val-sub">Proven Ayurvedic products</p>
             </div>
         </div>
-    </div>
 
-    <style>
-.padt70 { padding-top: 50px; background-color: #f9f9f9; border-top: 1px solid #e0e0e0; }
-.footer-container { max-width: 1200px; margin: 0 auto; padding: 0 15px; }
-.f-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-bottom: 40px; }
-.f-col h2.widget-title { font-size: 1.2rem; font-weight: 700; color: #b71c1c; margin-bottom: 20px; text-transform: uppercase; }
-.f-col p, .f-col .textwidget { color: #555; line-height: 1.6; font-size: 0.95rem; }
-.f-col ul { list-style: none; padding: 0; margin: 0; }
-.f-col ul li { margin-bottom: 12px; }
-.f-col ul li a { color: #555; text-decoration: none; font-size: 0.95rem; transition: color 0.3s; }
-.f-col ul li a:hover { color: #b71c1c; }
-.social-icons ul { display: flex; gap: 15px; margin-top: 20px; }
-.social-icons ul li a { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: #e0e0e0; border-radius: 50%; color: #333; transition: all 0.3s; }
-.social-icons ul li a:hover { background: #b71c1c; color: #fff; transform: translateY(-3px); }
-.social-icons ul li a svg { width: 18px; height: 18px; fill: currentColor; }
-.talk-to-us .f-call-us span { display: block; font-weight: 600; color: #333; margin-bottom: 5px; }
-.talk-to-us .f-call-us a { color: #b71c1c; font-weight: 700; font-size: 1.1rem; text-decoration: none; }
-.talk-to-us ul li { display: flex; align-items: flex-start; gap: 15px; margin-top: 15px; }
-.talk-to-us ul li .tt-icon { color: #b71c1c; margin-top: 3px; }
-.copy-col { border-top: 1px solid #ddd; padding: 20px 0; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; font-size: 0.9rem; color: #666; }
-.copy-col a { color: #b71c1c; text-decoration: none; font-weight: 600; }
-@media (max-width: 768px) {
-    .copy-col { flex-direction: column; text-align: center; gap: 10px; }
-}
-</style>
-<div class="footer-container">
-        <div class="f-grid">
-            <div class="f-col f-about">
-                <img src="/images/ebigcart_logo.png" width="180" style="max-width:100%; height:auto;" alt="Ebigcart Logo">
-                <section id="custom_html-6" class="widget_text widget widget_custom_html"><div class="textwidget custom-html-widget">Ebigcart is a divine inspiration which inspires you to make your Laddu Gopal ready as your little one. In Gokul, Laddu Gopal is called Lalan means a little infant baby. We are one stop solution for your Laddu Gopal dresses, Mukut, Bansuri, Kangan, Hair, Singhasan, Quilts and other Ornaments &amp; Accessories. </div></section>
-                <div class="social-icons">
-                    <ul class="d-flex">
-                        <li><a target="_blank" href="https://www.facebook.com/Msd.laddugopal/"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512">
-                                    <path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z">
-                                    </path>
-                                </svg></a></li>
-                        <li><a target="_blank" href="https://twitter.com/mahashringaar">
-							<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.1 by @@fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"></path></svg>
-							</a></li>
-                        <li><a target="_blank" href="https://www.instagram.com/Ebigcart/"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
-                                    <path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z">
-                                    </path>
-                                </svg></a></li>
-                        <li><a target="_blank" href="https://www.youtube.com/Ebigcartdress"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512">
-                                    <path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z">
-                                    </path>
-                                </svg></a></li>
-						 <li><a target="_blank" href="https://in.pinterest.com/Ebigcart/">
-							 <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><!--!Font Awesome Free 6.7.2 by @@fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M384 32H64C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64h72.6l-2.2-.8c-5.4-48.1-3.1-57.5 15.7-134.7c3.9-16 8.5-35 13.9-57.9c0 0-7.3-14.8-7.3-36.5c0-70.7 75.5-78 75.5-25c0 13.5-5.4 31.1-11.2 49.8c-3.3 10.6-6.6 21.5-9.1 32c-5.7 24.5 12.3 44.4 36.4 44.4c43.7 0 77.2-46 77.2-112.4c0-58.8-42.3-99.9-102.6-99.9C153 139 112 191.4 112 245.6c0 21.1 8.2 43.7 18.3 56c2 2.4 2.3 4.5 1.7 7c-1.1 4.7-3.1 12.9-4.7 19.2c-1 4-1.8 7.3-2.1 8.6c-1.1 4.5-3.5 5.5-8.2 3.3c-30.6-14.3-49.8-59.1-49.8-95.1C67.2 167.1 123.4 96 229.4 96c85.2 0 151.4 60.7 151.4 141.8c0 84.6-53.3 152.7-127.4 152.7c-24.9 0-48.3-12.9-56.3-28.2c0 0-12.3 46.9-15.3 58.4c-5 19.3-17.6 42.9-27.4 59.3H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64z"></path></svg>
-							 </a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="f-col f-links">
-                <section id="nav_menu-3" class="widget widget_nav_menu"><h2 class="widget-title">Quick Links</h2><nav class="menu-quick-links-container" aria-label="Quick Links"><ul id="menu-quick-links" class="menu"><li id="menu-item-13970" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-13970"><a href="/shop">Summer Poshak</a></li>
-<li id="menu-item-12960" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-12960"><a href="/shop">Designer Poshak</a></li>
-<li id="menu-item-13971" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-13971"><a href="/shop">Gopi Dress</a></li>
-<li id="menu-item-16096" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-16096"><a href="/shop">Mukut</a></li>
-<li id="menu-item-16095" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-16095"><a href="/shop">Mala</a></li>
-<li id="menu-item-16097" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-16097"><a href="/shop">Bansuri</a></li>
-<li id="menu-item-17621" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17621"><a href="#">Laddu Gopal Size Chart</a></li>
-<li id="menu-item-11917" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-11917"><a href="#">Blog</a></li>
-</ul></nav></section>
-
-            </div>
-
-            <div class="f-col f-links">
-                <section id="nav_menu-4" class="widget widget_nav_menu"><h2 class="widget-title">Policies</h2><nav class="menu-policies-container" aria-label="Policies"><ul id="menu-policies" class="menu"><li id="menu-item-10140" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-10140"><a href="{{ route('contact') }}">Contact Us</a></li>
-<li id="menu-item-13973" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-13973"><a href="{{ route('about') }}">About Us</a></li>
-<li id="menu-item-10137" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-10137"><a href="{{ route('terms') }}">Terms &amp; Conditions</a></li>
-<li id="menu-item-10138" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-privacy-policy menu-item-10138"><a rel="privacy-policy" href="{{ route('privacy') }}">Privacy Policy</a></li>
-<li id="menu-item-10139" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-10139"><a href="{{ route('refund') }}">Refund and Cancellation</a></li>
-<li id="menu-item-13976" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-13976"><a href="#">FAQ for Laddu Gopal</a></li>
-</ul></nav></section>
-            </div>
-
-            <div class="f-col talk-to-us">
-                <section id="custom_html-7" class="widget_text widget widget_custom_html">
-                    <h2 class="widget-title">Talk To Us</h2>
-                    <div class="textwidget custom-html-widget">
-                        <div class="f-call-us">
-                            <span>Got Questions? Call us</span>
-                            <a href="tel:{{ \App\Models\Setting::get('site_phone', '+91 9259449933') }}">{{ \App\Models\Setting::get('site_phone', '+91 9259449933') }}</a>
-                        </div>
-                        <ul>
-                            <li>
-                                <div class="tt-icon">
-                                    <svg width="18" height="16" viewBox="0 0 18 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M1 5C1 2.2 2.6 1 5 1H13C15.4 1 17 2.2 17 5V10.6C17 13.4 15.4 14.6 13 14.6H5" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
-                                        <path d="M13 5.40039L10.496 7.40039C9.672 8.05639 8.32 8.05639 7.496 7.40039L5 5.40039" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
-                                        <path d="M1 11.4004H5.8" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
-                                        <path d="M1 8.19922H3.4" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
-                                    </svg>
-                                </div>
-                                <div class="tt-content">
-                                    <a href="mailto:{{ \App\Models\Setting::get('site_email', 'support@ebigcart.com') }}">{{ \App\Models\Setting::get('site_email', 'support@ebigcart.com') }}</a>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="tt-icon">
-                                    <svg width="17" height="20" viewBox="0 0 17 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M8.50001 10.9417C9.99877 10.9417 11.2138 9.72668 11.2138 8.22791C11.2138 6.72915 9.99877 5.51416 8.50001 5.51416C7.00124 5.51416 5.78625 6.72915 5.78625 8.22791C5.78625 9.72668 7.00124 10.9417 8.50001 10.9417Z" stroke="currentColor" stroke-width="1.5"></path>
-                                        <path d="M1.21115 6.64496C2.92464 -0.887449 14.0841 -0.878751 15.7889 6.65366C16.7891 11.0722 14.0406 14.8123 11.6313 17.126C9.88298 18.8134 7.11704 18.8134 5.36006 17.126C2.95943 14.8123 0.210885 11.0635 1.21115 6.64496Z" stroke="currentColor" stroke-width="1.5"></path>
-                                    </svg>
-                                </div>
-                                <div class="tt-content">
-                                    {{ \App\Models\Setting::get('site_address', 'Near Kalideh police chowk ki Car parking Varindavan ,Mathura') }}
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </section>
+        <div class="dhuria-val-col">
+            <div class="dhuria-val-icon"><i class="bi bi-credit-card"></i></div>
+            <div>
+                <h5 class="dhuria-val-title">Easy Payment Methods</h5>
+                <p class="dhuria-val-sub">Pay Through Net-Banking, Cards, UPI or COD</p>
             </div>
         </div>
-       <!--  <div class="copy-col">
-                    </div> -->
-<div class="copy-col">
-	
-	
-        <div class="copyright">
 
-            Copyright &copy; 2026 Ebigcart. All rights reserved.
-
+        <div class="dhuria-val-col">
+            <div class="dhuria-val-icon"><i class="bi bi-shield-lock"></i></div>
+            <div>
+                <h5 class="dhuria-val-title">Secure Website</h5>
+                <p class="dhuria-val-sub">SSL Secured Website, Order With Confidence</p>
+            </div>
         </div>
-		
-		<div class="designby">Designed &amp; Developed by: <a target="_blank" href="https://foundida.com/">Foundida</a></div>
-		</div>
-    </div>
 
-
-
-<div id="customAlertModal" class="custom-alert-modal">
-    <div class="custom-alert-box">
-        <span class="custom-alert-close">Ã—</span>
-        <p id="customAlertMessage"></p>
-        <img id="customAlertIcon" src="#/" alt="" style="display:none;">
+        <div class="dhuria-val-col">
+            <div class="dhuria-val-icon"><i class="bi bi-headset"></i></div>
+            <div>
+                <h5 class="dhuria-val-title">24/7 Customer Support</h5>
+                <p class="dhuria-val-sub">Got Questions? Just Email, WhatsApp or Call Us</p>
+            </div>
+        </div>
     </div>
 </div>
 
+<!-- 2. Social Follow Bar -->
+<div class="dhuria-social-bar">
+    <div class="dhuria-social-inner">
+        <div class="dhuria-social-left">
+            <a href="https://facebook.com" target="_blank" class="dhuria-s-icon" title="Facebook"><i class="bi bi-facebook"></i></a>
+            <a href="https://instagram.com" target="_blank" class="dhuria-s-icon" title="Instagram"><i class="bi bi-instagram"></i></a>
+        </div>
+        <div class="dhuria-social-right">
+            Follow-us on social media!
+        </div>
+    </div>
+</div>
 
+<!-- 3. Main Dark Navy Footer -->
+<footer class="dhuria-main-footer">
+    <div class="dhuria-footer-container">
+        <div class="dhuria-footer-grid">
+            <!-- Brand Column -->
+            <div class="dhuria-footer-col dhuria-f-brand">
+                <a href="/" style="display:inline-block; margin-bottom: 18px;">
+                    <img src="{{ asset('images/dhuria_logo_white.png') }}" alt="dhuria" style="height: 42px; width: auto; object-fit: contain;">
+                </a>
+                <p class="dhuria-brand-desc">
+                    Premium Ayurvedic wellness inspired by the five natural elements. Formulated with authentic botanical extracts for balanced health and vitality.
+                </p>
+                <div class="dhuria-brand-socials">
+                    <a href="https://instagram.com" target="_blank" class="dhuria-bs-icon"><i class="bi bi-instagram"></i></a>
+                    <a href="https://facebook.com" target="_blank" class="dhuria-bs-icon"><i class="bi bi-facebook"></i></a>
+                    <a href="https://wa.me/919220251059" target="_blank" class="dhuria-bs-icon"><i class="bi bi-whatsapp"></i></a>
+                    <a href="mailto:floramade517@gmail.com" class="dhuria-bs-icon"><i class="bi bi-envelope"></i></a>
+                </div>
+            </div>
 
-<script>
-(function () {
-    const nativeAlert = window.alert;
+            <!-- Navigate Column -->
+            <div class="dhuria-footer-col">
+                <h4 class="dhuria-f-title">NAVIGATE</h4>
+                <ul class="dhuria-f-links">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="{{ route('shop') }}">All Products</a></li>
+                    <li><a href="{{ route('about') }}">About Our Founder</a></li>
+                    <li><a href="{{ route('contact') }}">Contact Us</a></li>
+                </ul>
+            </div>
 
-    window.alert = function (message) {
-        if (typeof window.customAlert === 'function') {
-            window.customAlert(message);
-        } else {
-            nativeAlert(message);
-        }
-    };
-})();
-</script>
+            <!-- Policy Column -->
+            <div class="dhuria-footer-col">
+                <h4 class="dhuria-f-title">POLICY</h4>
+                <ul class="dhuria-f-links">
+                    <li><a href="{{ route('terms') }}">Terms &amp; Conditions</a></li>
+                    <li><a href="{{ route('privacy') }}">Privacy Policy</a></li>
+                    <li><a href="{{ route('refund') }}">Refund Policy</a></li>
+                    <li><a href="{{ route('shipping') }}">Shipping Policy</a></li>
+                    <li><a href="{{ route('cancellation') }}">Cancellation Policy</a></li>
+                </ul>
+            </div>
 
+            <!-- Contact Us Column -->
+            <div class="dhuria-footer-col dhuria-f-contact">
+                <h4 class="dhuria-f-title">CONTACT US</h4>
+                <div class="dhuria-contact-item">
+                    <span class="dhuria-c-label">Email</span>
+                    <a href="mailto:floramade517@gmail.com" class="dhuria-c-val">floramade517@gmail.com</a>
+                </div>
+                <div class="dhuria-contact-item">
+                    <span class="dhuria-c-label">Phone Helpline</span>
+                    <a href="tel:+919220251059" class="dhuria-c-val">+91 9220251059</a>
+                </div>
+                <div class="dhuria-contact-item">
+                    <span class="dhuria-c-label">Location</span>
+                    <span class="dhuria-c-val">Delhi, India</span>
+                </div>
+                <div class="dhuria-contact-item">
+                    <span class="dhuria-c-label">Timings</span>
+                    <span class="dhuria-c-val">Mon - Sat: 10:00 AM - 07:00 PM</span>
+                </div>
+            </div>
+        </div>
 
-<script>
-jQuery(function ($) {
-    // âœ… Make function GLOBAL
-    window.customAlert = function (message, iconUrl = null) {
-        $('#customAlertMessage').text(message);
-        if (iconUrl) {
-            $('#customAlertIcon')
-                .attr('src', iconUrl)
-                .show();
-        } else {
-            $('#customAlertIcon').hide();
-        }
-        $('#customAlertModal').fadeIn();
-    };
-
-    // Close modal
-    $(document).on('click', '.custom-alert-close, #customAlertModal', function (e) {
-        if (e.target !== this) return;
-        $('#customAlertModal').fadeOut();
-    });
-
-});
-</script>
-
-
-
-
+        <!-- Copyright Bottom Bar -->
+        <div class="dhuria-copyright-row">
+            <div>
+                &copy; {{ date('Y') }} Dhuria Healthcare. All rights reserved.
+            </div>
+            <div>
+                100% Certified Ayurvedic Formulations
+            </div>
+        </div>
+    </div>
 </footer>
+
+<!-- Floating WhatsApp Action Button -->
+<a href="https://wa.me/919220251059?text=Hello%20Dhuria%20Healthcare,%20I%20have%20an%20inquiry%20regarding%20products" target="_blank" class="dhuria-float-whatsapp" title="Chat on WhatsApp">
+    <i class="bi bi-whatsapp"></i>
+</a>
+
+<style>
+/* 1. Value Proposition Strip */
+.dhuria-value-bar {
+    background: #ffffff;
+    border-top: 1px solid #e2e8f0;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 35px 20px;
+}
+.dhuria-value-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+}
+.dhuria-val-col {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+.dhuria-val-icon {
+    font-size: 2rem;
+    color: #d4af37;
+    flex-shrink: 0;
+}
+.dhuria-val-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0 0 4px 0;
+}
+.dhuria-val-sub {
+    font-size: 0.8rem;
+    color: #64748b;
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* 2. Social Follow Strip */
+.dhuria-social-bar {
+    background: #0d2544;
+    padding: 12px 30px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.dhuria-social-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.dhuria-social-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.dhuria-s-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.82rem;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+.dhuria-s-icon:hover {
+    background: #d4af37;
+    color: #081a30;
+}
+.dhuria-social-right {
+    font-size: 0.82rem;
+    color: #f1f5f9;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* 3. Main Dark Footer */
+.dhuria-main-footer {
+    background: #061528;
+    color: #cbd5e1;
+    padding: 60px 20px 25px;
+    border-top: 1px solid rgba(212, 175, 55, 0.2);
+}
+.dhuria-footer-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+.dhuria-footer-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 0.8fr 0.8fr 1.2fr;
+    gap: 40px;
+    margin-bottom: 50px;
+}
+.dhuria-brand-desc {
+    font-size: 0.88rem;
+    line-height: 1.65;
+    color: #94a3b8;
+    max-width: 380px;
+    margin-bottom: 20px;
+}
+.dhuria-brand-socials {
+    display: flex;
+    gap: 10px;
+}
+.dhuria-bs-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    color: #cbd5e1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: all 0.2s;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.dhuria-bs-icon:hover {
+    background: #d4af37;
+    color: #061528;
+    transform: translateY(-2px);
+}
+.dhuria-f-title {
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    color: #ffffff;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+.dhuria-f-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.dhuria-f-links li {
+    margin-bottom: 12px;
+}
+.dhuria-f-links a {
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 0.88rem;
+    transition: all 0.2s;
+}
+.dhuria-f-links a:hover {
+    color: #d4af37;
+    padding-left: 4px;
+}
+.dhuria-contact-item {
+    margin-bottom: 12px;
+}
+.dhuria-c-label {
+    display: block;
+    font-size: 0.75rem;
+    color: #64748b;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-bottom: 2px;
+}
+.dhuria-c-val {
+    color: #cbd5e1;
+    font-size: 0.88rem;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+a.dhuria-c-val:hover {
+    color: #d4af37;
+}
+
+/* Copyright Row */
+.dhuria-copyright-row {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding-top: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+    color: #64748b;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+/* Floating WhatsApp Button */
+.dhuria-float-whatsapp {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background: #25d366;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5);
+    z-index: 9999;
+    text-decoration: none !important;
+    transition: all 0.3s ease;
+}
+.dhuria-float-whatsapp:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(37, 211, 102, 0.7);
+    color: #ffffff;
+}
+
+@media (max-width: 992px) {
+    .dhuria-value-inner { grid-template-columns: repeat(2, 1fr); }
+    .dhuria-footer-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 600px) {
+    .dhuria-value-inner { grid-template-columns: 1fr; }
+    .dhuria-footer-grid { grid-template-columns: 1fr; }
+    .dhuria-copyright-row { flex-direction: column; text-align: center; }
+}
+</style>

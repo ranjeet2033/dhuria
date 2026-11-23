@@ -1,230 +1,345 @@
 @extends('layouts.frontend')
 
-@section('title', 'Shopping Cart')
+@section('title', 'Your Cart - Dhuria Ayurveda')
 
 @section('content')
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-    <!-- Breadcrumb & Page Header -->
-    <div class="mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3.5 border-b border-slate-100">
-        <div>
-            <h1 class="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight" style="font-family: 'Outfit', sans-serif;">Shopping Cart</h1>
-            <p class="text-[10px] text-slate-400 mt-1 flex items-center gap-1.5 font-bold uppercase tracking-wider">
-                <a href="/" class="hover:text-primary transition-colors">Home</a> 
-                <span class="text-slate-300">/</span> 
-                @if(Auth::check())
-                    <a href="/dashboard" class="hover:text-primary transition-colors">Dashboard</a>
-                    <span class="text-slate-300">/</span>
-                @endif
-                <span class="text-slate-800">Cart</span>
-            </p>
-        </div>
-        <a href="/shop" class="text-xs font-bold text-primary hover:text-primary-dark transition-colors inline-flex items-center gap-1.5">
-            <i class="fa-solid fa-arrow-left text-[10px]"></i> Continue Shopping
-        </a>
+
+<style>
+.dh-cart-wrap {
+    max-width: 1250px;
+    margin: 0 auto;
+    padding: 30px 20px 70px;
+}
+.dh-cart-header {
+    margin-bottom: 35px;
+}
+.dh-cart-kicker {
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #b89326;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-bottom: 6px;
+}
+.dh-cart-title {
+    font-family: 'Cinzel', serif;
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: #061528;
+    margin: 0;
+}
+
+.dh-cart-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 0.9fr;
+    gap: 40px;
+    align-items: start;
+}
+
+/* Cart Table */
+.dh-cart-table-wrap {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+}
+.dh-cart-head {
+    display: grid;
+    grid-template-columns: 90px 1.5fr 1fr 1fr;
+    padding: 14px 20px;
+    background: #f8fafc;
+    border-bottom: 1.5px solid #e2e8f0;
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: #64748b;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+.dh-cart-row {
+    display: grid;
+    grid-template-columns: 90px 1.5fr 1fr 1fr;
+    padding: 20px;
+    border-bottom: 1px solid #f1f5f9;
+    align-items: center;
+}
+.dh-cart-row:last-child {
+    border-bottom: none;
+}
+.dh-cart-thumb {
+    width: 75px;
+    height: 75px;
+    border-radius: 10px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.dh-cart-thumb img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+.dh-cart-prod-title {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #061528;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 4px;
+}
+.dh-cart-prod-price {
+    font-size: 0.85rem;
+    color: #64748b;
+}
+.dh-cart-qty-ctrl {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    overflow: hidden;
+    background: #ffffff;
+    margin-bottom: 6px;
+}
+.dh-cart-qty-btn {
+    width: 30px;
+    height: 32px;
+    background: #f8fafc;
+    border: none;
+    font-weight: 800;
+    cursor: pointer;
+    color: #061528;
+}
+.dh-cart-qty-val {
+    width: 36px;
+    text-align: center;
+    border: none;
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: #061528;
+    outline: none;
+}
+.dh-cart-remove-link {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: #ef4444;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    display: block;
+}
+.dh-cart-remove-link:hover {
+    text-decoration: underline;
+}
+.dh-cart-total-val {
+    font-size: 1.15rem;
+    font-weight: 900;
+    color: #061528;
+}
+
+/* Order Summary Box (matching screenshot soft blue box) */
+.dh-summary-card {
+    background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
+    border: 1px solid #bae6fd;
+    border-radius: 18px;
+    padding: 30px;
+    box-shadow: 0 6px 20px rgba(2, 132, 199, 0.08);
+}
+.dh-summary-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #0c4a6e;
+    margin: 0 0 20px 0;
+    border-bottom: 1.5px solid #bae6fd;
+    padding-bottom: 12px;
+}
+.dh-summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    font-size: 0.92rem;
+    color: #334155;
+}
+.dh-summary-total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1.5px dashed #0284c7;
+    font-size: 1.25rem;
+    font-weight: 900;
+    color: #061528;
+}
+.dh-btn-checkout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    background: linear-gradient(135deg, #d4af37 0%, #b89326 100%);
+    color: #061528 !important;
+    padding: 14px 20px;
+    border-radius: 10px;
+    font-size: 1.05rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-decoration: none !important;
+    margin: 25px 0 20px 0;
+    box-shadow: 0 6px 18px rgba(212, 175, 55, 0.35);
+    transition: all 0.25s;
+    border: none;
+}
+.dh-btn-checkout:hover {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: #ffffff !important;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 992px) {
+    .dh-cart-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+    .dh-cart-head { display: none; }
+    .dh-cart-row { grid-template-columns: 80px 1fr; gap: 15px; }
+}
+</style>
+
+<div class="dh-cart-wrap">
+    <div class="dh-cart-header">
+        <span class="dh-cart-kicker">SHOPPING BAG</span>
+        <h1 class="dh-cart-title">Your Cart</h1>
     </div>
 
-    <div class="flex flex-col lg:flex-row gap-6">
-        @if(Auth::check())
-            @include('frontend.partials.customer_sidebar')
-        @endif
-
-        <div class="w-full {{ Auth::check() ? 'lg:w-3/4' : 'w-full' }}">
-            @if(empty($cart))
-                <div class="p-10 text-center bg-white border border-slate-200/80 rounded-2xl shadow-sm my-2">
-                    <div class="w-16 h-16 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center mx-auto mb-4">
-                        <i class="fa-solid fa-bag-shopping text-slate-300 text-2xl"></i>
-                    </div>
-                    <h2 class="text-base font-extrabold text-slate-800 mb-1" style="font-family: 'Outfit', sans-serif;">Your Cart is Currently Empty</h2>
-                    <p class="text-xs text-slate-400 mb-5 max-w-sm mx-auto leading-relaxed">Browse our collection of divine items, dresses, and accessories to add your favorite items.</p>
-                    <a href="/shop" class="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white px-6 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-colors shadow-sm">
-                        <i class="fa-solid fa-store text-xs"></i> Explore Collection
-                    </a>
+    @if(empty($cart) || count($cart) == 0)
+        <div style="background:#fff; border:1px solid #e2e8f0; border-radius:18px; padding:60px 20px; text-align:center; max-width:650px; margin:0 auto;">
+            <i class="bi bi-bag-x" style="font-size:3.5rem; color:#cbd5e1; display:block; margin-bottom:15px;"></i>
+            <h3 style="font-family:'Cinzel',serif; font-size:1.5rem; color:#061528; margin-bottom:8px;">Your Shopping Bag is Empty</h3>
+            <p style="color:#64748b; font-size:0.95rem; margin-bottom:25px;">Discover our authentic Ayurvedic kits, powders, and detox formulations.</p>
+            <a href="{{ route('shop') }}" style="background:#061528; color:#d4af37; border:1px solid #d4af37; padding:12px 30px; border-radius:30px; font-weight:800; text-transform:uppercase; text-decoration:none;">EXPLORE FORMULATIONS</a>
+        </div>
+    @else
+        @php
+            $subtotal = 0;
+        @endphp
+        <div class="dh-cart-grid">
+            <!-- Left: Items Table -->
+            <div class="dh-cart-table-wrap">
+                <div class="dh-cart-head">
+                    <div>Product</div>
+                    <div>Details</div>
+                    <div>Quantity</div>
+                    <div>Total</div>
                 </div>
-            @else
-                <div class="flex flex-col lg:flex-row gap-6 items-start">
-                    <!-- Left: Cart Items List -->
-                    <div class="flex-1 bg-white border border-slate-200/80 rounded-2xl p-4 sm:p-5 shadow-2xs w-full">
-                        <h2 class="text-xs font-extrabold text-slate-800 uppercase tracking-wider mb-4 pb-3 border-b border-slate-100 flex items-center gap-2" style="font-family: 'Outfit', sans-serif;">
-                            <i class="fa-solid fa-cart-shopping text-primary"></i> Cart Items ({{ count($cart) }})
-                        </h2>
 
-                        <div class="space-y-4">
-                            @foreach($cart as $id => $item)
-                                @php
-                                    $liveProduct = \App\Models\Product::find($id);
-                                    $itemName = $liveProduct ? $liveProduct->name : $item['name'];
-                                    $itemPrice = $liveProduct ? ($liveProduct->sale_price ?? $liveProduct->price) : $item['price'];
-                                    $itemImage = $liveProduct ? $liveProduct->primary_image_url : $item['image'];
-                                    $itemSlug = $liveProduct ? $liveProduct->slug : ($item['slug'] ?? '');
-                                @endphp
-
-                                <div id="cart-item-row-{{ $id }}" class="flex flex-col sm:flex-row items-start sm:items-center gap-4 pb-4 border-b border-slate-100 last:pb-0 last:border-b-0">
-                                    <!-- Thumbnail -->
-                                    <a href="{{ route('product.show', $itemSlug) }}" class="w-20 h-20 bg-slate-50 border border-slate-200/80 rounded-xl p-1.5 flex items-center justify-center flex-shrink-0 hover:border-slate-300 transition-all">
-                                        <img src="{{ asset($itemImage) }}" alt="{{ $itemName }}" class="max-w-full max-h-full object-contain">
-                                    </a>
-
-                                    <!-- Details Column -->
-                                    <div class="flex-1 min-w-0 w-full">
-                                        <div class="flex items-start justify-between gap-3 mb-1">
-                                            <a href="{{ route('product.show', $itemSlug) }}" class="text-xs sm:text-sm font-bold text-slate-900 hover:text-primary transition-colors line-clamp-2 leading-snug">
-                                                {{ $itemName }}
-                                            </a>
-                                            <span class="text-sm font-extrabold text-primary flex-shrink-0">
-                                                &#8377;{{ number_format($itemPrice * $item['quantity'], 2) }}
-                                            </span>
-                                        </div>
-
-                                        <p class="text-[11px] text-slate-400 font-semibold mb-3">
-                                            &#8377;{{ number_format($itemPrice, 2) }} each
-                                        </p>
-
-                                        <!-- Stepper & Remove Action Row -->
-                                        <div class="flex items-center justify-between flex-wrap gap-3">
-                                            <!-- Stepper -->
-                                            <div class="inline-flex items-center border border-slate-200 rounded-xl overflow-hidden bg-slate-50 h-8 shadow-2xs">
-                                                <button type="button" class="w-8 h-full bg-white hover:bg-slate-100 border-r border-slate-200 font-extrabold cursor-pointer text-slate-700 text-xs flex items-center justify-center transition" onclick="updateCartQty('{{ $id }}', {{ $item['quantity'] - 1 }})">
-                                                    <i class="fa-solid fa-minus text-[10px]"></i>
-                                                </button>
-                                                <span class="w-10 text-center text-xs font-extrabold text-slate-900">{{ $item['quantity'] }}</span>
-                                                <button type="button" class="w-8 h-full bg-white hover:bg-slate-100 border-l border-slate-200 font-extrabold cursor-pointer text-slate-700 text-xs flex items-center justify-center transition" onclick="updateCartQty('{{ $id }}', {{ $item['quantity'] + 1 }})">
-                                                    <i class="fa-solid fa-plus text-[10px]"></i>
-                                                </button>
-                                            </div>
-
-                                            <!-- Remove Button -->
-                                            <button type="button" class="text-rose-500 hover:text-rose-700 text-xs font-bold flex items-center gap-1.5 px-2.5 py-1 rounded-lg hover:bg-rose-50 transition cursor-pointer" onclick="removeCartItem('{{ $id }}')">
-                                                <i class="fa-regular fa-trash-can text-xs"></i> Remove
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-
-                    <!-- Right: Order Summary Sidebar -->
-                    @php 
-                        $subtotal = array_sum(array_map(function($item) { return $item['price'] * $item['quantity']; }, $cart));
-                        $coupon = session()->get('coupon');
-                        $discount = 0;
-                        if ($coupon) {
-                            if ($coupon['type'] == 'fixed') {
-                                $discount = $coupon['value'];
-                            } else {
-                                $discount = $subtotal * ($coupon['value'] / 100);
-                            }
-                        }
-                        $total = max(0, $subtotal - $discount);
+                @foreach($cart as $id => $item)
+                    @php
+                        $liveProduct = \App\Models\Product::find($id);
+                        $itemName = $liveProduct ? $liveProduct->name : $item['name'];
+                        $itemPrice = $liveProduct ? ($liveProduct->sale_price ?? $liveProduct->price) : $item['price'];
+                        $itemImage = $liveProduct ? $liveProduct->primary_image_url : ($item['image'] ?? 'images/liver_detox_product.jpg');
+                        $lineTotal = $itemPrice * $item['quantity'];
+                        $subtotal += $lineTotal;
                     @endphp
-                    <div class="w-full lg:w-80 bg-white border border-slate-200/80 rounded-2xl p-5 shadow-2xs sticky top-24">
-                        <h3 class="text-xs font-extrabold text-slate-900 uppercase tracking-wider mb-4 pb-3 border-b border-slate-100" style="font-family: 'Outfit', sans-serif;">
-                            Order Summary
-                        </h3>
-
-                        <!-- Coupon Form -->
-                        <div class="mb-5 pb-4 border-b border-slate-100">
-                            @if(session('coupon'))
-                                <div class="bg-emerald-50 border border-emerald-200 text-emerald-700 px-3 py-2 rounded-xl text-xs font-bold flex items-center justify-between">
-                                    <div class="flex items-center gap-2">
-                                        <i class="fa-solid fa-tag"></i>
-                                        <span>Code: {{ session('coupon')['code'] }} applied!</span>
-                                    </div>
-                                    <form action="{{ route('cart.removeCoupon') }}" method="POST">
-                                        @csrf
-                                        <button type="submit" class="text-rose-500 hover:text-rose-700 p-1 cursor-pointer" title="Remove Coupon">
-                                            <i class="fa-solid fa-xmark"></i>
-                                        </button>
-                                    </form>
-                                </div>
-                            @else
-                                <form action="{{ route('cart.applyCoupon') }}" method="POST" class="flex items-center">
-                                    @csrf
-                                    <input type="text" name="code" placeholder="Enter coupon code" required class="flex-1 bg-slate-50 border border-slate-200 rounded-l-xl px-3 py-2.5 text-xs font-semibold focus:outline-none focus:border-primary">
-                                    <button type="submit" class="bg-slate-800 hover:bg-slate-950 text-white px-4 py-2.5 rounded-r-xl text-xs font-extrabold uppercase tracking-wider transition-colors cursor-pointer border border-slate-800">
-                                        Apply
-                                    </button>
-                                </form>
-                            @endif
+                    <div class="dh-cart-row">
+                        <div class="dh-cart-thumb">
+                            <img src="{{ str_starts_with($itemImage, 'http') ? $itemImage : asset($itemImage) }}" alt="{{ $itemName }}">
                         </div>
 
-                        <div class="space-y-3 mb-5 text-xs">
-                            <div class="flex justify-between text-slate-600 font-medium">
-                                <span>Subtotal</span>
-                                <span class="font-extrabold text-slate-900">&#8377;{{ number_format($subtotal, 2) }}</span>
-                            </div>
-                            @if($discount > 0)
-                            <div class="flex justify-between text-emerald-600 font-bold">
-                                <span>Coupon Discount</span>
-                                <span>-&#8377;{{ number_format($discount, 2) }}</span>
-                            </div>
-                            @endif
-                            <div class="flex justify-between text-slate-600 font-medium items-center">
-                                <span>Delivery Charge</span>
-                                <span class="font-extrabold text-emerald-600 uppercase text-[9px] bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">FREE</span>
-                            </div>
-                            <div class="border-t border-slate-100 pt-3 flex justify-between text-sm font-extrabold text-slate-900">
-                                <span>Total Payable</span>
-                                <span class="text-primary text-base">&#8377;{{ number_format($total, 2) }}</span>
-                            </div>
+                        <div>
+                            <a href="/product/{{ $liveProduct->slug ?? '' }}" class="dh-cart-prod-title">{{ $itemName }}</a>
+                            <span class="dh-cart-prod-price">₹{{ number_format($itemPrice, 2) }}</span>
                         </div>
 
-                        <a href="{{ route('checkout.index') }}" class="w-full bg-primary hover:bg-primary-dark text-white flex items-center justify-center gap-2 py-3 rounded-xl font-extrabold text-xs uppercase tracking-wider shadow-md hover:shadow-lg transition duration-200">
-                            Proceed to Checkout <i class="fa-solid fa-arrow-right text-[10px]"></i>
-                        </a>
+                        <div>
+                            <div class="dh-cart-qty-ctrl">
+                                <button type="button" class="dh-cart-qty-btn" onclick="updateCartQuantity('{{ $id }}', {{ $item['quantity'] - 1 }})">-</button>
+                                <input type="text" value="{{ $item['quantity'] }}" readonly class="dh-cart-qty-val">
+                                <button type="button" class="dh-cart-qty-btn" onclick="updateCartQuantity('{{ $id }}', {{ $item['quantity'] + 1 }})">+</button>
+                            </div>
+                            <span class="dh-cart-remove-link" onclick="removeCartItem('{{ $id }}')">REMOVE</span>
+                        </div>
+
+                        <div class="dh-cart-total-val">
+                            ₹{{ number_format($lineTotal, 2) }}
+                        </div>
                     </div>
+                @endforeach
+            </div>
+
+            <!-- Right: Order Summary Card -->
+            <div class="dh-summary-card">
+                <h3 class="dh-summary-title">Order Summary</h3>
+
+                <div class="dh-summary-row">
+                    <span>Subtotal</span>
+                    <strong style="color:#061528;">₹{{ number_format($subtotal, 2) }}</strong>
                 </div>
-            @endif
+
+                <div class="dh-summary-row">
+                    <span>Shipping</span>
+                    <strong style="color:#10b981;">FREE</strong>
+                </div>
+
+                <div class="dh-summary-total-row">
+                    <span>Total</span>
+                    <span style="color:#061528;">₹{{ number_format($subtotal, 2) }}</span>
+                </div>
+
+                <a href="{{ route('checkout.index') }}" class="dh-btn-checkout">
+                    <span>CHECKOUT</span> <i class="bi bi-arrow-right"></i>
+                </a>
+
+                <div style="font-size:0.8rem; color:#475569; display:flex; flex-direction:column; gap:6px;">
+                    <div><i class="bi bi-shield-check text-green-600"></i> Secure encrypted checkout</div>
+                    <div><i class="bi bi-truck text-yellow-600"></i> Free express shipping across India</div>
+                </div>
+            </div>
         </div>
-    </div>
+    @endif
 </div>
 
-<!-- AJAX Stepper & Item Removal Scripts -->
 <script>
-function updateCartQty(productId, qty) {
-    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+function updateCartQuantity(productId, newQty) {
+    if (newQty < 1) {
+        removeCartItem(productId);
+        return;
+    }
     fetch('/cart/update', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': csrfToken
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
         },
-        body: JSON.stringify({ product_id: productId, quantity: qty })
+        body: JSON.stringify({ product_id: productId, quantity: newQty })
     })
-    .then(res => res.json())
+    .then(r => r.json())
     .then(data => {
-        if (data.success) {
-            if (window.Ebigcart) window.Ebigcart.updateHeaderCounts();
-            location.reload();
-        } else {
-            alert(data.message || 'Error updating cart quantity.');
-        }
-    })
-    .catch(err => console.error(err));
+        window.location.reload();
+    });
 }
 
 function removeCartItem(productId) {
-    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-    if (confirm('Are you sure you want to remove this item from your cart?')) {
-        fetch('/cart/remove', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': csrfToken
-            },
-            body: JSON.stringify({ product_id: productId })
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (data.success) {
-                if (window.Ebigcart) window.Ebigcart.updateHeaderCounts();
-                location.reload();
-            } else {
-                alert(data.message || 'Error removing item.');
-            }
-        })
-        .catch(err => console.error(err));
-    }
+    if(!confirm('Remove this product from your cart?')) return;
+    fetch('/cart/remove', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        },
+        body: JSON.stringify({ product_id: productId })
+    })
+    .then(r => r.json())
+    .then(data => {
+        window.location.reload();
+    });
 }
 </script>
+
 @endsection

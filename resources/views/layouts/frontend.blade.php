@@ -4,14 +4,14 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Ebigcart - Buy Best Laddu Gopal Dresses, Accessories and Ornaments</title>
-    <meta name="description" content="Explore beautiful Laddu Gopal dresses and accessories to adorn your divine idol with elegance and charm. Shop the best selection today!">
+    <title>@yield('title', 'Dhuria - 100% Pure Ayurveda & Natural Herbal Care')</title>
+    <meta name="description" content="Discover Dhuria's authentic Ayurvedic formulations, Pilecurex, MadhuCurex, herbal powders, and holistic wellness essentials.">
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/ebigcart_logo.png') }}">
-    <link rel="apple-touch-icon" href="{{ asset('images/ebigcart_logo.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/dhuria_logo.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('images/dhuria_logo.png') }}">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script>

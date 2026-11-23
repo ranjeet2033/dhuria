@@ -1,255 +1,155 @@
 @extends('layouts.frontend')
 
-@section('title', 'Customer Login')
+@section('title', 'Sign In - Dhuria Ayurveda')
 
 @section('content')
-<style>
-    .auth-page-wrapper {
-        min-height: 75vh !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        padding: 40px 16px !important;
-        background: #f8fafc !important;
-        font-family: 'Outfit', sans-serif !important;
-    }
-    .auth-card {
-        width: 100% !important;
-        max-width: 440px !important;
-        background: #ffffff !important;
-        border: 1px solid #e2e8f0 !important;
-        border-radius: 20px !important;
-        padding: 36px 32px !important;
-        box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 4px 6px -2px rgba(15, 23, 42, 0.03) !important;
-        box-sizing: border-box !important;
-    }
-    @media (max-width: 480px) {
-        .auth-card {
-            padding: 24px 20px !important;
-            border-radius: 16px !important;
-        }
-    }
-    .auth-title {
-        font-size: 24px !important;
-        font-weight: 800 !important;
-        color: #0f172a !important;
-        margin: 0 0 6px 0 !important;
-        text-align: center !important;
-        letter-spacing: -0.02em !important;
-    }
-    .auth-subtitle {
-        font-size: 13px !important;
-        color: #64748b !important;
-        margin: 0 0 24px 0 !important;
-        text-align: center !important;
-    }
-    .auth-google-btn {
-        width: 100% !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        gap: 12px !important;
-        background: #ffffff !important;
-        border: 1px solid #cbd5e1 !important;
-        border-radius: 12px !important;
-        padding: 11px 16px !important;
-        font-size: 13px !important;
-        font-weight: 700 !important;
-        color: #334155 !important;
-        text-decoration: none !important;
-        box-shadow: 0 1px 2px rgba(0,0,0,0.04) !important;
-        transition: all 0.2s ease !important;
-        box-sizing: border-box !important;
-    }
-    .auth-google-btn:hover {
-        background: #f8fafc !important;
-        border-color: #94a3b8 !important;
-        color: #0f172a !important;
-    }
-    .auth-divider {
-        display: flex !important;
-        align-items: center !important;
-        margin: 20px 0 !important;
-        text-align: center !important;
-    }
-    .auth-divider::before, .auth-divider::after {
-        content: '' !important;
-        flex: 1 !important;
-        border-bottom: 1px solid #e2e8f0 !important;
-    }
-    .auth-divider span {
-        padding: 0 14px !important;
-        font-size: 11px !important;
-        font-weight: 800 !important;
-        text-transform: uppercase !important;
-        color: #94a3b8 !important;
-        letter-spacing: 0.05em !important;
-    }
-    .auth-form-group {
-        margin-bottom: 16px !important;
-        text-align: left !important;
-    }
-    .auth-label {
-        display: block !important;
-        font-size: 11px !important;
-        font-weight: 800 !important;
-        text-transform: uppercase !important;
-        letter-spacing: 0.05em !important;
-        color: #475569 !important;
-        margin-bottom: 6px !important;
-    }
-    .auth-input {
-        width: 100% !important;
-        background: #ffffff !important;
-        border: 1px solid #cbd5e1 !important;
-        border-radius: 12px !important;
-        padding: 11px 14px !important;
-        font-size: 13px !important;
-        color: #0f172a !important;
-        outline: none !important;
-        transition: all 0.2s ease !important;
-        box-sizing: border-box !important;
-        font-family: inherit !important;
-    }
-    .auth-input:focus {
-        border-color: #b71c1c !important;
-        box-shadow: 0 0 0 3px rgba(183, 28, 28, 0.12) !important;
-    }
-    .auth-pass-wrap {
-        position: relative !important;
-        width: 100% !important;
-    }
-    .auth-pass-toggle {
-        position: absolute !important;
-        right: 12px !important;
-        top: 50% !important;
-        transform: translateY(-50%) !important;
-        background: transparent !important;
-        border: none !important;
-        color: #94a3b8 !important;
-        font-size: 14px !important;
-        cursor: pointer !important;
-        padding: 4px !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        box-shadow: none !important;
-    }
-    .auth-pass-toggle:hover {
-        color: #b71c1c !important;
-    }
-    .auth-submit-btn {
-        width: 100% !important;
-        background: #b71c1c !important;
-        color: #ffffff !important;
-        border: none !important;
-        border-radius: 12px !important;
-        padding: 13px !important;
-        font-size: 13px !important;
-        font-weight: 800 !important;
-        text-transform: uppercase !important;
-        letter-spacing: 0.05em !important;
-        cursor: pointer !important;
-        box-shadow: 0 4px 12px rgba(183, 28, 28, 0.3) !important;
-        transition: all 0.2s ease !important;
-        margin-top: 8px !important;
-        box-sizing: border-box !important;
-    }
-    .auth-submit-btn:hover {
-        background: #8e1515 !important;
-        box-shadow: 0 6px 16px rgba(183, 28, 28, 0.4) !important;
-        transform: translateY(-1px) !important;
-    }
-</style>
-
-<div class="auth-page-wrapper">
-    <div class="auth-card">
-        
-        <h1 class="auth-title">Welcome Back</h1>
-        <p class="auth-subtitle">Log in to manage your orders, wishlist, and account.</p>
-
-        <!-- Status & Error Alert -->
-        @if (session('status'))
-            <div style="background: #ecfdf5; border: 1px solid #a7f3d0; color: #065f46; padding: 10px 14px; border-radius: 10px; font-size: 12px; font-weight: 600; margin-bottom: 16px; text-align: center;">
-                {{ session('status') }}
-            </div>
-        @endif
-
-        @if ($errors->any())
-            <div style="background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; padding: 10px 14px; border-radius: 10px; font-size: 12px; margin-bottom: 16px;">
-                @foreach ($errors->all() as $error)
-                    <div style="display: flex; align-items: center; gap: 6px;">
-                        <i class="fa-solid fa-circle-exclamation" style="font-size: 12px;"></i>
-                        <span>{{ $error }}</span>
-                    </div>
-                @endforeach
-            </div>
-        @endif
-
-        <!-- Google OAuth Button -->
-        <a href="{{ route('auth.google') }}" class="auth-google-btn">
-            <svg style="width: 18px; height: 18px;" viewBox="0 0 48 48">
-                <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path>
-                <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path>
-                <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path>
-                <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path>
-                <path fill="none" d="M0 0h48v48H0z"></path>
-            </svg>
-            Continue with Google
+<div class="min-h-[82vh] bg-slate-50/60 py-8 px-4 sm:px-6 lg:px-8 flex flex-col justify-center" style="font-family: 'Outfit', sans-serif;">
+    <div class="max-w-4xl w-full mx-auto mb-3">
+        <a href="{{ route('shop') }}" class="inline-flex items-center gap-1.5 text-xs font-bold text-slate-500 hover:text-slate-900 transition-colors">
+            <i class="bi bi-arrow-left"></i> Back to Shop
         </a>
+    </div>
 
-        <!-- Divider -->
-        <div class="auth-divider">
-            <span>OR</span>
-        </div>
-
-        <form method="POST" action="{{ route('login') }}">
-            @csrf
-
-            <!-- Email Address -->
-            <div class="auth-form-group">
-                <label for="email" class="auth-label">Email Address</label>
-                <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="username" class="auth-input" placeholder="name@example.com">
-            </div>
-
-            <!-- Password -->
-            <div class="auth-form-group" x-data="{ showPassword: false }">
-                <label for="password" class="auth-label">Password</label>
-                <div class="auth-pass-wrap">
-                    <input id="password" :type="showPassword ? 'text' : 'password'" name="password" required autocomplete="current-password" class="auth-input" style="padding-right: 40px !important;" placeholder="Enter your password">
-                    <button type="button" @click="showPassword = !showPassword" class="auth-pass-toggle" title="Toggle Password Visibility">
-                        <i class="fa-solid" :class="showPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
-                    </button>
+    <div class="max-w-4xl w-full mx-auto bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-200/80 flex flex-col md:flex-row">
+        <!-- Left Column: Dark Navy Brand Showcase -->
+        <div class="w-full md:w-[42%] bg-[#081a30] text-white p-8 md:p-10 flex flex-col justify-between relative overflow-hidden" style="background: radial-gradient(circle at 15% 20%, rgba(212, 175, 55, 0.15) 0%, transparent 45%), radial-gradient(circle at 85% 85%, rgba(13, 37, 68, 0.9) 0%, transparent 55%), #081a30;">
+            <!-- Brand Header -->
+            <div>
+                <a href="/" class="inline-flex items-center gap-3 text-decoration-none mb-1">
+                    <img src="{{ asset('images/dhuria_logo_white.png') }}" alt="Dhuria" class="h-8 md:h-9 w-auto object-contain">
+                </a>
+                <div class="text-[9px] font-black uppercase tracking-[0.22em] text-[#d4af37] mt-1">
+                    PURE AYURVEDA &bull; BETTER LIFE
                 </div>
             </div>
 
-            <!-- Remember Me & Forgot Password -->
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; font-size: 12px;">
-                <label for="remember_me" style="display: flex; align-items: center; gap: 8px; cursor: pointer; color: #475569; font-weight: 600; margin: 0;">
-                    <input id="remember_me" type="checkbox" name="remember" style="width: 15px; height: 15px; accent-color: #b71c1c; cursor: pointer; margin: 0;">
-                    <span>Remember me</span>
-                </label>
-
-                @if (Route::has('password.request'))
-                    <a href="{{ route('password.request') }}" style="color: #b71c1c; font-weight: 700; text-decoration: none;">
-                        Forgot password?
-                    </a>
-                @endif
+            <!-- Main Content Area -->
+            <div class="my-8 md:my-12">
+                <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-[#d4af37]/30 text-[#d4af37] text-[10px] font-extrabold uppercase tracking-widest mb-4">
+                    <i class="bi bi-stars"></i> CUSTOMER SIGN IN
+                </div>
+                <h2 class="text-2xl md:text-3xl font-extrabold text-white leading-tight mb-4 tracking-tight">
+                    Welcome to Authentic Wellness.
+                </h2>
+                <p class="text-xs md:text-sm text-slate-300 leading-relaxed font-normal">
+                    Sign in to manage your orders, track fast dispatch, access saved prescriptions, and explore personalized Ayurvedic formulations.
+                </p>
             </div>
 
-            <!-- Submit Button -->
-            <button type="submit" class="auth-submit-btn">
-                Log In
-            </button>
-        </form>
-
-        <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid #f1f5f9; text-align: center; font-size: 13px; color: #64748b;">
-            <span>Don't have an account?</span>
-            <a href="{{ route('register') }}" style="color: #b71c1c; font-weight: 800; text-decoration: none; margin-left: 4px;">
-                Register here
-            </a>
+            <!-- Trust Bullet Points -->
+            <div class="space-y-2.5 pt-6 border-t border-white/10">
+                <div class="flex items-center gap-2.5 text-xs text-slate-300">
+                    <i class="bi bi-check-circle-fill text-[#d4af37]"></i>
+                    <span>100% Certified Classical Ayurvedic Herbs</span>
+                </div>
+                <div class="flex items-center gap-2.5 text-xs text-slate-300">
+                    <i class="bi bi-shield-check text-[#d4af37]"></i>
+                    <span>Encrypted &amp; Protected Sign-in Session</span>
+                </div>
+            </div>
         </div>
 
+        <!-- Right Column: Sign In Form -->
+        <div class="w-full md:w-[58%] bg-white p-8 md:p-12 flex flex-col justify-center">
+            <!-- Top Tag Pill -->
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-[10px] font-black uppercase tracking-wider mb-2.5 w-fit">
+                <i class="bi bi-box-arrow-in-right"></i> WELCOME BACK
+            </div>
+
+            <h1 class="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight mb-1">
+                Sign In to Account
+            </h1>
+            <p class="text-xs text-slate-500 mb-6">
+                Enter your registered credentials to access your store orders.
+            </p>
+
+            <!-- Alerts -->
+            @if (session('status'))
+                <div class="mb-4 p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl text-xs font-semibold flex items-center gap-2">
+                    <i class="bi bi-check-circle-fill text-emerald-600"></i>
+                    <span>{{ session('status') }}</span>
+                </div>
+            @endif
+
+            @if ($errors->any())
+                <div class="mb-4 p-3.5 bg-rose-50 border border-rose-200 text-rose-800 rounded-xl text-xs space-y-1">
+                    @foreach ($errors->all() as $error)
+                        <div class="flex items-center gap-2">
+                            <i class="bi bi-exclamation-circle-fill text-rose-600"></i>
+                            <span>{{ $error }}</span>
+                        </div>
+                    @endforeach
+                </div>
+            @endif
+
+            <!-- Form -->
+            <form method="POST" action="{{ route('login') }}" class="space-y-4">
+                @csrf
+
+                <!-- Email Input -->
+                <div>
+                    <label for="email" class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                        EMAIL ADDRESS
+                    </label>
+                    <div class="relative">
+                        <i class="bi bi-envelope text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 text-sm"></i>
+                        <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="username"
+                               class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:bg-white focus:border-[#081a30] focus:ring-2 focus:ring-[#081a30]/10 transition outline-none font-medium"
+                               placeholder="e.g. yourname@example.com">
+                    </div>
+                </div>
+
+                <!-- Password Input -->
+                <div x-data="{ show: false }">
+                    <div class="flex items-center justify-between mb-1.5">
+                        <label for="password" class="block text-[11px] font-bold uppercase tracking-wider text-slate-700">
+                            PASSWORD
+                        </label>
+                        @if (Route::has('password.request'))
+                            <a href="{{ route('password.request') }}" class="text-xs text-amber-700 hover:text-amber-800 font-semibold hover:underline">
+                                Forgot password?
+                            </a>
+                        @endif
+                    </div>
+                    <div class="relative">
+                        <i class="bi bi-lock text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 text-sm"></i>
+                        <input id="password" :type="show ? 'text' : 'password'" name="password" required autocomplete="current-password"
+                               class="w-full pl-10 pr-10 py-3 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:bg-white focus:border-[#081a30] focus:ring-2 focus:ring-[#081a30]/10 transition outline-none font-medium"
+                               placeholder="Enter your password">
+                        <button type="button" @click="show = !show" class="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 cursor-pointer text-sm" title="Toggle password visibility">
+                            <i class="bi" :class="show ? 'bi-eye-slash' : 'bi-eye'"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Remember Me Checkbox -->
+                <div class="flex items-center justify-between pt-1">
+                    <label for="remember_me" class="flex items-center gap-2 cursor-pointer text-xs text-slate-600 select-none">
+                        <input id="remember_me" type="checkbox" name="remember" class="w-4 h-4 rounded text-[#081a30] border-slate-300 focus:ring-0 cursor-pointer">
+                        <span>Remember me on this device</span>
+                    </label>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="w-full bg-[#081a30] hover:bg-[#0d2544] text-white font-bold py-3.5 px-6 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg flex items-center justify-center gap-2 text-xs uppercase tracking-wider mt-3 cursor-pointer">
+                    SIGN IN <i class="bi bi-arrow-right"></i>
+                </button>
+            </form>
+
+            <!-- Bottom Navigation -->
+            <div class="mt-6 text-center text-xs text-slate-500">
+                New to Dhuria? 
+                <a href="{{ route('register') }}" class="font-bold text-slate-900 hover:underline ml-1">
+                    Create an account
+                </a>
+            </div>
+
+            <!-- SSL Security Badge -->
+            <div class="mt-4 flex items-center justify-center gap-1.5 text-[11px] text-slate-400">
+                <i class="bi bi-shield-check text-emerald-600"></i>
+                <span>256-bit SSL encrypted connection</span>
+            </div>
+        </div>
     </div>
 </div>
 @endsection

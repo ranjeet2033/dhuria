@@ -1,75 +1,128 @@
 @extends('layouts.frontend')
 
-@section('title', 'Cancellation Policy')
+@section('title', 'Cancellation Policy - Dhuria Ayurveda')
 
 @section('content')
-    <!-- Page Header -->
-    <div class="bg-[#fdfaf6] py-5 md:py-12 text-center border-b border-gray-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <p class="text-[10px] md:text-sm text-gray-500 uppercase tracking-widest leading-relaxed">
-                <a href="/" class="hover:text-primary transition">Home</a> / 
-                <span class="text-gray-900 font-medium">Cancellation Policy</span>
-            </p>
-            <h1 class="text-2xl sm:text-4xl font-serif font-bold text-gray-900 mt-1 md:mt-2">Cancellation Policy</h1>
-        </div>
+
+<style>
+.dh-policy-wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px 70px;
+}
+.dh-policy-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+.dh-policy-kicker {
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #b89326;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-bottom: 8px;
+}
+.dh-policy-title {
+    font-family: 'Cinzel', serif;
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: #061528;
+    margin: 0 0 10px 0;
+}
+.dh-policy-sub {
+    font-size: 0.95rem;
+    color: #64748b;
+    line-height: 1.6;
+}
+.dh-policy-section {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 24px 28px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+}
+.dh-policy-sec-title {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #061528;
+    margin-bottom: 12px;
+}
+.dh-policy-text {
+    font-size: 0.9rem;
+    color: #475569;
+    line-height: 1.7;
+    margin: 0;
+}
+.dh-questions-box {
+    background: #0d2544;
+    color: #ffffff;
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    margin-top: 50px;
+}
+.dh-qb-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+.dh-qb-card {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    padding: 16px;
+    color: #f1f5f9;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+.dh-qb-card:hover {
+    background: rgba(212, 175, 55, 0.2);
+    border-color: #d4af37;
+    color: #ffffff;
+}
+</style>
+
+<div class="dh-policy-wrap">
+    <div class="dh-policy-header">
+        <span class="dh-policy-kicker">✦ ORDER ADJUSTMENT ✦</span>
+        <h1 class="dh-policy-title">Cancellation Policy</h1>
+        <p class="dh-policy-sub">Simple and transparent order cancellation process before dispatch.</p>
     </div>
 
-    <!-- Content Section -->
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
-        <div class="prose max-w-none text-gray-600 leading-relaxed font-sans text-sm sm:text-base space-y-6">
-            <p class="text-xs text-gray-400">Last updated: July 8, 2026</p>
-            
-            <p>
-                At <strong>Ebigcart</strong>, we understand that you may sometimes need to cancel an order. We have a simple cancellation process designed to be as fair and convenient as possible.
-            </p>
+    <div class="dh-policy-section">
+        <div class="dh-policy-sec-title">Cancellation Before Dispatch</div>
+        <p class="dh-policy-text">You may cancel your order at any time before the consignment is dispatched from our Delhi fulfillment facility. Once a courier tracking AWB is generated, orders cannot be cancelled and must follow our standard return process.</p>
+    </div>
 
-            <h2 class="text-xl font-serif font-bold text-gray-900 mt-8 mb-4">1. Cancellation Timeline</h2>
-            <p>
-                You can cancel your order at any time **before it has been shipped or dispatched**. 
-            </p>
-            <p>
-                We usually process and ship orders within <strong>24 to 48 hours</strong> of order placement. Therefore, if you wish to cancel, please notify us as quickly as possible. Once the order has been dispatched from our facility and a tracking number has been generated, the order **cannot be cancelled**.
-            </p>
+    <div class="dh-policy-section">
+        <div class="dh-policy-sec-title">Immediate Full Refund</div>
+        <p class="dh-policy-text">For cancelled prepaid orders, 100% of the transaction amount is refunded immediately via Razorpay back to your original payment method (Cards/UPI/Net-Banking) without any cancellation fee deduction.</p>
+    </div>
 
-            <h2 class="text-xl font-serif font-bold text-gray-900 mt-8 mb-4">2. How to Request a Cancellation</h2>
-            <p>
-                To cancel your order:
-            </p>
-            <ul class="list-disc pl-6 space-y-2">
-                <li>Send an urgent email to <strong>{{ \App\Models\Setting::get('site_email', 'Papperlemon1@gmail.com') }}</strong> OR call our support team.</li>
-                <li>Provide your **Order Number** and the reason for cancellation in your message.</li>
-            </ul>
-
-            <h2 class="text-xl font-serif font-bold text-gray-900 mt-8 mb-4">3. Refunds for Cancelled Orders</h2>
-            <p>
-                If your order is cancelled successfully before dispatch:
-            </p>
-            <ul class="list-disc pl-6 space-y-2">
-                <li>We will cancel the order in our system and initiate a full refund.</li>
-                <li>The refund will be credited back to your original payment method (Credit/Debit Card, Net Banking, UPI, or Wallet) via our secure gateway, <strong>Razorpay</strong>.</li>
-                <li>You will receive a confirmation email once the cancellation is approved and the refund is initiated.</li>
-            </ul>
-
-            <h2 class="text-xl font-serif font-bold text-gray-900 mt-8 mb-4">4. Refund Processing Duration</h2>
-            <p>
-                Refunds for cancelled orders follow the standard gateway timeline. The amount will typically reflect in your account within <strong>5 to 7 business days</strong> of the cancellation confirmation.
-            </p>
-
-            <h2 class="text-xl font-serif font-bold text-gray-900 mt-8 mb-4">5. Post-Dispatch Cancellation (Refusal of Delivery)</h2>
-            <p>
-                If the order has already been shipped and you refuse delivery from our courier partner, a refund will be processed only after the package is returned back to our warehouse. In such cases, we reserve the right to deduct any shipping charges incurred for sending the package and its return-to-origin (RTO) from the final refund amount.
-            </p>
-
-            <h2 class="text-xl font-serif font-bold text-gray-900 mt-8 mb-4">6. Contact Information</h2>
-            <p>
-                For immediate help with order cancellation, please reach out to us:
-            </p>
-            <ul class="list-disc pl-6 space-y-2 mt-2">
-                <li><strong>Brand Name:</strong> {{ \App\Models\Setting::get('site_name', 'Ebigcart') }}</li>
-                <li><strong>Email:</strong> {{ \App\Models\Setting::get('site_email', 'Papperlemon1@gmail.com') }}</li>
-                <li><strong>Address:</strong> {{ \App\Models\Setting::get('site_address', '12800 Northborough Dr, Houston, TX 77067') }}</li>
-            </ul>
+    <!-- Still Have Questions Box -->
+    <div class="dh-questions-box">
+        <h3 style="font-family:'Cinzel',serif; font-size:1.8rem; font-weight:800; color:#fff; margin:0 0 8px 0;">Still have questions?</h3>
+        <p style="font-size:0.9rem; color:#cbd5e1; margin-bottom:25px;">Contact our dispatch team for urgent order cancellations.</p>
+        <div class="dh-qb-grid">
+            <a href="mailto:floramade517@gmail.com" class="dh-qb-card">
+                <i class="bi bi-envelope" style="font-size:1.4rem; display:block; margin-bottom:6px;"></i>
+                <span style="font-size:0.8rem; font-weight:700;">floramade517@gmail.com</span>
+                <span style="display:block; font-size:0.7rem; color:#cbd5e1;">Email Support</span>
+            </a>
+            <a href="tel:+919220251059" class="dh-qb-card">
+                <i class="bi bi-telephone" style="font-size:1.4rem; display:block; margin-bottom:6px;"></i>
+                <span style="font-size:0.8rem; font-weight:700;">+91 9220251059</span>
+                <span style="display:block; font-size:0.7rem; color:#cbd5e1;">Mon - Sat (10am - 7pm)</span>
+            </a>
+            <a href="{{ route('contact') }}" class="dh-qb-card">
+                <i class="bi bi-chat-dots" style="font-size:1.4rem; display:block; margin-bottom:6px;"></i>
+                <span style="font-size:0.8rem; font-weight:700;">Contact Desk</span>
+                <span style="display:block; font-size:0.7rem; color:#cbd5e1;">Reach Out Instantly</span>
+            </a>
         </div>
     </div>
+</div>
+
 @endsection
-

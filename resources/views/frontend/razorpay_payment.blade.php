@@ -1,6 +1,6 @@
 @extends('layouts.frontend')
 
-@section('title', 'Complete Payment — Ebigcart')
+@section('title', 'Complete Payment — Dhuria')
 
 @section('content')
 <div class="min-h-[75vh] flex items-center justify-center px-4 py-8 bg-slate-50">
@@ -143,9 +143,9 @@
             "key": "{{ $razorpayKey }}", 
             "amount": "{{ $amount }}", 
             "currency": "INR",
-            "name": "Ebigcart",
+            "name": "Dhuria",
             "description": "Order #{{ $order->order_number }}",
-            "image": "{{ asset('images/logo.jpeg') }}",
+            "image": "{{ asset('images/dhuria_logo.png') }}",
             "order_id": "{{ $razorpayOrderId }}", 
             "handler": function (response) {
                 document.getElementById('razorpay_payment_id').value = response.razorpay_payment_id;

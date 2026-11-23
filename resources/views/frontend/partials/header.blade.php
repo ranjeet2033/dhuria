@@ -1,455 +1,818 @@
 @php
     $headerCategories = \App\Models\Category::parents()->with('children.children')->where('is_active', true)->get();
+    $searchFeaturedProducts = \App\Models\Product::where('is_active', true)->take(4)->get();
 @endphp
-<header class="ranisahab-header">
+
+<!-- ========================================================
+     FLORAMADE LUXURY HEADER
+     ======================================================== -->
+<header class="flora-header">
   <style>
-html, body, #page, .site, header, .site-header, .ranisahab-header { margin-top: 0 !important; padding-top: 0 !important; top: 0 !important; }
-html { margin-top: 0px !important; }
-body { margin-top: 0px !important; padding-top: 0px !important; }
-    body, html, #page, .ranisahab-header { margin-top: 0 !important; padding-top: 0 !important; }
-    .ranisahab-header { background: #ffffff; color: #222222; font-family: 'Cinzel', 'Outfit', sans-serif; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-bottom: 1px solid #eaeaea; }
-    
-    /* Top Announcement Bar */
-    .rs-top-bar { background: #b71c1c; color: #ffffff; padding: 7px 15px; text-align: center; font-size: 0.78rem; letter-spacing: 1.5px; font-weight: 600; text-transform: uppercase; margin: 0; display: block; width: 100%; }
-    .rs-top-bar span { margin: 0 10px; opacity: 0.8; }
+    :root {
+      --fl-navy-dark: #061528;
+      --fl-navy-main: #081a30;
+      --fl-navy-light: #0d2544;
+      --fl-gold: #d4af37;
+      --fl-gold-bright: #f59e0b;
+      --fl-gold-light: #fef08a;
+    }
 
-    /* Middle Main Bar */
-    .rs-main-bar { display: flex; align-items: center; justify-content: space-between; padding: 6px 30px; max-width: 1500px; margin: 0 auto; gap: 15px; position: relative !important; min-height: 60px; }
-    
-    /* Left Search Box */
-    .rs-search-box { position: relative; flex: 1; max-width: 320px; z-index: 5; }
-    .rs-search-input { width: 100%; background: #f8f9fa; border: 1px solid #e0e0e0; border-radius: 30px; padding: 8px 40px 8px 18px; color: #222; font-size: 0.85rem; font-family: 'Outfit', sans-serif; outline: none; transition: all 0.3s ease; }
-    .rs-search-input::placeholder { color: #888888; font-style: italic; }
-    .rs-search-input:focus { border-color: #b71c1c; background: #ffffff; box-shadow: 0 0 10px rgba(183,28,28,0.15); }
-    .rs-search-btn { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #b71c1c; font-size: 0.95rem; cursor: pointer; }
+    html, body, #page, .site, header, .flora-header {
+      margin-top: 0 !important;
+      padding-top: 0 !important;
+      top: 0 !important;
+    }
 
-    /* Center Logo (Dead Centered on Desktop & Mobile) */
-    .rs-logo-container { position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; z-index: 20 !important; display: flex !important; justify-content: center !important; align-items: center !important; text-align: center !important; margin: 0 !important; }
-    .rs-logo { display: inline-flex; align-items: center; justify-content: center; text-decoration: none; }
-    .rs-logo img { height: 60px !important; width: auto !important; object-fit: contain !important; transition: transform 0.3s ease !important; margin: 0 !important; }
-    .rs-logo:hover img { transform: scale(1.03); }
+    .flora-header {
+      background: var(--fl-navy-dark);
+      color: #ffffff;
+      font-family: 'Cinzel', 'Outfit', sans-serif;
+      position: sticky;
+      top: 0;
+      z-index: 9999;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+    }
 
-    /* Right Action Items */
-    .rs-actions { display: flex; align-items: center; gap: 22px; flex: 1; justify-content: flex-end; }
-    .rs-action-link { display: flex; align-items: center; gap: 6px; color: #222222; text-decoration: none !important; font-size: 0.8rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; transition: all 0.3s ease; position: relative; }
-    .rs-action-link:hover { color: #b71c1c; transform: translateY(-1px); }
-    .rs-action-icon { font-size: 1.25rem; color: #b71c1c; }
-    .rs-badge { position: absolute; top: -7px; left: 10px; background: #b71c1c; color: #fff; font-size: 0.65rem; font-weight: 800; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1.5px solid #fff; }
+    /* 1. TOP UTILITY / ANNOUNCEMENT BAR */
+    .flora-top-bar {
+      background: #030c18;
+      color: #cbd5e1;
+      padding: 6px 30px;
+      font-size: 0.76rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1550px;
+      margin: 0 auto;
+      letter-spacing: 0.3px;
+    }
+    .flora-top-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .flora-social-link {
+      color: #94a3b8;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.06);
+      font-size: 0.72rem;
+      transition: all 0.2s ease;
+    }
+    .flora-social-link:hover {
+      background: var(--fl-gold);
+      color: var(--fl-navy-dark);
+      transform: translateY(-1px);
+    }
+    .flora-top-left-text {
+      color: #cbd5e1;
+      font-weight: 500;
+      margin-left: 4px;
+    }
 
-    /* Bottom Navigation Bar */
-    .rs-nav-bar { background: #ffffff; border-top: 1px solid #f0f0f0; border-bottom: 1px solid #f0f0f0; position: relative; z-index: 900; }
-    .rs-nav-list { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; list-style: none; padding: 0; margin: 0; max-width: 1500px; margin: 0 auto; }
-    .rs-nav-item { display: flex; align-items: center; position: relative; }
-    .rs-nav-item .sep { color: #b71c1c; font-size: 0.65rem; opacity: 0.5; padding: 0 10px; }
-    .rs-nav-link { color: #333333; font-size: 0.82rem; font-weight: 700; text-decoration: none !important; text-transform: uppercase; letter-spacing: 0.8px; padding: 10px 0; transition: all 0.2s ease; position: relative; display: flex; align-items: center; gap: 4px; }
-    .rs-nav-link:hover, .rs-nav-item:hover > .rs-nav-link, .rs-nav-link.active { color: #b71c1c; }
-    .rs-nav-link.active::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px; background: #b71c1c; }
+    .flora-top-center {
+      color: #fef08a;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
 
-    /* Dropdown & Mega Menu */
-    .rs-dropdown {
-        position: absolute;
-        top: 100%;
-        left: 50%;
-        transform: translateX(-50%) translateY(10px);
-        background: #ffffff;
-        border: 1px solid #eaeaea;
-        border-radius: 12px;
-        box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+    .flora-top-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      color: #cbd5e1;
+    }
+    .flora-top-contact-link {
+      color: #cbd5e1;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+    .flora-top-contact-link:hover {
+      color: var(--fl-gold);
+    }
+
+    /* 2. MAIN HEADER NAVIGATION BAR */
+    .flora-main-nav {
+      max-width: 1550px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 30px;
+      position: relative;
+    }
+
+    /* Brand Logo */
+    .flora-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none !important;
+    }
+    .flora-brand-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1.5px solid var(--fl-gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle, #254972 0%, #0c233f 100%);
+      color: var(--fl-gold);
+      font-size: 1.15rem;
+      box-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+    }
+    .flora-brand-text {
+      font-family: 'Cinzel', serif;
+      font-size: 1.75rem;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      background: linear-gradient(135deg, #ffffff 30%, #fef08a 70%, #d4af37 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 0;
+      line-height: 1;
+    }
+
+    /* Center Nav Links */
+    .flora-nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .flora-nav-item {
+      position: relative;
+    }
+    .flora-nav-link {
+      color: #f1f5f9;
+      text-decoration: none !important;
+      font-size: 0.92rem;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      padding: 8px 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: color 0.25s ease;
+    }
+    .flora-nav-link i.arrow {
+      font-size: 0.7rem;
+      transition: transform 0.2s;
+    }
+    .flora-nav-link:hover, .flora-nav-link.active {
+      color: var(--fl-gold);
+    }
+    .flora-nav-item:hover .flora-nav-link i.arrow {
+      transform: rotate(180deg);
+    }
+
+    /* Dropdown Menus */
+    .flora-dropdown {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%) translateY(10px);
+      background: var(--fl-navy-main);
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      border-radius: 12px;
+      padding: 10px 0;
+      min-width: 220px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 1000;
+      list-style: none;
+      pointer-events: none;
+    }
+    .flora-nav-item:hover > .flora-dropdown {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
+      pointer-events: auto;
+    }
+    .flora-dropdown-item {
+      padding: 0;
+      margin: 0;
+    }
+    .flora-dropdown-link {
+      display: block;
+      padding: 8px 20px;
+      color: #cbd5e1;
+      text-decoration: none !important;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    .flora-dropdown-link:hover {
+      background: rgba(212, 175, 55, 0.12);
+      color: var(--fl-gold);
+      padding-left: 24px;
+    }
+
+    /* Right Action Icons */
+    .flora-actions {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+    }
+    .flora-action-btn {
+      color: #f1f5f9;
+      text-decoration: none !important;
+      font-size: 1.25rem;
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+    }
+    .flora-action-btn:hover {
+      color: var(--fl-gold);
+      transform: translateY(-2px);
+    }
+    .flora-count-badge {
+      position: absolute;
+      top: -7px;
+      right: -10px;
+      background: var(--fl-gold-bright);
+      color: #061528;
+      font-size: 0.65rem;
+      font-weight: 900;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1.5px solid var(--fl-navy-dark);
+    }
+
+    /* Centered Search Popup Modal (Matching Reference) */
+    .flora-search-modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(3, 12, 24, 0.72);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      z-index: 100000;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 50px 16px 20px;
+      overflow-y: auto;
+    }
+    .flora-search-modal-backdrop.active {
+      display: flex;
+    }
+    .flora-search-modal-box {
+      width: 100%;
+      max-width: 580px;
+      background: #ffffff;
+      border-radius: 24px;
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.4);
+      padding: 24px;
+      color: #0f172a;
+      font-family: 'Outfit', sans-serif;
+      animation: searchModalSlideDown 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      border: 1px solid rgba(226, 232, 240, 0.95);
+      position: relative;
+    }
+    @keyframes searchModalSlideDown {
+      from {
         opacity: 0;
-        visibility: hidden;
-        transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-        z-index: 999;
-        min-width: 220px;
-        padding: 12px 0;
-        pointer-events: none;
-    }
-    .rs-nav-item:hover > .rs-dropdown {
+        transform: translateY(-20px) scale(0.96);
+      }
+      to {
         opacity: 1;
-        visibility: visible;
-        transform: translateX(-50%) translateY(0);
-        pointer-events: auto;
-    }
-
-    /* Mega Menu specifically for Laddu Gopal (Multi-column) */
-    .rs-mega-menu {
-        min-width: 780px !important;
-        padding: 20px 24px !important;
-        display: grid !important;
-        grid-template-columns: repeat(4, 1fr) !important;
-        gap: 20px !important;
-    }
-    .rs-mega-col-title {
-        font-size: 0.82rem;
-        font-weight: 800;
-        color: #b71c1c;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        padding-bottom: 6px;
-        margin-bottom: 8px;
-        border-bottom: 1.5px solid #fee2e2;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        text-decoration: none !important;
-    }
-    .rs-mega-col-title:hover {
-        color: #8e1515;
-    }
-    .rs-mega-list {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-    }
-    .rs-mega-item a {
-        color: #475569;
-        font-size: 0.8rem;
-        font-weight: 600;
-        text-decoration: none !important;
-        padding: 3px 0;
-        display: block;
-        transition: all 0.15s ease;
-    }
-    .rs-mega-item a:hover {
-        color: #b71c1c;
-        padding-left: 4px;
-    }
-
-    /* Standard Single Column Dropdown */
-    .rs-simple-menu {
-        list-style: none;
-        padding: 6px 0;
-        margin: 0;
-    }
-    .rs-simple-item a {
-        color: #334155;
-        font-size: 0.82rem;
-        font-weight: 600;
-        text-decoration: none !important;
-        padding: 8px 18px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        transition: all 0.15s ease;
-        white-space: nowrap;
-    }
-    .rs-simple-item a:hover {
-        background: #fdf2f2;
-        color: #b71c1c;
-        padding-left: 22px;
-    }
-
-    /* Mobile Drawer */
-    .rs-mobile-toggle { display: none; background: none; border: 1px solid #b71c1c; color: #b71c1c; border-radius: 4px; padding: 4px 10px; cursor: pointer; align-items: center; gap: 5px; font-weight: 600; font-size: 0.85rem; letter-spacing: 1px; flex: 1; max-width: 90px; justify-content: flex-start; }
-    .rs-mobile-toggle i { font-size: 1.4rem; }
-    .rs-mobile-search-icon { display: none !important; }
-    
-    .rs-mobile-drawer { display: none; background: #ffffff; border-top: 1px solid #eee; padding: 15px 20px; max-height: 80vh; overflow-y: auto; }
-    .rs-mobile-drawer.active { display: block; }
-    .rs-mobile-drawer ul { list-style: none; padding: 0; margin: 0; }
-    .rs-mobile-drawer li { margin-bottom: 8px; }
-    .rs-mobile-drawer a { color: #333; text-decoration: none; font-size: 0.9rem; letter-spacing: 0.5px; text-transform: uppercase; font-weight: 700; display: block; }
-    .rs-mobile-drawer a:hover { color: #b71c1c; }
-
-    .rs-mobile-accordion {
-        border-bottom: 1px solid #f1f5f9;
-        padding-bottom: 8px;
-    }
-    .rs-mobile-acc-btn {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        width: 100%;
-        background: none;
-        border: none;
-        padding: 6px 0;
-        font-size: 0.9rem;
-        font-weight: 700;
-        color: #1e293b;
-        text-transform: uppercase;
-        cursor: pointer;
-    }
-    .rs-mobile-sublist {
-        padding-left: 14px;
-        margin-top: 6px;
-        display: none;
-    }
-    .rs-mobile-sublist.open {
-        display: block;
-    }
-    .rs-mobile-sublist a {
-        font-size: 0.82rem;
-        font-weight: 600;
-        color: #64748b;
-        padding: 4px 0;
-        text-transform: capitalize;
-    }
-
-    @media (max-width: 768px) {
-      .rs-top-bar {
-        padding: 4px 6px !important;
-        font-size: 0.64rem !important;
-        letter-spacing: 0.3px !important;
-        white-space: nowrap !important;
-        overflow: hidden !important;
-        text-overflow: ellipsis !important;
-        line-height: 1.2 !important;
-        display: block !important;
-      }
-      .rs-top-bar span {
-        margin: 0 3px !important;
+        transform: translateY(0) scale(1);
       }
     }
-    @media (max-width: 1100px) {
-      .rs-desktop-account { display: none !important; }
-      .rs-nav-bar { display: none; }
-      .rs-search-box { display: none; }
-      .rs-mobile-toggle { display: flex; }
-      .rs-mobile-search-icon { display: flex !important; }
-      
-      .rs-main-bar { display: flex; align-items: center; justify-content: space-between; padding: 6px 30px; max-width: 1500px; margin: 0 auto; gap: 15px; position: relative !important; min-height: 60px; }
-      
-      .rs-logo-container { position: absolute; left: 50%; transform: translateX(-50%); flex: unset; z-index: 10; }
-      .rs-logo img { height: 60px !important; width: auto !important; object-fit: contain !important; transition: transform 0.3s ease !important; margin: 0 !important; }
-      
-      .rs-actions { flex: 1; justify-content: flex-end; gap: 15px; }
-      .rs-action-link span:not(.rs-badge) { display: none; }
-      .rs-action-icon { font-size: 1.3rem; }
-      .rs-badge { top: -5px; right: -8px; left: unset; width: 16px; height: 16px; font-size: 0.6rem; border: 1px solid #fff; }
+    .flora-search-input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      background: #f8fafc;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 10px 14px;
+      margin-bottom: 20px;
+      transition: all 0.2s;
+    }
+    .flora-search-input-wrap:focus-within {
+      background: #ffffff;
+      border-color: #081a30;
+      box-shadow: 0 0 0 3px rgba(8, 26, 48, 0.08);
+    }
+    .flora-search-input-field {
+      width: 100%;
+      background: transparent;
+      border: none;
+      outline: none;
+      font-size: 0.92rem;
+      font-weight: 500;
+      color: #0f172a;
+      padding: 0 10px;
+    }
+    .flora-search-input-field::placeholder {
+      color: #94a3b8;
+    }
+    .flora-search-close-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #f1f5f9;
+      border: none;
+      color: #64748b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+    .flora-search-close-btn:hover {
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+    .flora-search-sec-title {
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #94a3b8;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+    .flora-search-pill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .flora-search-pill {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #334155;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 20px;
+      padding: 5px 14px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.18s;
+    }
+    .flora-search-pill:hover {
+      background: #f8fafc;
+      border-color: #081a30;
+      color: #081a30;
+      transform: translateY(-1px);
+    }
+    .flora-search-remedies-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .flora-search-remedy-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 9px 12px;
+      border-radius: 14px;
+      border: 1px solid #f1f5f9;
+      background: #fcfdfe;
+      text-decoration: none;
+      color: inherit;
+      margin-bottom: 8px;
+      transition: all 0.18s;
+    }
+    .flora-search-remedy-item:hover {
+      background: #ffffff;
+      border-color: #cbd5e1;
+      box-shadow: 0 4px 12px rgba(8, 26, 48, 0.04);
+      transform: translateX(2px);
+    }
+    .flora-search-remedy-thumb {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: #f8fafc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+      flex-shrink: 0;
+      overflow: hidden;
+      border: 1px solid #f1f5f9;
+    }
+    .flora-search-remedy-thumb img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+    .flora-search-remedy-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .flora-search-remedy-name {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #0f172a;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 3px;
+    }
+    .flora-search-remedy-price-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.78rem;
+    }
+    .flora-search-badge-ayur {
+      font-size: 0.62rem;
+      font-weight: 800;
+      background: #e0f2fe;
+      color: #0369a1;
+      padding: 2px 7px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .flora-search-quick-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 6px;
+    }
+    .flora-search-quick-link {
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: #475569;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 20px;
+      padding: 5px 14px;
+      text-decoration: none;
+      transition: all 0.18s;
+    }
+    .flora-search-quick-link:hover {
+      background: #081a30;
+      color: #ffffff;
+      border-color: #081a30;
+    }
+
+    /* Mobile Hamburger Menu */
+    .flora-mobile-toggle {
+      display: none;
+      background: none;
+      border: 1px solid var(--fl-gold);
+      color: var(--fl-gold);
+      border-radius: 6px;
+      padding: 6px 10px;
+      font-size: 1.25rem;
+      cursor: pointer;
+    }
+
+    .flora-mobile-drawer {
+      display: none;
+      background: var(--fl-navy-main);
+      border-top: 1px solid rgba(212, 175, 55, 0.25);
+      padding: 20px;
+    }
+    .flora-mobile-drawer.active {
+      display: block;
+    }
+    .flora-mobile-drawer ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .flora-mobile-drawer li {
+      margin-bottom: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      padding-bottom: 8px;
+    }
+    .flora-mobile-drawer a {
+      color: #f1f5f9;
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 600;
+      display: block;
+    }
+
+    @media (max-width: 992px) {
+      .flora-top-left, .flora-top-right { display: none; }
+      .flora-top-center { width: 100%; justify-content: center; font-size: 0.72rem; }
+      .flora-nav-links { display: none; }
+      .flora-mobile-toggle { display: block; }
+      .flora-brand-text { font-size: 1.45rem; }
+      .flora-actions { gap: 16px; }
     }
   </style>
 
-  <!-- Top Announcement Bar -->
-  <div class="rs-top-bar">
-    <span>👑</span> FREE EXPRESS SHIPPING ABOVE ₹499 <span>✦</span> PREMIUM QUALITY COLLECTION <span>✦</span> COD AVAILABLE <span>👑</span>
+  <!-- 1. Top Utility Notification Bar -->
+  <div class="flora-top-bar">
+    <div class="flora-top-left">
+      <a href="https://facebook.com" target="_blank" class="flora-social-link" title="Facebook"><i class="bi bi-facebook"></i></a>
+      <a href="https://instagram.com" target="_blank" class="flora-social-link" title="Instagram"><i class="bi bi-instagram"></i></a>
+      <span class="flora-top-left-text">Follow us!</span>
+    </div>
+
+    <div class="flora-top-center">
+      <span>🎉</span> Festive Offer: Save Up to 20% + Extra Combo OFF!
+    </div>
+
+    <div class="flora-top-right">
+      <span>Get in touch with us</span>
+      <a href="tel:{{ \App\Models\Setting::get('site_phone', '+91 9259449933') }}" class="flora-top-contact-link" title="Call Us">
+        <i class="bi bi-telephone-fill" style="color:var(--fl-gold);"></i>
+      </a>
+      <a href="mailto:{{ \App\Models\Setting::get('site_email', 'contact@dhuria.com') }}" class="flora-top-contact-link" title="Email Us">
+        <i class="bi bi-envelope-fill" style="color:var(--fl-gold);"></i>
+      </a>
+    </div>
   </div>
 
-  <!-- Main Middle Bar -->
-  <div class="rs-main-bar">
+  <!-- 2. Main Navigation Bar -->
+  <div class="flora-main-nav">
     <!-- Mobile Hamburger Toggle -->
-    <button class="rs-mobile-toggle" id="rsMobileToggle" aria-label="Toggle Navigation">
-      <i class="bi bi-list"></i> <span>MENU</span>
+    <button class="flora-mobile-toggle" id="floraMobileToggle" aria-label="Toggle Menu">
+      <i class="bi bi-list"></i>
     </button>
 
-    <!-- Left Search Box (Desktop) -->
-    <div class="rs-search-box">
-      <form action="/shop" method="GET">
-        <input type="text" name="search" class="rs-search-input" value="{{ request('search') }}" placeholder="Search dresses, mukut...">
-        <button type="submit" class="rs-search-btn" aria-label="Search">
-          <i class="bi bi-search"></i>
-        </button>
-      </form>
-    </div>
+    <!-- Brand Logo -->
+    <a href="/" class="flora-brand">
+      <img src="{{ asset('images/dhuria_logo_white.png') }}" alt="dhuria" style="height: 38px; width: auto; object-fit: contain;">
+    </a>
 
-    <!-- Center Logo -->
-    <div class="rs-logo-container">
-      <a href="/" class="rs-logo">
-        <img src="/images/ebigcart_logo.png" alt="Ebigcart Logo - Shop More, Pay Less">
-      </a>
-    </div>
+    <!-- Center Nav Links -->
+    <ul class="flora-nav-links">
+      <li class="flora-nav-item">
+        <a href="/" class="flora-nav-link {{ request()->is('/') ? 'active' : '' }}">Home</a>
+      </li>
 
-    <!-- Right Actions -->
-    <div class="rs-actions">
-      <!-- Mobile Search Icon -->
-      <a href="javascript:void(0)" class="rs-action-link rs-mobile-search-icon" onclick="document.getElementById('rsMobileDrawer').classList.toggle('active');">
-        <i class="bi bi-search rs-action-icon"></i>
-      </a>
+      <!-- MadhuCurex / Shop with Dropdown -->
+      <li class="flora-nav-item">
+        <a href="{{ route('shop') }}" class="flora-nav-link {{ request()->is('shop') ? 'active' : '' }}">
+          <span>MadhuCurex</span>
+          <i class="bi bi-chevron-down arrow"></i>
+        </a>
+        <ul class="flora-dropdown">
+          <li class="flora-dropdown-item">
+            <a href="{{ route('shop') }}" class="flora-dropdown-link">All Products</a>
+          </li>
+          @foreach($headerCategories as $hCat)
+            <li class="flora-dropdown-item">
+              <a href="{{ route('shop', ['cat' => $hCat->slug]) }}" class="flora-dropdown-link">{{ $hCat->name }}</a>
+            </li>
+          @endforeach
+        </ul>
+      </li>
 
-      <a href="/wishlist" class="rs-action-link">
-        <span class="rs-badge wishlist-count-badge">0</span><i class="bi bi-heart rs-action-icon"></i>
-        <span>WISHLIST</span>
-      </a>
+      <li class="flora-nav-item">
+        <a href="{{ route('about') }}" class="flora-nav-link {{ request()->is('about') ? 'active' : '' }}">About Us</a>
+      </li>
 
-      <a href="/cart" class="rs-action-link">
-        <span class="rs-badge cart-count-badge">0</span><i class="bi bi-bag rs-action-icon"></i>
-        <span>BAG</span>
-      </a>
+      <li class="flora-nav-item">
+        <a href="{{ route('contact') }}" class="flora-nav-link {{ request()->is('contact') ? 'active' : '' }}">Contact Us</a>
+      </li>
 
+      <!-- Policy Dropdown -->
+      <li class="flora-nav-item">
+        <a href="javascript:void(0)" class="flora-nav-link">
+          <span>Policy</span>
+          <i class="bi bi-chevron-down arrow"></i>
+        </a>
+        <ul class="flora-dropdown">
+          <li class="flora-dropdown-item"><a href="{{ route('terms') }}" class="flora-dropdown-link">Terms &amp; Conditions</a></li>
+          <li class="flora-dropdown-item"><a href="{{ route('privacy') }}" class="flora-dropdown-link">Privacy Policy</a></li>
+          <li class="flora-dropdown-item"><a href="{{ route('refund') }}" class="flora-dropdown-link">Refund &amp; Return Policy</a></li>
+          <li class="flora-dropdown-item"><a href="{{ route('shipping') }}" class="flora-dropdown-link">Shipping Policy</a></li>
+          <li class="flora-dropdown-item"><a href="{{ route('cancellation') }}" class="flora-dropdown-link">Cancellation Policy</a></li>
+        </ul>
+      </li>
+    </ul>
+
+    <!-- Right Action Icons -->
+    <div class="flora-actions">
+      <!-- Profile / User Account -->
       @auth
-        <a href="/dashboard" class="rs-action-link rs-desktop-account" title="My Account">
-          <i class="bi bi-person-circle rs-action-icon"></i>
-          <span>ACCOUNT</span>
+        <a href="{{ route('dashboard') }}" class="flora-action-btn" title="My Account">
+          <i class="bi bi-person"></i>
         </a>
       @else
-        <a href="/login" class="rs-action-link rs-desktop-account" title="Login / Register">
-          <i class="bi bi-person rs-action-icon"></i>
-          <span>LOGIN</span>
+        <a href="{{ route('login') }}" class="flora-action-btn" title="Login / Register">
+          <i class="bi bi-person"></i>
         </a>
       @endauth
+
+      <!-- Search Trigger Icon -->
+      <button type="button" class="flora-action-btn" id="floraSearchToggle" title="Search Products">
+        <i class="bi bi-search"></i>
+      </button>
+
+      <!-- Wishlist Heart Icon -->
+      <a href="{{ route('wishlist.index') }}" class="flora-action-btn" title="My Wishlist">
+        <i class="bi bi-heart"></i>
+        <span class="flora-count-badge wishlist-count-badge">0</span>
+      </a>
+
+      <!-- Shopping Bag Icon -->
+      <a href="{{ route('cart.index') }}" class="flora-action-btn" title="Shopping Cart">
+        <i class="bi bi-bag"></i>
+        <span class="flora-count-badge cart-count-badge">0</span>
+      </a>
     </div>
-  </div>
 
-  <!-- Bottom Navigation Bar (Dynamic Hierarchical Categories) -->
-  <div class="rs-nav-bar">
-    <ul class="rs-nav-list">
-      <li class="rs-nav-item">
-        <a href="/" class="rs-nav-link {{ request()->is('/') ? 'active' : '' }}">HOME</a>
-      </li>
-      <li class="rs-nav-item">
-        <span class="sep">✦</span>
-        <a href="/shop" class="rs-nav-link {{ request()->is('shop') && !request('cat') ? 'active' : '' }}">SHOP ALL</a>
-      </li>
+    <!-- Centered Search Popup Modal (Matching Reference Image 4) -->
+    <div class="flora-search-modal-backdrop" id="floraSearchModalBackdrop">
+      <div class="flora-search-modal-box" id="floraSearchModalBox" onclick="event.stopPropagation()">
+        <!-- Search Input Form -->
+        <form action="{{ route('shop') }}" method="GET" id="floraSearchForm">
+          <div class="flora-search-input-wrap">
+            <i class="bi bi-search" style="color: #94a3b8; font-size: 1.05rem; flex-shrink: 0;"></i>
+            <input type="text" name="search" id="floraSearchInput" class="flora-search-input-field" placeholder="Search remedies, kits..." value="{{ request('search') }}" autocomplete="off">
+            <button type="button" class="flora-search-close-btn" id="floraSearchCloseBtn" title="Close Search">
+              <i class="bi bi-x-lg"></i>
+            </button>
+          </div>
+        </form>
 
-      @foreach($headerCategories as $hCat)
-        <li class="rs-nav-item">
-          <span class="sep">✦</span>
-          <a href="{{ route('shop', ['cat' => $hCat->slug]) }}" class="rs-nav-link {{ request('cat') == $hCat->slug ? 'active' : '' }}">
-            {{ strtoupper($hCat->name) }}
-            @if($hCat->children && $hCat->children->count() > 0)
-              <i class="bi bi-chevron-down" style="font-size: 0.65rem; opacity: 0.7; margin-left: 2px;"></i>
-            @endif
-          </a>
+        <!-- Popular Searches Section -->
+        <div class="flora-search-sec-title">
+          <i class="bi bi-stars" style="color: #f59e0b;"></i>
+          <span>Popular Searches</span>
+        </div>
+        <div class="flora-search-pill-list">
+          <a href="{{ route('shop', ['search' => 'Pilecurex Kit']) }}" class="flora-search-pill">Pilecurex Kit</a>
+          <a href="{{ route('shop', ['search' => 'MadhuCurex']) }}" class="flora-search-pill">MadhuCurex</a>
+          <a href="{{ route('shop', ['search' => 'Liver Detox']) }}" class="flora-search-pill">Liver Detox</a>
+          <a href="{{ route('shop', ['search' => 'Paachan Sathi']) }}" class="flora-search-pill">Paachan Sathi</a>
+          <a href="{{ route('shop', ['search' => 'Diabetes Care']) }}" class="flora-search-pill">Diabetes Care</a>
+        </div>
 
-          @if($hCat->children && $hCat->children->count() > 0)
-            @if($hCat->children->where('children', '!=', null)->count() > 0 && $hCat->slug === 'laddu-gopal')
-              <!-- Multi-column Mega Menu for Laddu Gopal -->
-              <div class="rs-dropdown rs-mega-menu">
-                @foreach($hCat->children as $child)
-                  <div class="rs-mega-col">
-                    <a href="{{ route('shop', ['cat' => $child->slug]) }}" class="rs-mega-col-title">
-                      {{ $child->name }}
-                    </a>
-                    @if($child->children && $child->children->count() > 0)
-                      <ul class="rs-mega-list">
-                        @foreach($child->children as $subChild)
-                          <li class="rs-mega-item">
-                            <a href="{{ route('shop', ['cat' => $subChild->slug]) }}">
-                              {{ $subChild->name }}
-                            </a>
-                          </li>
-                        @endforeach
-                      </ul>
-                    @endif
-                  </div>
-                @endforeach
+        <!-- Featured Remedies Section -->
+        <div class="flora-search-remedies-header">
+          <div class="flora-search-sec-title" style="margin-bottom: 0;">
+            <i class="bi bi-activity" style="color: #0284c7;"></i>
+            <span>Featured Remedies</span>
+          </div>
+          <a href="{{ route('shop') }}" style="font-size: 0.72rem; font-weight: 700; color: #475569; text-decoration: none;">View all &rarr;</a>
+        </div>
+
+        <div id="floraSearchRemediesList">
+          @foreach($searchFeaturedProducts as $sProd)
+            <a href="{{ route('product.show', $sProd->slug) }}" class="flora-search-remedy-item" data-title="{{ strtolower($sProd->name) }}">
+              <div class="flora-search-remedy-thumb">
+                <img src="{{ $sProd->primary_image_url }}" alt="{{ $sProd->name }}">
               </div>
-            @else
-              <!-- Standard Dropdown Menu for Other Categories -->
-              <div class="rs-dropdown">
-                <ul class="rs-simple-menu">
-                  @foreach($hCat->children as $child)
-                    <li class="rs-simple-item">
-                      <a href="{{ route('shop', ['cat' => $child->slug]) }}">
-                        <span>{{ $child->name }}</span>
-                        @if($child->children && $child->children->count() > 0)
-                          <i class="bi bi-chevron-right" style="font-size: 0.65rem; opacity: 0.5;"></i>
-                        @endif
-                      </a>
-                    </li>
-                  @endforeach
-                </ul>
-              </div>
-            @endif
-          @endif
-        </li>
-      @endforeach
-
-      <li class="rs-nav-item">
-        <span class="sep">✦</span>
-        <a href="/about" class="rs-nav-link {{ request()->is('about') ? 'active' : '' }}">ABOUT US</a>
-      </li>
-      <li class="rs-nav-item">
-        <span class="sep">✦</span>
-        <a href="/contact" class="rs-nav-link {{ request()->is('contact') ? 'active' : '' }}">CONTACT</a>
-      </li>
-    </ul>
-  </div>
-
-  <!-- Mobile Drawer (Hierarchical Categories with Collapsible Accordions) -->
-  <div class="rs-mobile-drawer" id="rsMobileDrawer">
-    @auth
-      <div style="background: #fdf2f2; border: 1px solid #fecaca; border-radius: 10px; padding: 12px 15px; margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between;">
-        <div style="display: flex; align-items: center; gap: 10px;">
-          <div style="width: 38px; height: 38px; background: #b71c1c; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem;">
-            {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
-          </div>
-          <div>
-            <h4 style="margin: 0; font-size: 0.85rem; font-weight: 800; color: #1e293b;">{{ Auth::user()->name }}</h4>
-            <span style="font-size: 0.72rem; color: #64748b;">{{ Auth::user()->email }}</span>
-          </div>
-        </div>
-        <a href="/dashboard" style="background: #b71c1c; color: #fff; text-decoration: none; padding: 6px 12px; border-radius: 6px; font-size: 0.72rem; font-weight: 800;">DASHBOARD</a>
-      </div>
-    @else
-      <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 15px; margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between;">
-        <div style="display: flex; align-items: center; gap: 10px;">
-          <div style="width: 36px; height: 36px; background: #e2e8f0; color: #64748b; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.1rem;">
-            <i class="bi bi-person"></i>
-          </div>
-          <div>
-            <h4 style="margin: 0; font-size: 0.85rem; font-weight: 800; color: #1e293b;">Welcome Guest!</h4>
-            <span style="font-size: 0.72rem; color: #64748b;">Log in for orders & checkout</span>
-          </div>
-        </div>
-        <div style="display: flex; gap: 6px;">
-          <a href="/login" style="background: #b71c1c; color: #fff; text-decoration: none; padding: 6px 12px; border-radius: 6px; font-size: 0.72rem; font-weight: 800;">LOGIN</a>
-          <a href="/register" style="border: 1px solid #b71c1c; color: #b71c1c; text-decoration: none; padding: 5px 10px; border-radius: 6px; font-size: 0.72rem; font-weight: 800;">REGISTER</a>
-        </div>
-      </div>
-    @endauth
-    <div class="mb-3">
-      <form action="/shop" method="GET" style="display: flex; gap: 8px;">
-        <input type="text" name="search" value="{{ request('search') }}" style="flex: 1; background: #f8f9fa; border: 1px solid #ccc; color: #222; padding: 8px 12px; border-radius: 20px; font-size: 0.85rem;" placeholder="Search products...">
-        <button type="submit" style="background: #b71c1c; color: #fff; border: none; padding: 8px 16px; border-radius: 20px; font-weight: 700;"><i class="bi bi-search"></i></button>
-      </form>
-    </div>
-    <ul>
-      <li><a href="/" style="{{ request()->is('/') ? 'color: #b71c1c;' : '' }}">HOME</a></li>
-      <li><a href="/shop" style="{{ request()->is('shop') && !request('cat') ? 'color: #b71c1c;' : '' }}">SHOP ALL</a></li>
-      
-      @foreach($headerCategories as $hCat)
-        <li class="rs-mobile-accordion">
-          @if($hCat->children && $hCat->children->count() > 0)
-            <div style="display: flex; align-items: center; justify-content: space-between;">
-              <a href="{{ route('shop', ['cat' => $hCat->slug]) }}" style="{{ request('cat') == $hCat->slug ? 'color: #b71c1c;' : '' }}">
-                {{ strtoupper($hCat->name) }}
-              </a>
-              <button type="button" onclick="this.parentElement.nextElementSibling.classList.toggle('open'); this.querySelector('i').classList.toggle('bi-chevron-up'); this.querySelector('i').classList.toggle('bi-chevron-down');" style="background: none; border: none; padding: 6px 10px; cursor: pointer; color: #64748b;">
-                <i class="bi bi-chevron-down"></i>
-              </button>
-            </div>
-            <div class="rs-mobile-sublist">
-              @foreach($hCat->children as $child)
-                <div style="margin-bottom: 4px;">
-                  <a href="{{ route('shop', ['cat' => $child->slug]) }}" style="font-weight: 700; color: #1e293b;">
-                    • {{ $child->name }}
-                  </a>
-                  @if($child->children && $child->children->count() > 0)
-                    <div style="padding-left: 12px; margin-top: 2px;">
-                      @foreach($child->children as $subChild)
-                        <a href="{{ route('shop', ['cat' => $subChild->slug]) }}" style="font-size: 0.78rem; color: #64748b; display: block; padding: 2px 0;">
-                          - {{ $subChild->name }}
-                        </a>
-                      @endforeach
-                    </div>
+              <div class="flora-search-remedy-info">
+                <div class="flora-search-remedy-name">{{ $sProd->name }}</div>
+                <div class="flora-search-remedy-price-row">
+                  @if($sProd->sale_price)
+                    <strong style="color: #081a30; font-weight: 800;">&#8377;{{ number_format($sProd->sale_price, 0) }}</strong>
+                    <span style="color: #94a3b8; text-decoration: line-through; font-size: 0.72rem;">&#8377;{{ number_format($sProd->price, 0) }}</span>
+                  @else
+                    <strong style="color: #081a30; font-weight: 800;">&#8377;{{ number_format($sProd->price, 0) }}</strong>
                   @endif
+                  <span class="flora-search-badge-ayur">Ayurvedic</span>
                 </div>
-              @endforeach
-            </div>
-          @else
-            <a href="{{ route('shop', ['cat' => $hCat->slug]) }}" style="{{ request('cat') == $hCat->slug ? 'color: #b71c1c;' : '' }}">
-              {{ strtoupper($hCat->name) }}
+              </div>
+              <i class="bi bi-chevron-right" style="color: #cbd5e1; font-size: 0.85rem; margin-left: auto;"></i>
             </a>
-          @endif
-        </li>
-      @endforeach
+          @endforeach
+        </div>
 
-      <li><a href="/about" style="{{ request()->is('about') ? 'color: #b71c1c;' : '' }}">ABOUT US</a></li>
-      <li><a href="/contact" style="{{ request()->is('contact') ? 'color: #b71c1c;' : '' }}">CONTACT</a></li>
-    </ul>
+        <!-- Quick Links Section -->
+        <div class="flora-search-sec-title" style="margin-top: 18px; margin-bottom: 8px;">
+          <span>Quick Links</span>
+        </div>
+        <div class="flora-search-quick-links">
+          <a href="{{ route('shop') }}" class="flora-search-quick-link">All Products</a>
+          <a href="{{ route('about') }}" class="flora-search-quick-link">About Us</a>
+          <a href="{{ route('contact') }}" class="flora-search-quick-link">Contact Support</a>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const toggleBtn = document.getElementById("rsMobileToggle");
-      const drawer = document.getElementById("rsMobileDrawer");
-      if (toggleBtn && drawer) {
-        toggleBtn.addEventListener("click", function() {
-          drawer.classList.toggle("active");
-        });
+  <!-- Mobile Drawer Menu -->
+  <div class="flora-mobile-drawer" id="floraMobileDrawer">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="{{ route('shop') }}">MadhuCurex / Shop All</a></li>
+      @foreach($headerCategories as $hCat)
+        <li style="padding-left: 15px;"><a href="{{ route('shop', ['cat' => $hCat->slug]) }}">&bull; {{ $hCat->name }}</a></li>
+      @endforeach
+      <li><a href="{{ route('about') }}">About Us</a></li>
+      <li><a href="{{ route('contact') }}">Contact Us</a></li>
+      <li><a href="{{ route('terms') }}">Terms &amp; Conditions</a></li>
+      <li><a href="{{ route('privacy') }}">Privacy Policy</a></li>
+      <li><a href="{{ route('refund') }}">Refund &amp; Cancellation</a></li>
+      @auth
+        <li><a href="{{ route('dashboard') }}"><i class="bi bi-person-circle"></i> My Account</a></li>
+      @else
+        <li><a href="{{ route('login') }}"><i class="bi bi-box-arrow-in-right"></i> Login / Register</a></li>
+      @endauth
+    </ul>
+  </div>
+</header>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const searchToggle = document.getElementById('floraSearchToggle');
+  const searchModalBackdrop = document.getElementById('floraSearchModalBackdrop');
+  const searchCloseBtn = document.getElementById('floraSearchCloseBtn');
+  const searchInput = document.getElementById('floraSearchInput');
+
+  function openSearchModal() {
+    if (searchModalBackdrop) {
+      searchModalBackdrop.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => {
+        if (searchInput) searchInput.focus();
+      }, 100);
+    }
+  }
+
+  function closeSearchModal() {
+    if (searchModalBackdrop) {
+      searchModalBackdrop.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  }
+
+  if (searchToggle) {
+    searchToggle.addEventListener('click', function(e) {
+      e.preventDefault();
+      openSearchModal();
+    });
+  }
+
+  if (searchCloseBtn) {
+    searchCloseBtn.addEventListener('click', closeSearchModal);
+  }
+
+  if (searchModalBackdrop) {
+    searchModalBackdrop.addEventListener('click', function(e) {
+      if (e.target === searchModalBackdrop) {
+        closeSearchModal();
       }
     });
-  </script>
-</header>
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && searchModalBackdrop && searchModalBackdrop.classList.contains('active')) {
+      closeSearchModal();
+    }
+  });
+
+  if (searchInput) {
+    searchInput.addEventListener('input', function() {
+      const q = this.value.trim().toLowerCase();
+      const items = document.querySelectorAll('.flora-search-remedy-item');
+      items.forEach(el => {
+        const title = el.getAttribute('data-title') || '';
+        if (!q || title.includes(q)) {
+          el.style.display = 'flex';
+        } else {
+          el.style.display = 'none';
+        }
+      });
+    });
+  }
+
+  const mobileToggle = document.getElementById('floraMobileToggle');
+  const mobileDrawer = document.getElementById('floraMobileDrawer');
+  if (mobileToggle && mobileDrawer) {
+    mobileToggle.addEventListener('click', function() {
+      mobileDrawer.classList.toggle('active');
+    });
+  }
+});
+</script>

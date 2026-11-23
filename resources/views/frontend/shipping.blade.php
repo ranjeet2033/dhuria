@@ -1,78 +1,128 @@
 @extends('layouts.frontend')
 
-@section('title', 'Shipping & Delivery Policy')
+@section('title', 'Shipping Policy - Dhuria Ayurveda')
 
 @section('content')
-    <!-- Page Header -->
-    <div class="bg-[#fdfaf6] py-5 md:py-12 text-center border-b border-gray-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <p class="text-[10px] md:text-sm text-gray-500 uppercase tracking-widest leading-relaxed">
-                <a href="/" class="hover:text-primary transition">Home</a> / 
-                <span class="text-gray-900 font-medium">Shipping Policy</span>
-            </p>
-            <h1 class="text-2xl sm:text-4xl font-serif font-bold text-gray-900 mt-1 md:mt-2">Shipping & Delivery Policy</h1>
-        </div>
+
+<style>
+.dh-policy-wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px 70px;
+}
+.dh-policy-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+.dh-policy-kicker {
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #b89326;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-bottom: 8px;
+}
+.dh-policy-title {
+    font-family: 'Cinzel', serif;
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: #061528;
+    margin: 0 0 10px 0;
+}
+.dh-policy-sub {
+    font-size: 0.95rem;
+    color: #64748b;
+    line-height: 1.6;
+}
+.dh-policy-section {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 24px 28px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+}
+.dh-policy-sec-title {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #061528;
+    margin-bottom: 12px;
+}
+.dh-policy-text {
+    font-size: 0.9rem;
+    color: #475569;
+    line-height: 1.7;
+    margin: 0;
+}
+.dh-questions-box {
+    background: #0d2544;
+    color: #ffffff;
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    margin-top: 50px;
+}
+.dh-qb-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+.dh-qb-card {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    padding: 16px;
+    color: #f1f5f9;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+.dh-qb-card:hover {
+    background: rgba(212, 175, 55, 0.2);
+    border-color: #d4af37;
+    color: #ffffff;
+}
+</style>
+
+<div class="dh-policy-wrap">
+    <div class="dh-policy-header">
+        <span class="dh-policy-kicker">✦ PAN-INDIA DISPATCH ✦</span>
+        <h1 class="dh-policy-title">Shipping Policy</h1>
+        <p class="dh-policy-sub">Reliable logistics, order tracking, and transparent delivery timelines across India.</p>
     </div>
 
-    <!-- Content Section -->
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
-        <div class="prose max-w-none text-gray-600 leading-relaxed font-sans text-sm sm:text-base space-y-6">
-            <p class="text-xs text-gray-400">Last updated: July 8, 2026</p>
-            
-            <p>
-                Welcome to <strong>Ebigcart</strong>. We are committed to delivering our fresh, high-quality groceries, beverages, and daily essentials safely and efficiently right to your doorstep.
-            </p>
+    <div class="dh-policy-section">
+        <div class="dh-policy-sec-title">Free Express Shipping on Orders Above ₹499</div>
+        <p class="dh-policy-text">We offer Free Express Courier Delivery on all prepaid orders exceeding ₹499 across 26,000+ postal pincodes in India.</p>
+    </div>
 
-            <h2 class="text-xl font-serif font-bold text-gray-900 mt-8 mb-4">1. Shipping Coverage & Locations</h2>
-            <p>
-                We ship our products across the contiguous United States (lower 48 states). If your delivery address is in Alaska, Hawaii, or a U.S. territory not serviced by standard UPS ground routes, our support team will contact you to arrange an alternative delivery solution.
-            </p>
+    <div class="dh-policy-section">
+        <div class="dh-policy-sec-title">Dispatch &amp; Delivery Timelines</div>
+        <p class="dh-policy-text">Orders placed before 2:00 PM are processed and handed over to premier courier partners (Delhivery, BlueDart, DTDC) on the same business day. Delivery takes approximately 2 to 4 business days for metro cities and 4 to 6 business days for rest of India.</p>
+    </div>
 
-            <h2 class="text-xl font-serif font-bold text-gray-900 mt-8 mb-4">2. Order Processing & Dispatch Time</h2>
-            <p>
-                All orders are processed and prepared for shipping within <strong>1 to 2 business days</strong> after receiving order confirmation and payment. Orders placed on Sundays or public holidays will be processed on the next working day.
-            </p>
-
-            <h2 class="text-xl font-serif font-bold text-gray-900 mt-8 mb-4">3. Delivery Timelines</h2>
-            <p>
-                Our standard delivery timeline once dispatched is:
-            </p>
-            <ul class="list-disc pl-6 space-y-2">
-                <li><strong>Standard (UPS Ground):</strong> 3 to 7 business days.</li>
-                <li><strong>Expedited (UPS 3 Day Select):</strong> 3 business days.</li>
-                <li><strong>Expedited (UPS 2nd Day Air):</strong> 2 business days.</li>
-                <li><strong>Overnight (UPS Next Day Air):</strong> 1 business day.</li>
-                <li><strong>Remote or Rural Areas:</strong> May take up to 10 business days.</li>
-            </ul>
-            <p>
-                *Note: Delivery times may be affected by bad weather, holidays, or administrative disruptions beyond our control.
-            </p>
-
-            <h2 class="text-xl font-serif font-bold text-gray-900 mt-8 mb-4">4. Shipping & Delivery Charges</h2>
-            <p>
-                Shipping rates are calculated based on weight, dimensions, and the destination of the package. Any applicable shipping fees will be clearly displayed in your cart and summarized at the checkout screen before you finalize your payment.
-            </p>
-
-            <h2 class="text-xl font-serif font-bold text-gray-900 mt-8 mb-4">5. Shipment Tracking</h2>
-            <p>
-                Once your order has been dispatched, we will send you a shipment confirmation email or SMS containing a **Tracking Number** and a link to trace your package online. You can use this to monitor the status and estimated delivery time of your package.
-            </p>
-
-            <h2 class="text-xl font-serif font-bold text-gray-900 mt-8 mb-4">6. Lost or Damaged Shipments</h2>
-            <p>
-                In the rare event that a package is lost in transit or is delivered in a heavily damaged state, please contact us immediately at <strong>{{ \App\Models\Setting::get('site_email', 'Papperlemon1@gmail.com') }}</strong>. We will work with the logistics partner to resolve the issue or dispatch a replacement order to you as soon as possible.
-            </p>
-
-            <h2 class="text-xl font-serif font-bold text-gray-900 mt-8 mb-4">7. Contact Information</h2>
-            <p>
-                If you have any questions or queries regarding the shipping of your products, please reach out to us:
-            </p>
-            <ul class="list-disc pl-6 space-y-2 mt-2">
-                <li><strong>Brand Name:</strong> {{ \App\Models\Setting::get('site_name', 'Ebigcart') }}</li>
-                <li><strong>Email:</strong> {{ \App\Models\Setting::get('site_email', 'Papperlemon1@gmail.com') }}</li>
-                <li><strong>Address:</strong> {{ \App\Models\Setting::get('site_address', '12800 Northborough Dr, Houston, TX 77067') }}</li>
-            </ul>
+    <!-- Still Have Questions Box -->
+    <div class="dh-questions-box">
+        <h3 style="font-family:'Cinzel',serif; font-size:1.8rem; font-weight:800; color:#fff; margin:0 0 8px 0;">Still have questions?</h3>
+        <p style="font-size:0.9rem; color:#cbd5e1; margin-bottom:25px;">Track your parcel or inquire about shipping schedules.</p>
+        <div class="dh-qb-grid">
+            <a href="mailto:floramade517@gmail.com" class="dh-qb-card">
+                <i class="bi bi-envelope" style="font-size:1.4rem; display:block; margin-bottom:6px;"></i>
+                <span style="font-size:0.8rem; font-weight:700;">floramade517@gmail.com</span>
+                <span style="display:block; font-size:0.7rem; color:#cbd5e1;">Email Support</span>
+            </a>
+            <a href="tel:+919220251059" class="dh-qb-card">
+                <i class="bi bi-telephone" style="font-size:1.4rem; display:block; margin-bottom:6px;"></i>
+                <span style="font-size:0.8rem; font-weight:700;">+91 9220251059</span>
+                <span style="display:block; font-size:0.7rem; color:#cbd5e1;">Mon - Sat (10am - 7pm)</span>
+            </a>
+            <a href="{{ route('contact') }}" class="dh-qb-card">
+                <i class="bi bi-chat-dots" style="font-size:1.4rem; display:block; margin-bottom:6px;"></i>
+                <span style="font-size:0.8rem; font-weight:700;">Contact Desk</span>
+                <span style="display:block; font-size:0.7rem; color:#cbd5e1;">Reach Out Instantly</span>
+            </a>
         </div>
     </div>
+</div>
+
 @endsection
-

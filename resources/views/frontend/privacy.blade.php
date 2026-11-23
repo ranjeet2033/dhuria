@@ -1,106 +1,149 @@
 @extends('layouts.frontend')
 
-@section('title', 'Privacy Policy')
+@section('title', 'Privacy Policy - Dhuria Ayurveda')
 
 @section('content')
-    <!-- Page Header -->
-    <div class="bg-[#fdfaf6] py-5 md:py-12 text-center border-b border-gray-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <p class="text-[10px] md:text-sm text-gray-500 uppercase tracking-widest leading-relaxed">
-                <a href="/" class="hover:text-primary transition">Home</a> / 
-                <span class="text-gray-900 font-medium">Privacy Policy</span>
-            </p>
-            <h1 class="text-2xl sm:text-4xl font-serif font-bold text-gray-900 mt-1 md:mt-2">Privacy Policy</h1>
-        </div>
+
+<style>
+.dh-policy-wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px 70px;
+}
+.dh-policy-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+.dh-policy-kicker {
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #b89326;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-bottom: 8px;
+}
+.dh-policy-title {
+    font-family: 'Cinzel', serif;
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: #061528;
+    margin: 0 0 10px 0;
+}
+.dh-policy-sub {
+    font-size: 0.95rem;
+    color: #64748b;
+    line-height: 1.6;
+}
+.dh-policy-section {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 24px 28px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+}
+.dh-policy-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #f1f5f9;
+    color: #061528;
+    font-size: 0.85rem;
+    font-weight: 800;
+    margin-right: 10px;
+}
+.dh-policy-sec-title {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #061528;
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+}
+.dh-policy-text {
+    font-size: 0.9rem;
+    color: #475569;
+    line-height: 1.7;
+    margin: 0;
+}
+.dh-questions-box {
+    background: #0d2544;
+    color: #ffffff;
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    margin-top: 50px;
+    box-shadow: 0 10px 30px rgba(6, 21, 40, 0.15);
+}
+.dh-qb-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+.dh-qb-card {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    padding: 16px;
+    color: #f1f5f9;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+.dh-qb-card:hover {
+    background: rgba(212, 175, 55, 0.2);
+    border-color: #d4af37;
+    color: #ffffff;
+}
+</style>
+
+<div class="dh-policy-wrap">
+    <div class="dh-policy-header">
+        <span class="dh-policy-kicker">✦ DATA PRIVACY &amp; SECURITY ✦</span>
+        <h1 class="dh-policy-title">Privacy Policy</h1>
+        <p class="dh-policy-sub">How we collect, protect, and handle your personal data and digital privacy.</p>
     </div>
 
-    <!-- Content Section -->
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
-        <div class="prose max-w-none text-gray-600 leading-relaxed font-sans text-sm sm:text-base space-y-6">
-            <p class="text-xs text-gray-400">Last updated: July 8, 2026</p>
-            
-            <p>
-                At <strong>Ebigcart</strong>, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that are collected and recorded by Ebigcart and how we use it.
-            </p>
-            <p>
-                If you have additional questions or require more information about our Privacy Policy, do not hesitate to contact us.
-            </p>
+    <div class="dh-policy-section">
+        <div class="dh-policy-sec-title"><span class="dh-policy-num">1</span> Information We Collect</div>
+        <p class="dh-policy-text">When you place an order or contact our Ayurvedic consultation desk, we collect essential details including your name, contact phone, delivery address, and payment preferences.</p>
+    </div>
 
-            <h2 class="text-xl font-serif font-bold text-gray-900 mt-8 mb-4">1. Consent</h2>
-            <p>
-                By using our website, you hereby consent to our Privacy Policy and agree to its terms.
-            </p>
+    <div class="dh-policy-section">
+        <div class="dh-policy-sec-title"><span class="dh-policy-num">2</span> How We Use Your Data</div>
+        <p class="dh-policy-text">Your information is used strictly to process orders, generate shipping waybills, communicate tracking updates, and deliver customized wellness recommendations. We never sell or rent your personal health data to third-party advertisers.</p>
+    </div>
 
-            <h2 class="text-xl font-serif font-bold text-gray-900 mt-8 mb-4">2. Information We Collect</h2>
-            <p>
-                The personal information that you are asked to provide, and the reasons why you are asked to provide it, will be made clear to you at the point we ask you to provide your personal information.
-            </p>
-            <p>
-                If you register for an account or purchase products from us, we may ask for your contact information, including items such as:
-            </p>
-            <ul class="list-disc pl-6 space-y-2">
-                <li>Name / Business Name</li>
-                <li>Shipping Address and Billing Address</li>
-                <li>Email Address</li>
-                <li>Telephone/Mobile Number</li>
-            </ul>
-            <p>
-                When you make a payment on our website, the transaction details are handled by our secure payment gateway partner, <strong>Stripe</strong>. We do not store or collect your payment card details on our website servers. Stripe processes your payment data in compliance with PCI-DSS standards.
-            </p>
+    <div class="dh-policy-section">
+        <div class="dh-policy-sec-title"><span class="dh-policy-num">3</span> 256-Bit SSL Payment Encryption</div>
+        <p class="dh-policy-text">All financial transactions are handled via Razorpay’s PCI-DSS compliant payment gateway with bank-grade encryption. We do not store your credit card or UPI PIN numbers on our servers.</p>
+    </div>
 
-            <h2 class="text-xl font-serif font-bold text-gray-900 mt-8 mb-4">3. How We Use Your Information</h2>
-            <p>
-                We use the information we collect in various ways, including to:
-            </p>
-            <ul class="list-disc pl-6 space-y-2">
-                <li>Provide, operate, and maintain our website.</li>
-                <li>Improve, personalize, and expand our website offerings.</li>
-                <li>Understand and analyze how you use our website.</li>
-                <li>Process your transactions, arrange shipments, and send invoice confirmations.</li>
-                <li>Communicate with you, either directly or through one of our partners, including for customer service, to provide you with updates and other information relating to the website.</li>
-                <li>Send you emails regarding order status, tracking, and promotional notifications (with your consent).</li>
-                <li>Find and prevent fraud.</li>
-            </ul>
-
-            <h2 class="text-xl font-serif font-bold text-gray-900 mt-8 mb-4">4. Log Files</h2>
-            <p>
-                Ebigcart follows a standard procedure of using log files. These files log visitors when they visit websites. The information collected by log files includes internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date and time stamp, referring/exit pages, and possibly the number of clicks. These are not linked to any information that is personally identifiable. The purpose of the information is for analyzing trends, administering the site, tracking users' movement on the website, and gathering demographic information.
-            </p>
-
-            <h2 class="text-xl font-serif font-bold text-gray-900 mt-8 mb-4">5. Cookies and Web Beacons</h2>
-            <p>
-                Like any other website, Ebigcart uses "cookies". These cookies are used to store information including visitors' preferences, and the pages on the website that the visitor accessed or visited. The information is used to optimize the users' experience by customizing our web page content based on visitors' browser type and/or other information.
-            </p>
-
-            <h2 class="text-xl font-serif font-bold text-gray-900 mt-8 mb-4">6. Third-Party Privacy Policies</h2>
-            <p>
-                Ebigcart's Privacy Policy does not apply to other advertisers or websites. Thus, we are advising you to consult the respective Privacy Policies of these third-party servers for more detailed information. It may include their practices and instructions about how to opt-out of certain options. 
-            </p>
-            <p>
-                Our payment gateway partner, <strong>Stripe</strong>, acts as an independent controller of your payment data. You can read their privacy policy at stripe.com/privacy to understand how they handle transaction data.
-            </p>
-
-            <h2 class="text-xl font-serif font-bold text-gray-900 mt-8 mb-4">7. Your Privacy Rights (CCPA / US Privacy Law)</h2>
-            <p>
-                We would like to make sure you are fully aware of all of your data protection rights. Every user is entitled to the following:
-            </p>
-            <ul class="list-disc pl-6 space-y-2">
-                <li><strong>The right to access:</strong> You have the right to request copies of your personal data.</li>
-                <li><strong>The right to rectification:</strong> You have the right to request that we correct any information you believe is inaccurate.</li>
-                <li><strong>The right to erasure:</strong> You have the right to request that we erase your personal data, under certain conditions.</li>
-                <li><strong>The right to restrict processing:</strong> You have the right to request that we restrict the processing of your personal data, under certain conditions.</li>
-            </ul>
-
-            <h2 class="text-xl font-serif font-bold text-gray-900 mt-8 mb-4">8. Contact Us</h2>
-            <p>
-                If you have any questions about this Privacy Policy, or if you would like to exercise any of your data protection rights, please contact us at:
-            </p>
-            <ul class="list-disc pl-6 space-y-2 mt-2">
-                <li><strong>Brand Name:</strong> {{ \App\Models\Setting::get('site_name', 'Ebigcart') }}</li>
-                <li><strong>Email:</strong> {{ \App\Models\Setting::get('site_email', 'Papperlemon1@gmail.com') }}</li>
-                <li><strong>Address:</strong> {{ \App\Models\Setting::get('site_address', '12800 Northborough Dr, Houston, TX 77067') }}</li>
-            </ul>
+    <!-- Still Have Questions Box -->
+    <div class="dh-questions-box">
+        <h3 style="font-family:'Cinzel',serif; font-size:1.8rem; font-weight:800; color:#fff; margin:0 0 8px 0;">Still have questions?</h3>
+        <p style="font-size:0.9rem; color:#cbd5e1; margin-bottom:25px;">Our team is here to assist with any questions about your data privacy.</p>
+        <div class="dh-qb-grid">
+            <a href="mailto:floramade517@gmail.com" class="dh-qb-card">
+                <i class="bi bi-envelope" style="font-size:1.4rem; display:block; margin-bottom:6px;"></i>
+                <span style="font-size:0.8rem; font-weight:700;">floramade517@gmail.com</span>
+                <span style="display:block; font-size:0.7rem; color:#cbd5e1;">Email Support</span>
+            </a>
+            <a href="tel:+919220251059" class="dh-qb-card">
+                <i class="bi bi-telephone" style="font-size:1.4rem; display:block; margin-bottom:6px;"></i>
+                <span style="font-size:0.8rem; font-weight:700;">+91 9220251059</span>
+                <span style="display:block; font-size:0.7rem; color:#cbd5e1;">Mon - Sat (10am - 7pm)</span>
+            </a>
+            <a href="{{ route('contact') }}" class="dh-qb-card">
+                <i class="bi bi-chat-dots" style="font-size:1.4rem; display:block; margin-bottom:6px;"></i>
+                <span style="font-size:0.8rem; font-weight:700;">Contact Desk</span>
+                <span style="display:block; font-size:0.7rem; color:#cbd5e1;">Reach Out Instantly</span>
+            </a>
         </div>
     </div>
+</div>
+
 @endsection
-
